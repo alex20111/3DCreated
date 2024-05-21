@@ -1,0 +1,16 @@
+.point {
+    cursor: pointer
+}
+
+.footer {
+    margin-bottom: 60px
+
+}
+
+/* body {
+    background-image: url('http://localhost:4200/assets/3dPrint.jpg');
+    min-height: 700px;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+} */

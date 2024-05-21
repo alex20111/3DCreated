@@ -1,0 +1,18 @@
+.card:hover {     
+    cursor: pointer; 
+    /* .border-primary */
+    box-shadow:  0 8px 10px 0 rgb(13, 110, 253);
+  }
+
+  .act:hover {     
+    background-color: #fafafa
+  }
+
+  .imgStyle{
+    background-image: url('http://localhost:4200/assets/3dPrint.jpg');
+    min-height: 500px;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    display:grid;
+  }
