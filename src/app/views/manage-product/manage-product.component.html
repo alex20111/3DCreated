@@ -1,0 +1,145 @@
+<div class="container footer">
+  <h2> @if ( editProductId) {
+    Edit product
+    } @else {
+    Add management
+    }</h2>
+
+
+  <form [formGroup]="form"  enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="productTitle" class="form-label"><b>Title</b></label>
+      <input type="text" class="form-control" id="productTitle" aria-describedby="titleHelp" formControlName="title"
+      [ngClass]="{ 'is-invalid':  f['title'].invalid && (f['title'].dirty || f['title'].touched) }"[disableControl]="submitted">
+         <!-- [ngClass]="{ 'is-invalid':  submitted && f['title'].errors  }" -->
+        <!-- myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched) -->
+
+      <div class="invalid-feedback"
+        *ngIf="f['title'].invalid && (f['title'].dirty || f['title'].touched)">
+
+        @if (f['title'].errors?.['required'] ) {
+        <div>A title is required</div>
+        }
+        @if (f['title'].errors?.['minlength']) {
+        <div>Title must be at least 3 characters</div>
+        }
+        @if (f['title'].errors?.['maxlength']) {
+        <div>Title must not exceed 200 characters</div>
+        }
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="productTitle" class="form-label"><b>Category</b></label>
+      <select class="form-select" aria-label="Default select example"  formControlName="category">
+        <option selected value="-1">Select category</option>
+        <option *ngFor="let cat of categories; index as idx" [value]="cat.id">{{cat.category}}</option>  
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="productPrice" class="form-label"><b>Price</b></label>
+      <input type="number" class="form-control" id="productPrice" formControlName="price"
+        [ngClass]="{ 'is-invalid': f['price'].invalid && (f['price'].dirty || f['price'].touched) }" [disableControl]="submitted">
+
+      @if (f['price'].invalid && (f['price'].dirty || f['price'].touched)) {
+      <div class="invalid-feedback">
+        @if (f['price'].errors?.['required']) {
+        <div>Price is required</div>
+        }
+        @if (f['price'].errors?.['pattern']) {
+        <div>Enter only numbers</div>
+        }
+      </div>
+      }
+    </div>
+    <div class="mb-3">
+      <label for="productQuantity" class="form-label"><b>Quantity</b></label>
+      <input type="number" class="form-control" id="productQuantity" formControlName="quantity"
+        [ngClass]="{ 'is-invalid': f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched) }" [disableControl]="submitted">
+
+      @if (f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched)) {
+      <div class="invalid-feedback">
+        @if (f['quantity'].errors?.['required']) {
+        <div>Quantity is required</div>
+        }
+        @if (f['quantity'].errors?.['pattern']) {
+        <div>Enter only numbers</div>
+        }
+      </div>
+      }
+    </div>
+    <div class="mb-3">
+      <label for="productDescription" class="form-label"><b>Description</b></label>
+
+      <st-editor formControlName="description" [config]="config"></st-editor>
+
+        @if (f['description'].invalid && (f['description'].dirty || f['description'].touched)) {
+        <div class="invalid-feedback">
+          @if (f['description'].errors?.['required']) {
+          <div>A description is required</div>
+          }
+          @if (f['description'].errors?.['minlength']) {
+          <div>Description must be at least 1 characters</div>
+          }
+          @if (f['description'].errors?.['maxlength']) {
+          <div>Descrtiption must not exceed 2000 characters</div>
+          }
+        </div>
+        } 
+    </div>
+
+    <div class="mb-3">
+      <label for="productImage" class="form-label"><b>Cover Image ( main page )</b></label>
+      <input #productImage type="file" class="form-control" id="productImage"
+        (change)="this.coverFileChangeHandler($event)" accept=".jpg,.png,.gif,.jpeg"
+        [ngClass]="{ 'is-invalid': toManyFiles || noCoverFile }" [disabled]="submitted">
+
+      @if (toManyFiles){
+      <div class="invalid-feedback">
+        5 files maximum
+      </div>
+      }
+      @if(noCoverFile){
+        <div class="invalid-feedback">
+          Cover image is required.
+        </div>
+      }
+      <div class="d-inline-flex p-2" *ngIf="coverPreviewImg.length > 0">
+        <img [src]="coverPreviewImg" class="preview" style="width:100px;height:100px;" crossorigin="anonymous" />
+      </div>
+
+    </div>
+
+    <div class="mb-3">
+      <label for="productImage" class="form-label">Additional images</label>
+      <input #productImage type="file" class="form-control" id="productImage" (change)="this.fileChangeHandler($event)"
+        multiple accept=".jpg,.png,.gif,.jpeg" [ngClass]="{ 'is-invalid': toManyFiles }" [disabled]="submitted">
+
+      @if (toManyFiles){
+      <div class="invalid-feedback">
+        5 files maximum
+      </div>
+      }
+      <div class="d-inline-flex p-2">
+        <span *ngFor="let p of previewImgList; index as idx" class="p-1">
+          <img [src]="p.preview" class="preview" style="width:100px;height:100px;" crossorigin="anonymous"/>
+          <fa-icon *ngIf="!submitted" [icon]="faTrash" style="margin-left: -15px; vertical-align: top; color: red"
+            (click)="removeImageFile(idx, p.fileId)"></fa-icon>
+        </span>
+      </div>
+
+    </div>
+    <button class="btn btn-warning me-2" type="button" [disabled]="submitted" [routerLink]="['/']">
+      Cancel
+    </button>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid || noCoverFile" (click)="onSubmit()">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="submitted" ></span>
+      Submit
+    </button>
+
+  </form>
+
+
+
+
+</div>

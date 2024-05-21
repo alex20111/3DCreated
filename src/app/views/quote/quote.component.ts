@@ -1,0 +1,136 @@
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleQuestion, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { StlModelViewerModule } from 'angular-stl-model-viewer';
+
+@Component({
+  selector: 'app-quote',
+  standalone: true,
+  imports: [StlModelViewerModule, CommonModule, FontAwesomeModule, NgbDatepickerModule],
+  templateUrl: './quote.component.html',
+  styleUrl: './quote.component.css'
+})
+export class QuoteComponent {
+
+  private modalService = inject(NgbModal);
+  modalMessage: ModalMessage = {} as ModalMessage;
+  faQuestion = faQuestion;
+
+  @ViewChild("fileDropRef", { static: false }) fileDropEl: ElementRef | undefined;
+  files: any[] = [];
+  newStl: any;
+
+  /**
+   * on file drop handler
+   */
+  onFileDropped($event: any) {
+    this.prepareFilesList($event);
+  }
+
+  /**
+   * handle file from browsing
+   */
+  fileBrowseHandler(event: any) {
+
+    if (event.target.files)
+    // this.prepareFilesList(event.target.files);
+    this.readSTLFile(event);
+  }
+
+  /**
+   * Delete file from files list
+   * @param index (File index)
+   */
+  deleteFile(index: number) {
+    if (this.files[index].progress < 100) {
+      console.log("Upload in progress.");
+      return;
+    }
+    this.files.splice(index, 1);
+  }
+
+  /**
+   * Simulate the upload process
+   */
+  uploadFilesSimulator(index: number) {
+    setTimeout(() => {
+      if (index === this.files.length) {
+        return;
+      } else {
+        const progressInterval = setInterval(() => {
+          if (this.files[index].progress === 100) {
+            clearInterval(progressInterval);
+            this.uploadFilesSimulator(index + 1);
+          } else {
+            this.files[index].progress += 5;
+          }
+        }, 200);
+      }
+    }, 1000);
+  }
+
+  /**
+   * Convert Files list to normal array list
+   * @param files (Files List)
+   */
+  prepareFilesList(files: Array<any>) {
+    for (const item of files) {
+      item.progress = 0;
+      this.files.push(item);
+    }
+    if (this.fileDropEl){
+     this.fileDropEl.nativeElement.value = "";
+    }
+    this.uploadFilesSimulator(0);
+  }
+
+  /**
+   * format bytes
+   * @param bytes (File size in bytes)
+   * @param decimals (Decimals point)
+   */
+  formatBytes(bytes: any, decimals = 2) {
+    if (bytes === 0) {
+      return "0 Bytes";
+    }
+    const k = 1024;
+    const dm = decimals <= 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  }
+
+  readSTLFile(evnt: any){
+    console.log(evnt)
+      // = '' as unknown as ArrayBuffer;
+    if (evnt.target.files){
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+
+        if ( e.target)
+        this.newStl = e.target.result;
+      
+    }
+      reader.readAsDataURL(evnt.target.files[0]);
+    }
+  }
+  open(content: TemplateRef<any>, idx: number) {
+    if (idx === 1){
+      this.modalMessage.title = "Material";
+      this.modalMessage.body = "Description of the material";
+    }else if (idx === 2){
+      this.modalMessage.title = "Color";
+      this.modalMessage.body = "Description of the color";
+    }
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+	}
+
+}
+
+export interface ModalMessage {
+  title: string,
+  body: string
+}

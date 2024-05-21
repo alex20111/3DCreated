@@ -1,0 +1,155 @@
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-8">
+      <h2 class="">Upload 3d Model</h2>
+
+      @if(!newStl){
+      <div class="modelCont rounded border-dark bg-light" appDnd (fileDropped)="onFileDropped($event)">
+        <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event)" accept=".stl" />
+        <img src="assets/img/dnd/ic-upload-file.svg" alt="">
+        <h3>Drag and drop file here</h3>
+        <h3>or</h3>
+        <label for="fileDropRef">Upload your 3d model</label>
+      </div>
+      <div class="files-list">
+        <div class="single-file" *ngFor="let file of files; let i = index">
+          <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+          <div class="info">
+            <h4 class="name">
+              {{ file?.name }}
+            </h4>
+            <p class="size">
+              {{ formatBytes(file?.size) }}
+            </p>
+            fileProgress: {{file?.progress}}
+            <!-- <app-progress [progress]="file?.progress"></app-progress> -->
+          </div>
+          <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+        </div>
+      </div>
+      }
+      @if(newStl){
+      <button (click)="newStl = undefined">New</button>
+      <stl-model-viewer [centered]="true" [stlModels]="[newStl]"></stl-model-viewer>
+      }
+
+      <!-- <div class="container p-y-1"> -->
+      <!-- <div class="row m-b-1">
+            <div class="col-sm-6 offset-sm-3"> -->
+      <!-- <button type="button" class="btn btn-success btn-block" onclick="document.getElementById('inputFile').click()">Add
+        Image</button>
+      <div class="form-group inputDnD">
+        <label class="sr-only" for="inputFile">File Upload</label>
+        <input type="file" class="form-control-file text-success font-weight-bold" id="inputFile" accept="image/*"
+          onchange="readUrl(this)" data-title="Drag and drop a file">
+      </div> -->
+      <!-- </div>
+        </div>
+    </div> -->
+
+
+    </div>
+    <div class="col-4">
+      <label for="materialInput" class="form-label">Material</label>
+      <div class="mb-3 input-group">
+        <select class="form-select rounded" aria-label="Default select Material">
+          <option selected>Select material</option>
+          <option value="1">PLA</option>
+          <option value="2">ABS</option>
+          <option value="3">PTEG</option>
+        </select>
+        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 1)">
+          <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+        </span>
+      </div>
+      <label for="colorsInput" class="form-label">Color</label>
+      <div class="mb-3 input-group">        
+        <select class="form-select rounded" aria-label="Default select colors">
+          <option selected>Select color</option>
+          <option value="1">Black</option>
+          <option value="2">Green</option>
+          <option value="3">Blue</option>
+        </select>
+        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
+        </span>
+      </div>
+      <label for="colorsInput" class="form-label">Infill density</label>
+      <div class="mb-3 input-group">        
+        <select class="form-select rounded" aria-label="Default select colors">
+          <!-- <option selected>Infill density</option> -->
+          <option value="1">10%</option>
+          <option selected value="2">20%</option>
+          <option value="3">30%</option>
+          <option value="3">40%</option>
+          <option value="3">50%</option>
+        </select>
+        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
+        </span>
+      </div>
+      <label for="colorsInput" class="form-label">Layer height</label>
+      <div class="mb-3 input-group">        
+        <select class="form-select rounded" aria-label="Default select colors">
+          <!-- <option selected>Layer height</option> -->
+          <option value="1">0.12</option>
+          <option value="2">0.16</option>
+          <option selected value="3">0.20</option>
+        </select>
+        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
+        </span>
+      </div>
+      <label for="colorsInput" class="form-label">Wall count</label>
+      <div class="mb-3 input-group">        
+        <select class="form-select rounded" aria-label="Default select colors">
+          <!-- <option selected>Wall count</option> -->
+          <option selected value="1">2</option>
+          <option value="2">4</option>
+          <option value="3">6</option>
+        </select>
+        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
+        </span>
+      </div>
+      <div class="row mb-3">
+        <div class="col">Height
+          <input type="text" class="form-control" placeholder="Height">
+        </div>
+        <div class="col">Width
+          <input type="text" class="form-control" placeholder="Width">
+        </div>
+        <div class="col">Length
+          <input type="text" class="form-control" placeholder="Length">
+        </div>
+      </div>
+      <div class="mb-3 ">
+        Price: 12.54$ <br />
+        <small> <b>The estimated price can change after review.</b></small>
+
+
+
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-primary " type="button" [disabled]="!newStl">
+          Request Quote
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">{{modalMessage.title}}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+    {{modalMessage.body}}
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+	</div>
+</ng-template>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->

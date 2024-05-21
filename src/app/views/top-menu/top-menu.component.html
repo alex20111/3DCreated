@@ -1,0 +1,102 @@
+<div
+  style="background-image: linear-gradient(to right,#0059a6 , #00afe9); line-height: 1.9;  font-size: 16px;  display: block;  min-height: 38px;"
+  class="mx-auto">
+  <div class="container text-light">
+    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 list-group list-group-horizontal ">
+      @if(user === undefined){
+      <li class="nav-item mx-3">
+        <a class="nav-link " aria-current="page" href="#" routerLink="/login">
+          <fa-icon [icon]="faArrowRightToBracket"></fa-icon>
+          Login</a>
+      </li>
+
+      <li class="nav-item mx-3">
+        <a class="nav-link active" aria-current="page" href="#" routerLink="/signup">
+          <fa-icon [icon]="faUserPlus">
+          </fa-icon>
+          Sign up
+        </a>
+
+      </li>
+      }
+      <li class="nav-item mx-3">
+        <a class="nav-link active" aria-current="page" href="#" routerLink="/viewCart"><fa-icon [icon]="faCartShopping">
+          </fa-icon>
+          <span class="badge rounded-pill text-bg-danger"
+            style="margin-left: -5px;vertical-align: top; padding: 2px 2px 2px 2px">
+            {{cart.cartProducts ? cart.cartProducts.length : 0}}
+            </span>
+
+ 
+        </a>
+      </li>
+
+      @if(user && user.email){
+      <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <fa-icon [icon]="faUser">
+          </fa-icon>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Orders</a></li>
+          <li><a class="dropdown-item" href="#">Account</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" routerLink="/addProduct">Add Product</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+        </ul>
+      </li>
+      }
+    </ul>
+
+  </div>
+</div>
+
+
+<nav class="navbar bg-body-tertiary navbar-expand-lg py-4">
+  <div class="container">
+    <a class="navbar-brand fs-2" href="#">
+      <img src="assets/Untitled.png" class="img-fluid" alt="Responsive image">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">3DCreations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item ">
+              <a class="nav-link fs-5 fw-bold" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 fw-bold" href="#" routerLink="/services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 fw-bold" href="#">Contact us</a>
+            </li>
+          </ul>
+
+          <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
+          </li>
+        </ul>
+        <!-- <form class="d-flex mt-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>  
+          </form> -->
+      </div>
+    </div>
+  </div>
+</nav>
