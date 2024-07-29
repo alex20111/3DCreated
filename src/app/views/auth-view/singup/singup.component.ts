@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { DisableControlDirective } from '../../directives/disable-control.directive';
 import { CommonModule } from '@angular/common';
-import { MustMatch } from '../../validator/mustMatchValidator';
-import { AuthService } from '../../services/auth.service';
+import { DisableControlDirective } from '../../../directives/disable-control.directive';
+import { MustMatch } from '../../../validator/mustMatchValidator';
+import { AuthService } from '../../../services/auth.service';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'app-singup',
@@ -17,14 +19,11 @@ export class SingupComponent {
 
   submitted: boolean = false;
 
-   StrongPasswordRegx: RegExp =
-  /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
-
   signupForm: FormGroup =  this.formBuilder.group({
     lastName: ['',[ Validators.required,Validators.minLength(3),Validators.maxLength(35)]],
     firstName:['', [ Validators.required,Validators.minLength(3),Validators.maxLength(35)]],
     email: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(200),Validators.email] ],
-    password: ['', [Validators.required,Validators.minLength(8), Validators.pattern(this.StrongPasswordRegx)]],
+    password: ['', [Validators.required,Validators.minLength(8), Validators.pattern(environment.PASS_REGEX)]],
     confirmPassword: ['', [Validators.required]]
     },
     {
@@ -54,12 +53,6 @@ export class SingupComponent {
         console.error("signup: ", err);
       }
     });
-
-
-    
-   
-
-
 
 
   }

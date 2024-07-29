@@ -34,7 +34,7 @@ export class CartService {
   }
 
   producyById(productId: string): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/getProductForCart/${productId}`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/getProductForCart/${productId}`);
     
   }
   // addCartValueSingle(cart: Cart){

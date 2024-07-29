@@ -13,13 +13,13 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   addProduct(product: any): Observable<any>{
-    return this.http.post<any>(`http://${this.host}:${this.port}/admin/addProduct`, product);  
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/admin/addProduct`, product);  
   }
   editProduct(product: any): Observable<any>{
-    return this.http.post<any>(`http://${this.host}:${this.port}/admin/editProduct`, product);  
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/admin/editProduct`, product);  
   }
   getProduct(id: number): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/admin/editProduct/${id}`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/admin/editProduct/${id}`);
   }
 
 

@@ -17,23 +17,23 @@ export class ProductService {
     // return this.http.get<any>(`http://${this.host}:${this.port}/getProductList/?title=query&bob=patate`);
 
     if (query){
-      return this.http.get<any>(`http://${this.host}:${this.port}/getProductList/?${query}`);
+      return this.http.get<any>(`http://${this.host}:${this.port}/api/getProductList/?${query}`);
     }
-    return this.http.get<any>(`http://${this.host}:${this.port}/getProductList/`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/getProductList/`);
     
   }
 
   displayProduct(productId: string): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/displayProduct/${productId}`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/displayProduct/${productId}`);
   }
 
 
   loadProductsBycategories(catgId: any): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/productsCategories/${catgId}`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/productsCategories/${catgId}`);
   }
 
   getCategoryList(): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/categories/`);
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/categories/`);
   }
 
 }

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "3dCreations": {
+    "3dCreated": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/3d-creations",
+            "outputPath": "dist/3d-created",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -35,6 +35,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+               ],
               "budgets": [
                 {
                   "type": "initial",
@@ -50,6 +56,12 @@
               "outputHashing": "all"
             },
             "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+               ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -61,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "3dCreations:build:production"
+              "buildTarget": "3dCreated:build:production"
             },
             "development": {
-              "buildTarget": "3dCreations:build:development"
+              "buildTarget": "3dCreated:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "3dCreations:build"
+            "buildTarget": "3dCreated:build"
           }
         },
         "test": {
