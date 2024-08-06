@@ -6,6 +6,16 @@
                     <div class="card  border-0">
                         <div class="card-body p-5">
                             <h1 class="fs-4 card-title fw-bold mb-4">Sign up</h1>
+                            @if(successMsg.length > 0){
+                                <div class="alert alert-success text-center " role="success">
+                                    {{successMsg}}                                   
+                                </div>
+                            }@else if(errorMsg.length > 0){
+                                <div class="alert alert-danger text-center " role="danger">
+                                    {{errorMsg}}
+                                </div>
+                            }
+
                             <form [formGroup]="signupForm" class="needs-validation" novalidate="" autocomplete="off">
                                 <div class="mb-3">
                                     <label class="mb-2 text-muted" for="firstName">First name</label>

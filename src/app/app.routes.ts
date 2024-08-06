@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { WelcomeComponent } from './views/welcome/welcome.component';
-import { ManageProductComponent } from './views/manage-product/manage-product.component';
-import { ProductViewComponent } from './views/product-view/product-view.component';
+import { ManageProductComponent } from './views/products-ui/manage-product/manage-product.component';
+import { ProductViewComponent } from './views/products-ui/product-view/product-view.component';
 import { categoriesListResolver } from './resolver/categories-resolver';
 import { CartComponent } from './views/cart/cart.component';
 import { QuoteComponent } from './views/quote/quote.component';
@@ -11,6 +11,7 @@ import { SingupComponent } from './views/auth-view/singup/singup.component';
 import { ChangePasswordComponent } from './views/auth-view/change-password/change-password.component';
 import { ForgotPasswordComponent } from './views/auth-view/forgot-password/forgot-password.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { MyProfileComponent } from './views/my-account/my-profile/my-profile.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -25,4 +26,5 @@ export const routes: Routes = [
     { path: 'resetPassword', component: ForgotPasswordComponent },
     { path: 'services', component: ServiceComponent },
     { path: 'changePassword', component: ChangePasswordComponent },
+    { path: 'myProfile', component: MyProfileComponent ,canActivate : [AuthGuard]},
 ];

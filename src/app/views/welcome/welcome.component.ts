@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
@@ -31,10 +31,27 @@ export class WelcomeComponent implements OnInit {
   priceMin: any = 5;
   priceMax: any = 100;
 
+  message: string = "";
+
   user: User | undefined = undefined;
 
-  constructor(private productService: ProductService, private authService: AuthService) { }
+
+
+  constructor(private productService: ProductService, private authService: AuthService, private route: ActivatedRoute) { }
   ngOnInit(): void {
+
+    const userActivated = this.route.snapshot.queryParamMap.get('userActivated') !== null ? this.route.snapshot.queryParamMap.get('userActivated') as string : undefined;
+
+    console.log("userActivated: ", userActivated);
+
+    if (userActivated !== undefined) {
+      if (userActivated === 'true') {
+        this.message = "Account activated.";
+      } else {
+        this.message = "Account activation error.";
+      }
+    }
+
     this.loading = true;
 
     this.authService.user.subscribe({
@@ -84,13 +101,13 @@ export class WelcomeComponent implements OnInit {
       this.priceMax = +this.priceMin + 1;
 
     }
-let query: string = '';
+    let query: string = '';
 
-    if (this.searchDisplay){
+    if (this.searchDisplay) {
       query = 'searchKeyword=' + this.searchDisplay + "&";
     }
 
-     query = query + 'priceMin=' + this.priceMin + '&priceMax=' + this.priceMax;
+    query = query + 'priceMin=' + this.priceMin + '&priceMax=' + this.priceMax;
     this.loadProducts(query);
 
   }

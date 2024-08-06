@@ -18,6 +18,10 @@ import { environment } from '../../../../environments/environment';
 export class SingupComponent {
 
   submitted: boolean = false;
+  accountCreated: boolean = false;
+
+  successMsg: string = "";
+  errorMsg: string = "";
 
   signupForm: FormGroup =  this.formBuilder.group({
     lastName: ['',[ Validators.required,Validators.minLength(3),Validators.maxLength(35)]],
@@ -48,9 +52,13 @@ export class SingupComponent {
       next: (result)=> {
         console.log("signup: ", result);
         this.submitted = false;
+        this.accountCreated = true;
+        this.successMsg = result.message;
       },
       error: (err) => {
         console.error("signup: ", err);
+        this.accountCreated = false;
+        this.errorMsg = err.error.message;
       }
     });
 

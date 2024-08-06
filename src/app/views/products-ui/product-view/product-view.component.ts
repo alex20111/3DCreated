@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-product-view',

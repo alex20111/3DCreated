@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowRightToBracket   } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,7 +13,7 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit{
   faArrowRightToBracket = faArrowRightToBracket;
 
   //form 
@@ -29,38 +30,12 @@ export class ForgotPasswordComponent {
     email: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(200),Validators.email] ]
   })
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService){}
-  // ngOnInit(): void {
-
-  //   this.displayForm = false;
-    
-  //   console.log("Parameters: " , this.route.snapshot.queryParamMap);
-  //   const email = this.route.snapshot.queryParamMap.get('email');
-  //   const token = this.route.snapshot.queryParamMap.get('token');
-
-  //   console.log("Token: " , token);
-  //   console.log("email: " , email);
-
-  //   if (token && email){
-  //     console.log("evaluate");
-  //     this.resetSucess = true;
-  //     this.authService.evalResetPassword(email, token).subscribe({
-  //       next: (result)=> {
-  //         this.resetMessage = "Password reset success";
-  //         console.log("eval reset response : ", result);
-  //         this.submitted = false;
-  //       },
-  //       error: (err) => {
-  //         console.error("Error evaluate reset: ", err);
-  //         this.errorMessage = "Password reset error";
-  //       }
-  //     });
-  //   }else{
-  //     this.displayForm = true;
-  //   }
-
-
-  // }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router){}
+  ngOnInit(): void {
+    if (this.authService.userValue){
+      this.router.navigate(['/']);
+    }
+  }
 
   get f(): { [key: string]: AbstractControl } {
     return this.forgotPassForm.controls;

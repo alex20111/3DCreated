@@ -1,0 +1,24 @@
+<div class="mb-3 mt-5">
+  <h4>Account</h4>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.Profile}"
+      (click)="pageChange(viewEnum.Profile)">Infromation</li>
+    <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.chPassword}"
+      (click)="pageChange(viewEnum.chPassword)">Change Password</li>
+    <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.Orders}"
+      (click)="pageChange(viewEnum.Orders) "> Orders</li>
+    <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.Quotes}"
+      (click)="pageChange(viewEnum.Quotes)">Quotes request</li>
+  </ul>
+</div>
+
+<!-- <div class="my-3 ms-2">
+               <h4>Orders</h4>
+               <ul class="list-group list-group-flush">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+              </ul>
+            </div> -->

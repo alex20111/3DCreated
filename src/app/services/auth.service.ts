@@ -64,4 +64,10 @@ export class AuthService {
     return this.http.post<any>(`http://${this.host}:${this.port}/api/resetPassword/change`, rstEval);  
   }
 
+  changePassword(chPassword: any): Observable<any>{
+  
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/changePassword/`, chPassword); 
+
+  }
+
 }

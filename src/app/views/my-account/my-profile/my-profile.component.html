@@ -1,0 +1,88 @@
+<!-- 
+@if(message.length > 0){
+    <div class="container mt-2">        
+            <div class="alert alert-success text-center " role="success">
+                {{message}}                                   
+            </div>                                
+    </div>
+} -->
+<!-- <div class="imgStyle align-middle align-items-center mt-2">
+
+    <div class="text-center fs-1 text-white fw-bolder " style="">
+        Welcome to 3dCreated <br />
+        3D printing services
+    </div>
+
+</div> -->
+<div class="container footer">
+    <div class="row justify-content-md-center" style="background-color:white">
+
+        <div class="col-2">
+           <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
+        </div>
+
+        <div class="col-7 bg-light"> <!-- image must be max 1000w 596h-->
+            @if(currentView === viewEnum.Profile){
+                profffffiilleee
+            }@else if(currentView === viewEnum.chPassword){
+                <app-change-password></app-change-password>
+            }
+
+            <!-- <div class="row">
+                <div class="col-8 ">
+                    @if(searchDisplay){
+                    Results: <button type="button" class="btn btn-outline-secondary mb-2 mt-2  btn-sm">{{searchDisplay}}
+                        <fa-icon [icon]="faCircleXmark" size="xs" (click)="resetSearch()"></fa-icon></button>
+                    }
+                </div>
+
+                <div class="col-2 float-end">
+                    <div class="input-group mb-1 mt-2">
+                        <span class="input-group-text" id="basic-addon3">Filter</span>
+                        <select class="form-select form-select-sm ">
+                            <option>13</option>
+                            <option>26</option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="row "> -->
+                <!-- @if(loading){
+                <div class="spinner-border text-info" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                } -->
+                <!-- @if(productList && productList.length > 0){ -->
+                <!-- <div *ngFor="let product of productList; index as idx" class="col-md-4 col-lg-4 my-2"> -->
+
+                    <!-- <div class="card h-100 ">
+                        <span [routerLink]="['/viewProduct',product.id]" class="point">
+                            <img crossorigin="anonymous" src="http://localhost:3000/{{product.coverImageThumb}}"
+                                class="card-img-top" alt="...">
+                            <div class="card-body" style="height:80px;max-height:80px">
+                                <h6 class="card-title">{{product.title}}</h6> -->
+                                <!-- <p class="card-text">{{product.description}}.</p> -->
+                            <!-- </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-end">{{product.price}}.00$</li>
+                            </ul>
+                        </span>
+                        <div class="card-footer align-bottom ">
+                            <button *ngIf="user && user.admin" type="button" class="btn btn-primary "
+                                [routerLink]="['/editProduct',product.id]">Edit</button>
+                            <button type="button" class="btn btn-primary float-end"
+                                [routerLink]="['/addToCart',product.id]"> Add to
+                                cart</button>
+                        </div>
+                    </div> -->
+                <!-- </div> -->
+                <!-- }@else { -->
+                <!-- <div class="col-md-4 col-lg-4 my-2"> -->
+                    <!-- No Products found -->
+                <!-- </div> -->
+                <!-- } -->
+
+            <!-- </div> -->
+        </div>
+    </div>
+</div>

@@ -1,155 +1,207 @@
-<div class="container mt-2">
+<div class="container mt-2 footer">
   <div class="row">
-    <div class="col-8">
-      <h2 class="">Upload 3d Model</h2>
+
+    @if(messageSub.length === 0){
+    <div class="col-7">
+      <h2 class="">Upload 3D Model</h2>
+      <div *ngIf="message.length > 0" class="alert alert-info text-center " role="success">
+        {{message}}
+      </div>
 
       @if(!newStl){
+
+
       <div class="modelCont rounded border-dark bg-light" appDnd (fileDropped)="onFileDropped($event)">
         <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event)" accept=".stl" />
-        <img src="assets/img/dnd/ic-upload-file.svg" alt="">
+        <!-- <img src="assets/img/dnd/ic-upload-file.svg" alt=""> -->
         <h3>Drag and drop file here</h3>
         <h3>or</h3>
         <label for="fileDropRef">Upload your 3d model</label>
       </div>
+
       <div class="files-list">
-        <div class="single-file" *ngFor="let file of files; let i = index">
-          <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
-          <div class="info">
-            <h4 class="name">
-              {{ file?.name }}
-            </h4>
-            <p class="size">
-              {{ formatBytes(file?.size) }}
-            </p>
-            fileProgress: {{file?.progress}}
-            <!-- <app-progress [progress]="file?.progress"></app-progress> -->
-          </div>
-          <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+        @if(file){
+        <!-- <div class="single-file" *ngFor="let file of files; let i = index"> -->
+        <!-- <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file"> -->
+        <div class="info">
+          <h4 class="name">
+            {{ file?.name }}
+          </h4>
+          <ngb-progressbar class="mb-3" type="info" textType="dark" [value]="file?.progress" [showValue]="true" />
+          <p class="size">
+            {{ formatBytes(file?.size) }}
+          </p>
         </div>
+        <!-- <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)"> -->
+        }
       </div>
+      <div><b>File max size 35 Mb.</b></div>
+
+      <!-- </div> -->
       }
       @if(newStl){
-      <button (click)="newStl = undefined">New</button>
-      <stl-model-viewer [centered]="true" [stlModels]="[newStl]"></stl-model-viewer>
-      }
-
-      <!-- <div class="container p-y-1"> -->
-      <!-- <div class="row m-b-1">
-            <div class="col-sm-6 offset-sm-3"> -->
-      <!-- <button type="button" class="btn btn-success btn-block" onclick="document.getElementById('inputFile').click()">Add
-        Image</button>
-      <div class="form-group inputDnD">
-        <label class="sr-only" for="inputFile">File Upload</label>
-        <input type="file" class="form-control-file text-success font-weight-bold" id="inputFile" accept="image/*"
-          onchange="readUrl(this)" data-title="Drag and drop a file">
-      </div> -->
-      <!-- </div>
+      <div class="ms-2" style="font-size: 18px;font-weight: 500;color: #353f4a">
+        Name: {{ file?.name }}
+      </div>
+      <div class="ms-2" style="font-size: 18px;font-weight: 500;color: #353f4a">
+        <!-- <div class="col">Height
+          <input type="text" class="form-control" placeholder="Height" value="{{height}}">
         </div>
-    </div> -->
+        <div class="col">Width
+          <input type="text" class="form-control" placeholder="Width" value="0">
+        </div>
+        <div class="col">Length
+          <input type="text" class="form-control" placeholder="Length" value="0">
+        </div> -->
+        Dimensions: {{stlDimensions[0]}} x {{stlDimensions[1]}} x {{stlDimensions[2]}}mm
+      </div>
 
+      <div style="border-style: solid; height:500px">
+      <stl-model-viewer [centered]="true" [stlModels]="[newStl]"></stl-model-viewer>
+        </div>
+
+      }
 
     </div>
     <div class="col-4">
-      <label for="materialInput" class="form-label">Material</label>
-      <div class="mb-3 input-group">
-        <select class="form-select rounded" aria-label="Default select Material">
-          <option selected>Select material</option>
-          <option value="1">PLA</option>
-          <option value="2">ABS</option>
-          <option value="3">PTEG</option>
-        </select>
-        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 1)">
-          <fa-icon [icon]="faQuestion" class="point"></fa-icon>
-        </span>
-      </div>
-      <label for="colorsInput" class="form-label">Color</label>
-      <div class="mb-3 input-group">        
-        <select class="form-select rounded" aria-label="Default select colors">
-          <option selected>Select color</option>
-          <option value="1">Black</option>
-          <option value="2">Green</option>
-          <option value="3">Blue</option>
-        </select>
-        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
-          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
-        </span>
-      </div>
-      <label for="colorsInput" class="form-label">Infill density</label>
-      <div class="mb-3 input-group">        
-        <select class="form-select rounded" aria-label="Default select colors">
-          <!-- <option selected>Infill density</option> -->
-          <option value="1">10%</option>
-          <option selected value="2">20%</option>
-          <option value="3">30%</option>
-          <option value="3">40%</option>
-          <option value="3">50%</option>
-        </select>
-        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
-          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
-        </span>
-      </div>
-      <label for="colorsInput" class="form-label">Layer height</label>
-      <div class="mb-3 input-group">        
-        <select class="form-select rounded" aria-label="Default select colors">
-          <!-- <option selected>Layer height</option> -->
-          <option value="1">0.12</option>
-          <option value="2">0.16</option>
-          <option selected value="3">0.20</option>
-        </select>
-        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
-          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
-        </span>
-      </div>
-      <label for="colorsInput" class="form-label">Wall count</label>
-      <div class="mb-3 input-group">        
-        <select class="form-select rounded" aria-label="Default select colors">
-          <!-- <option selected>Wall count</option> -->
-          <option selected value="1">2</option>
-          <option value="2">4</option>
-          <option value="3">6</option>
-        </select>
-        <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
-          <fa-icon [icon]="faQuestion" class="point" ></fa-icon>
-        </span>
-      </div>
-      <div class="row mb-3">
-        <div class="col">Height
-          <input type="text" class="form-control" placeholder="Height">
-        </div>
-        <div class="col">Width
-          <input type="text" class="form-control" placeholder="Width">
-        </div>
-        <div class="col">Length
-          <input type="text" class="form-control" placeholder="Length">
-        </div>
-      </div>
-      <div class="mb-3 ">
-        Price: 12.54$ <br />
-        <small> <b>The estimated price can change after review.</b></small>
 
+      <form [formGroup]="quoteForm" enctype="multipart/form-data">
 
+        <label for="materialInput" class="form-label"><b>Material</b></label>
+        <div class="mb-3 input-group">
+          <select class="form-select rounded" aria-label="Default select Material" formControlName="material">
+            <option selected value="">Select material</option>
+            <option value="PLA">PLA</option>
+            <option value="ABS">ABS</option>
+            <option value="PETG">PTEG</option>
+          </select>
+          <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 1)">
+            <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+          </span>
+        </div>
+        <label for="colorsInput" class="form-label"><b>Color</b></label>
+        <div class="mb-3 input-group">
+          <select class="form-select rounded" aria-label="Default select colors" formControlName="color">
+            <option selected value="">Select color</option>
+            <option value="Black">Black</option>
+            <option value="Green">Green</option>
+            <option value="Blue">Blue</option>
+          </select>
+          <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+            <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+          </span>
+        </div>
+        <label for="infilInput" class="form-label"><b>Infill density</b></label>
+        <div class="mb-3 input-group">
+          <select class="form-select rounded" aria-label="Default select infil" formControlName="infil">
+            <!-- <option selected>Infill density</option> -->
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option selected value="20">20%</option>
+            <option value="25">25%</option>
+            <option value="30">30%</option>
+            <option value="35">35%</option>
+            <option value="40">40%</option>
+            <option value="45">45%</option>
+            <option value="50">50%</option>
+            <option value="55">55%</option>
+            <option value="60">60%</option>
+            <option value="65">65%</option>
+            <option value="70">79%</option>
+            <option value="75">75%</option>
+            <option value="80">80%</option>
+            <option value="85">85%</option>
+            <option value="90">90%</option>
+            <option value="95">95%</option>
+            <option value="100">100%</option>
+          </select>
+          <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+            <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+          </span>
+        </div>
+        <label for="layersInput" class="form-label"><b>Layer height</b></label>
+        <div class="mb-3 input-group">
+          <select class="form-select rounded" aria-label="Default select layer height" formControlName="layerHeight">
+            <!-- <option selected>Layer height</option> -->
+            <option value="0.12">0.12</option>
+            <option value="0.16">0.16</option>
+            <option selected value="0.20">0.20</option>
+          </select>
+          <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+            <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+          </span>
+        </div>
+        <label for="wallsInput" class="form-label"><b>Wall count</b></label>
+        <div class="mb-3 input-group">
+          <select class="form-select rounded" aria-label="Default select wall count" formControlName="wallCount">
+            <!-- <option selected>Wall count</option> -->
+            <option selected value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+          </select>
+          <span class="input-group-text ms-1 rounded p-1 bg-info" (click)="open(content, 2)">
+            <fa-icon [icon]="faQuestion" class="point"></fa-icon>
+          </span>
+        </div>
 
+        <div class="mb-3">
+          <label for="quoteemail" class="form-label"><b>E-mail</b></label>
+          <input id="email" type="email" class="form-control" formControlName="email" required
+            placeholder="E-mail address"
+            [ngClass]="{ 'is-invalid':  f['email'].invalid && (f['email'].dirty || f['email'].touched) }">
+          @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
+          <div class="invalid-feedback">
+            @if (f['email'].errors?.['required']) {
+            <div>Email is required</div>
+            }
+            @if (f['email'].errors?.['email']) {
+            <div>Enter a valid email</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="quoteDetails" class="form-label"><b>Additional details: </b></label>
+          <textarea class="form-control" placeholder="Add additional details" formControlName="additionalInfo"></textarea>
+
+        </div>
+        <div class="mb-3">
+          <p><b>You will receive an answer between 24 and 48 hours.</b> </p>
+          <button class="btn btn-warning mr-2" (click)="clearOrRestart()" [disabled]="submitted"
+            style="margin-right:10px">Clear</button>
+          <button class="btn btn-primary" type="submit" [disabled]="quoteForm.invalid" (click)="submit()">
+          <!-- <button class="btn btn-primary" type="submit" (click)="submit()"> -->
+            <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="submitted"></span>
+            Request Quote
+          </button>
+        </div>
+      </form>
+    </div>
+    }@else {
+    <div class="col-8 mx-auto">
+      <div *ngIf="messageSub.length > 0" class="alert alert-info text-center " role="success">
+        {{messageSub}}
       </div>
-      <div class="mb-3">
-        <button class="btn btn-primary " type="button" [disabled]="!newStl">
-          Request Quote
-        </button>
+      <div class="text-center">
+      <button class="btn btn-warning mx-auto" (click)="newStl = undefined; file = undefined; messageSub = ''; submitted=false "
+        style="margin-right:10px">Sumbit another Quote</button>
       </div>
     </div>
+    }
   </div>
 </div>
 
 <ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">{{modalMessage.title}}</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div class="modal-body">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalMessage.title}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
     {{modalMessage.body}}
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-	</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+  </div>
 </ng-template>
-
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { MustMatch } from '../../../validator/mustMatchValidator';
-import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DisableControlDirective } from '../../../directives/disable-control.directive';
 import { environment } from '../../../../environments/environment';
@@ -14,7 +14,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css'
 })
-export class ChangePasswordComponent implements OnInit{
+export class ChangePasswordComponent implements OnInit {
   submitted: boolean = false;
   forgotPassword: boolean = false;
 
@@ -35,23 +35,30 @@ export class ChangePasswordComponent implements OnInit{
     }
   );
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
-    
-    console.log("Parameters: " , this.route.snapshot.queryParamMap);
+
+    console.log("Parameters: ", this.route.snapshot.queryParamMap);
     this.email = this.route.snapshot.queryParamMap.get('email') !== null ? this.route.snapshot.queryParamMap.get('email') as string : "";
     this.token = this.route.snapshot.queryParamMap.get('token') !== null ? this.route.snapshot.queryParamMap.get('token') as string : "";
 
-    console.log("Token: " , this.token);
-    console.log("email: " , this.email);
+    console.log("Token: ", this.token);
+    console.log("email: ", this.email);
+    console.log("this.authService.userValue: ", this.authService.userValue);
 
-    if (this.token.length > 0 && this.email.length > 0){
+
+    if (this.token.length > 0 && this.email.length > 0 && !this.authService.userValue) {
       console.log("evaluate");
       this.forgotPassword = true;
-     
-    }else{
+
+    } else if (this.authService.userValue) {
       this.forgotPassword = false;
+    } else {
+      this.router.navigate(['/login']);
     }
 
 
@@ -61,16 +68,19 @@ export class ChangePasswordComponent implements OnInit{
     return this.chPassForm.controls;
   }
 
-  submit(){
+  submit() {
 
-    if (this.chPassForm.invalid){
+    if (this.chPassForm.invalid) {
       return;
     }
     this.submitted = true;
 
-    if (this.forgotPassword){
-      this.authService.changePasswordForReset(this.email, this.token, this.chPassForm.get('password')!.value, this.chPassForm.get('confirmPassword')!.value).subscribe({
-        next: (result)=> {
+    if (this.forgotPassword) {
+      const pass = this.chPassForm.get('password')!.value;
+      const cnfPass = this.chPassForm.get('confirmPassword')!.value;
+
+      this.authService.changePasswordForReset(this.email, this.token, pass, cnfPass).subscribe({
+        next: (result) => {
           // this.resetMessage = "Password reset success";
           console.log("eval reset response : ", result);
           this.resetMessage = result.message;
@@ -84,19 +94,24 @@ export class ChangePasswordComponent implements OnInit{
           this.submitted = false;
         }
       });
-    }else{
+    } else {
+      this.authService.changePassword(this.chPassForm.value).subscribe({
+        next: (result) => {
+          // this.resetMessage = "Password reset success";
+          console.log("changePassword : ", result);
+          this.resetMessage = result.message;
+          this.submitted = false;
 
+        },
+        error: (err) => {
+          console.error("Error changePassword: ", err);
+          // this.errorMessage = "Password reset error";
+          this.errorResetMessage = err.error.message;
+          this.submitted = false;
+        }
+      });
     }
 
-    // this.authService.signup(this.chPassForm.value).subscribe({
-    //   next: (result)=> {
-    //     console.log("signup: ", result);
-    //     this.submitted = false;
-    //   },
-    //   error: (err) => {
-    //     console.error("signup: ", err);
-    //   }
-    // });
 
   }
 

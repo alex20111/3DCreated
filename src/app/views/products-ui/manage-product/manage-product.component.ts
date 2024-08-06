@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
-import { AdminService } from '../../services/admin.service';
+import { AdminService } from '../../../services/admin.service';
 import { ActivatedRoute, Router, RouterModule, } from '@angular/router';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DisableControlDirective } from '../../directives/disable-control.directive';
+import { DisableControlDirective } from '../../../directives/disable-control.directive';
 import { EditorConfig, NgxSimpleTextEditorModule, ST_BUTTONS } from 'ngx-simple-text-editor';
 import { map } from 'rxjs';
 
