@@ -12,6 +12,8 @@ import { ChangePasswordComponent } from './views/auth-view/change-password/chang
 import { ForgotPasswordComponent } from './views/auth-view/forgot-password/forgot-password.component';
 import { AuthGuard } from './_helpers/auth.guard';
 import { MyProfileComponent } from './views/my-account/my-profile/my-profile.component';
+import { MyInfoComponent } from './views/my-account/my-info/my-info.component';
+import { QuoteListComponent } from './views/my-account/quote-list/quote-list.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -26,5 +28,13 @@ export const routes: Routes = [
     { path: 'resetPassword', component: ForgotPasswordComponent },
     { path: 'services', component: ServiceComponent },
     { path: 'changePassword', component: ChangePasswordComponent },
-    { path: 'myProfile', component: MyProfileComponent ,canActivate : [AuthGuard]},
+    // { path: 'myProfile', component: MyProfileComponent ,canActivate : [AuthGuard]},
+     {path: 'myProfile', canActivate: [AuthGuard], children: [
+        {path: 'home', component: MyProfileComponent},
+        {path: 'myInformation', component: MyInfoComponent},
+        {path: 'quoteList', component: QuoteListComponent},
+        {path: 'info', component: MyInfoComponent}
+      ]
+    }
+
 ];

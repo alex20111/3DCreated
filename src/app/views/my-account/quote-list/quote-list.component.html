@@ -1,1 +1,120 @@
-<p>quote-list works!</p>
+<h4 class="mb-2"> Quote List </h4>
+
+<form>
+	<div class="mb-3 row">
+		<!-- <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label> -->
+		<div class="col-xs-3 col-sm-auto">
+			<label for="quoteStatus" class="form-label"><b>Status</b></label>
+			<select class="form-select"  (change)="statusSearch($event)" [disabled]="loading" >
+			  <option selected value="all">All</option>
+			  @for (status of statusArray ; track status; let i = $index) {
+			  	<option value="{{status}}">{{status}}</option>  
+			  }
+			</select>
+		</div>
+	</div>
+</form> 
+
+@if(loading){
+	<div class="spinner-border text-info" role="status">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+}@else{
+<table class="table table-hover table-responsive">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">E-mail</th>
+			<th scope="col">Status</th>
+			<th scope="col">Created</th>
+            <th scope="col">STL File</th>
+		
+		</tr>
+	</thead>
+	<tbody>
+		@for (quote of quoteList ; track quote; let i = $index) {
+			
+			<tr>
+				<th scope="row">{{ i + 1 }}</th>
+                <td (click)="collapse.toggle()" class="point" [attr.aria-expanded]="!isCollapsed[i]">{{quote.fromEmail}}</td>
+                <td>
+					<!-- {{quote.status}} -->
+					<select #qStataus class="form-select" (change)="updateQuoteStatus(quote.id, qStataus.value)">
+						<option *ngFor="let status of statusArray" [value]="status" [selected]="quote.status == status ? status : ''"> 
+							{{status}}
+						</option>
+					</select>
+
+				</td>
+                <td>{{ quote.createdAt | date : " YYYY-MM-dd hh:mm" }}</td>
+                <td ><a  (click)="stlFile(quote.stlFile)" class="point" >STL file</a> </td>
+				<!-- <td><button	type="button"	class="btn btn-outline-primary"	(click)="collapse.toggle()"
+					[attr.aria-expanded]="!isCollapsed[i]"	aria-controls="collapseExample"	>
+					Toggle 
+					</button>
+				</td> -->
+			</tr>
+				
+				<tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
+					<td colspan="5" >
+						<div class="card">
+							<div class="card-body">
+								<div >
+									<b>Material:</b> 
+									<p>{{quote.material}}</p>
+								</div>
+								<div >
+									<b>color:</b> 
+									<p>{{quote.color}}</p>
+								</div>
+								<div >
+									<b>Infill:</b> 
+									<p>{{quote.infil}}</p>
+								</div>
+								<div >
+									<b>Layer height:</b> 
+									<p>{{quote.layerHeight}}</p>
+								</div>
+								<div >
+									<b>Wall count:</b> 
+									<p>{{quote.wallCount}}</p>
+								</div>
+								<div >
+									<b>Additional information:</b> 
+									<p [innerHtml]="quote.additionalInfo"></p>
+								</div>
+							</div>
+						</div>
+					</td>
+				
+				</tr>
+				<!-- <td>
+					<img
+						[src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+						[alt]="'The flag of ' + country.name"
+						class="me-2"
+						style="width: 20px"
+					/>
+					<ngb-highlight [result]="country.name" [term]="filter.value" />
+				</td>
+				<td><ngb-highlight [result]="country.area | number" [term]="filter.value" /></td>
+				<td><ngb-highlight [result]="country.population | number" [term]="filter.value" /></td> -->
+		
+		} @empty {
+			<tr>
+				<td colspan="5" style="text-align: center">No quotes found</td>
+			</tr>
+		}
+	</tbody>
+</table>
+}
+<!-- id: number;
+material: string;
+color: string;
+infil: number;
+layerHeight: number;
+wallCount: number;
+stlFile: string;
+status: string;
+fromEmail: string;
+additionalInfo: string; -->

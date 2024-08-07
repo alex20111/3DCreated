@@ -48,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
 
     console.log("Token: ", this.token);
     console.log("email: ", this.email);
-    console.log("this.authService.userValue: ", this.authService.userValue);
+    console.log("this.authService.userValue: ", this.authService.userValue);  //
 
 
     if (this.token.length > 0 && this.email.length > 0 && !this.authService.userValue) {

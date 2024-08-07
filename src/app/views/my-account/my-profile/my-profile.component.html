@@ -15,17 +15,50 @@
 
 </div> -->
 <div class="container footer">
-    <div class="row justify-content-md-center" style="background-color:white">
 
-        <div class="col-2">
+
+
+    <div class="row justify-content-md-center" style="background-color:white">
+        
+
+
+
+        
+        <div class="col-2 hideEle992">
            <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
         </div>
 
-        <div class="col-7 bg-light"> <!-- image must be max 1000w 596h-->
-            @if(currentView === viewEnum.Profile){
-                profffffiilleee
+        <div class="col-10 bg-light"> <!-- image must be max 1000w 596h-->
+
+            <button	type="button" class="btn btn-info showEle992 mt-1"
+            (click)="collapse.toggle()"	[attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample"	>
+                My Profile Menu
+                @if(isCollapsed){
+                    <fa-icon [icon]="faCaretDown"></fa-icon>
+                }@else {
+                    <fa-icon [icon]="faCaretLeft"></fa-icon>
+                }
+            </button>
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="showEle992 mt-1" >
+                <div class="card col-6">
+                    <div class="card-body">
+                        <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
+                    </div>
+                </div>
+            </div>
+
+         @if(currentView === viewEnum.userInfo){
+                <app-my-info></app-my-info>
+            }
+            @else if(currentView === viewEnum.chPassword){
+                <app-change-password></app-change-password>
+            }@else if(currentView === viewEnum.OrderList || currentView === viewEnum.Orders){
+                <app-order-list></app-order-list>
             }@else if(currentView === viewEnum.chPassword){
                 <app-change-password></app-change-password>
+            }@else if(currentView === viewEnum.QuoteList){
+                <app-quote-list></app-quote-list>
             }
 
             <!-- <div class="row">

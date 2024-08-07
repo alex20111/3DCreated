@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleQuestion, faQuestion } from '@fortawesome/free-solid-svg-icons';
-import { NgbDatepickerModule, NgbModal, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { StlModelViewerModule } from 'angular-stl-model-viewer';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { DisableControlDirective } from '../../directives/disable-control.directive';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { QuoteService } from '../../services/quote.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { BOLD_BUTTON, EditorConfig, ITALIC_BUTTON, NgxSimpleTextEditorModule, SEPARATOR, UNDO_BUTTON } from 'ngx-simple-text-editor';
 
 
 @Component({
   selector: 'app-quote',
   standalone: true,
-  imports: [StlModelViewerModule, CommonModule, FontAwesomeModule, NgbDatepickerModule, ReactiveFormsModule,
-    DisableControlDirective, NgbProgressbarModule,
+  imports: [StlModelViewerModule, CommonModule, FontAwesomeModule,  ReactiveFormsModule,
+    DisableControlDirective, NgbProgressbarModule,NgxSimpleTextEditorModule, 
     RouterModule],
   templateUrl: './quote.component.html',
   styleUrl: './quote.component.css'
@@ -29,11 +30,15 @@ export class QuoteComponent {
   submitted: boolean = false;
 
   maxFileSize: number = 36700160; //35meg
-  // maxFileSize: number = 10000; //35meg
   message: string = "";
   messageSub: string = ""; //when quote is submitted
   stlDimensions: any;
   stlLongFileName: string = '';
+
+  config: EditorConfig = {
+    placeholder: 'Additional information',
+    buttons: [UNDO_BUTTON, SEPARATOR, BOLD_BUTTON, ITALIC_BUTTON],
+  };
 
   quoteForm: FormGroup = this.formBuilder.group({
     material: ['',

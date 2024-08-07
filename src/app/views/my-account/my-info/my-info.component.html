@@ -1,0 +1,136 @@
+<div class="container mt-2 ">
+    <section class="h-100 ">
+        <div class="container h-100">
+            <div class="row justify-content-sm-center h-100 ">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="card  border-0 bg-light">
+                        <div class="card-body p-4">
+                              <!-- <div *ngIf="resetMessage.length > 0" class="alert alert-success text-center " role="success">
+                                    {{resetMessage}}
+                                </div>
+                                  <div  *ngIf="errorResetMessage.length > 0"  class="alert alert-danger text-center " role="danger">
+                                    {{errorResetMessage}}                                  
+                                </div> -->
+                     
+                            <h1 class="fs-4 card-title fw-bold mb-4">Information</h1>
+                            <form [formGroup]="userInfoForm" class="needs-validation" novalidate="" autocomplete="off">                       
+                                
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="firstName">First name</label>
+                                    <input id="firstName" type="text" class="form-control" formControlName="firstName"
+                                        required 
+                                        [ngClass]="{ 'is-invalid':  f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched) }">
+                                    @if (f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['firstName'].errors?.['required']) {
+                                        <div>First name is required</div>
+                                        }
+                                        @if (f['firstName'].errors?.['minlength']) {
+                                        <div>First name must be at least 3 or more characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="lastName">Last name</label>
+                                    <input id="lastName" type="text" class="form-control" formControlName="lastName"
+                                        required 
+                                        [ngClass]="{ 'is-invalid':  f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched) }">
+                                    @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['lastName'].errors?.['required']) {
+                                        <div>Last name is required</div>
+                                        }
+                                        @if (f['lastName'].errors?.['minlength']) {
+                                        <div>Last name must be at least 3 or more characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <!-- <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="Address">Address</label>
+                                    <input id="Address" type="text" class="form-control" formControlName="lastName"                                         
+                                        [ngClass]="{ 'is-invalid':  f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched) }">
+                                    @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['lastName'].errors?.['required']) {
+                                        <div>Last name is required</div>
+                                        }
+                                        @if (f['lastName'].errors?.['minlength']) {
+                                        <div>Last name must be at least 3 or more characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="city">City</label>
+                                    <input id="city" type="text" class="form-control" formControlName="lastName"                                         
+                                        [ngClass]="{ 'is-invalid':  f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched) }">
+                                    @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['lastName'].errors?.['required']) {
+                                        <div>Last name is required</div>
+                                        }
+                                        @if (f['lastName'].errors?.['minlength']) {
+                                        <div>Last name must be at least 3 or more characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="postalCode">Postal Code</label>
+                                    <input id="postalCode" type="text" class="form-control" formControlName="lastName"                                         
+                                        [ngClass]="{ 'is-invalid':  f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched) }">
+                                    @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['lastName'].errors?.['required']) {
+                                        <div>Last name is required</div>
+                                        }
+                                        @if (f['lastName'].errors?.['minlength']) {
+                                        <div>Last name must be at least 3 or more characters</div>
+                                        }
+                                    </div>
+                                    }
+                                </div> -->
+
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+                                    <input id="email" type="email" class="form-control" formControlName="email" required
+                                        
+                                        [ngClass]="{ 'is-invalid':  f['email'].invalid && (f['email'].dirty || f['email'].touched) }">
+                                    @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
+                                    <div class="invalid-feedback">
+                                        @if (f['email'].errors?.['required']) {
+                                        <div>Email is required</div>
+                                        }
+                                        @if (f['email'].errors?.['email']) {
+                                        <div>Enter a valid email</div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+
+                                <div class="d-grid col-6" >
+                                    <button type="submit" class="btn btn-primary " 
+                                        [disabled]="this.userInfoForm.invalid">
+                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"
+                                            *ngIf="submitted"></span>
+                                        Update
+                                    </button>
+                                </div>
+                            </form>              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+

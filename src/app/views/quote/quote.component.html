@@ -164,7 +164,8 @@
         </div>
         <div class="mb-3">
           <label for="quoteDetails" class="form-label"><b>Additional details: </b></label>
-          <textarea class="form-control" placeholder="Add additional details" formControlName="additionalInfo"></textarea>
+          <st-editor  formControlName="additionalInfo" [config]="config" ></st-editor>
+          <!-- <textarea class="form-control" placeholder="Add additional details" formControlName="additionalInfo"></textarea> -->
 
         </div>
         <div class="mb-3">

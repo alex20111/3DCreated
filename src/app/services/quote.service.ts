@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,33 +11,30 @@ export class QuoteService {
 
   constructor(private http: HttpClient) { }
 
-  uploadStlFile(stlFile: any): Observable<any>{
-    return this.http.post<any>(`http://${this.host}:${this.port}/api/uploadStlFile`, stlFile, {reportProgress : true, observe: "events", responseType:'json'});  
+  //on Quote screen, upload the STL file that the user added
+  uploadStlFile(stlFile: any): Observable<any> {
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/uploadStlFile`, stlFile, { reportProgress: true, observe: "events", responseType: 'json' });
   }
 
-  sendQuote(quote: any): Observable<any>{
-    return this.http.post<any>(`http://${this.host}:${this.port}/api/submitQuote`, quote);  
+  //send e-mails for the quotes that the user requested
+  sendQuote(quote: any): Observable<any> {
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/submitQuote`, quote);
   }
 
-  listAllQuotes(status: any){
-    return this.http.get<any>(`http://${this.host}:${this.port}/api/listAllQuotesWithQuery?status=${status}`);  
+  //admin , list all quotes.
+  listAllQuotes(query: any): Observable<any> {
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/listAllQuotesWithQuery?${query}`);
+  }
+
+  //admin, download quote requested
+  downloadSTLFile(fileName: string) {
+    return this.http.get(`http://${this.host}:${this.port}/api/quoteStlFile?reqStlFile=${fileName}`, { responseType: 'blob' });
+  }
+
+  updateQuote(fieldsToUpdate: any): Observable<any> {
+    return this.http.post<any>(`http://${this.host}:${this.port}/api/updateQuote`, fieldsToUpdate);
   }
 
 
-  // upload(file: File): Observable<HttpEvent<any>> {
-  //   const formData: FormData = new FormData();
-
-  //   formData.append('file', file);
-
-  //   const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
-  //     reportProgress: true,
-  //     responseType: 'json'
-  //   });
-
-  //   return this.http.request(req);
-  // }
-
-  // getFiles(): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/files`);
-  // }
 }
+

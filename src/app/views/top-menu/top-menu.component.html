@@ -38,11 +38,12 @@
           </fa-icon>
         </a>
         <ul class="dropdown-menu">
-          <li class="ps-2">{{user.email}}</li>
+          <li class="ps-2 pe-2">{{user.email}}</li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a  class="dropdown-item" [routerLink]="['/myProfile']" [queryParams]="{name: 'ferret'}" >My Profile</a> </li>
+          <!-- <li><a  class="dropdown-item" [routerLink]="['/myProfile/home']" [queryParams]="{name: 'ferret'}" >My Profile</a> </li> -->
+            <li><a  class="dropdown-item" [routerLink]="['/myProfile/home']" >My Profile</a> </li>
           <li><a class="dropdown-item" href="#">Orders</a></li>          
           <!-- <li><a class="dropdown-item" routerLink="/changePassword">Change Password</a></li>           -->
           <li>
@@ -62,14 +63,14 @@
 
   </div>
 </div>
+<!-- me
+        <div class="hideEle992">Hide me</div> -->
 
-
-<nav class="navbar bg-body-tertiary navbar-expand-lg py-4">
+<nav class="navbar bg-body-tertiary navbar-expand-lg py-4 border-bottom border-2" >
   <div class="container">
     <a class="navbar-brand fs-2" href="#">
       <img src="assets/Untitled.png" class="img-fluid" alt="Responsive image">
     </a>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
       aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -81,29 +82,37 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
+        <ng-container *ngTemplateOutlet="menu"></ng-container>  
 
-          <ul class="navbar-nav mx-auto">
-            <li class="nav-item ">
-              <a class="nav-link fs-5 fw-bold" href="#">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-5 fw-bold" href="#" routerLink="/services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fs-5 fw-bold" href="#">Contact us</a>
-            </li>
-          </ul>
-
-          <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
-          </li>
-        </ul>
-        <!-- <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>  
-          </form> -->
       </div>
     </div>
+
+
+
+
+
   </div>
 </nav>
+
+    
+<ng-template #menu>
+  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item ">
+        <a class="nav-link fs-5 fw-bold" href="#">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fs-5 fw-bold" href="#" routerLink="/services">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fs-5 fw-bold" href="#">Contact us</a>
+      </li>
+    </ul>
+
+    <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
+    </li>
+  </ul>
+</ng-template>
