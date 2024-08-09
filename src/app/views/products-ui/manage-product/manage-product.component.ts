@@ -274,6 +274,10 @@ export class ManageProductComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
     }
   }
+
+  fs(){
+    console.log("this form: " , this.form.invalid);
+  }
 }
 
 export interface PreviewImage {

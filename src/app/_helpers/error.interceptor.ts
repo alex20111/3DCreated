@@ -6,15 +6,19 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-   
+        const authService = inject(AuthService);
+    // console.log("ErrorInterceptor!!!!!: ", req);
             return next(req).pipe(
             catchError(err => {
-                console.log("ErrorInterceptor: ", err);
-                const authService = inject(AuthService);
+          
                 if ([401, 403].includes(err.status)) {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                    console.log("ErrorInterceptor!!!!!: ", err);
+                    console.log("error status2: " , err.status)
                     if (err.error.message &&
-                        (err.error.message === 'Incorrect email or password')
+                        (err.error.message === 'Incorrect email or password' ||
+                            err.error.message === 'E-mail not validated.' 
+                        )
                     ) {
                         console.log("wrong credentials");
                         return throwError(() => err);

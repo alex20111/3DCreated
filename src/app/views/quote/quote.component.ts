@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { QuoteService } from '../../services/quote.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { BOLD_BUTTON, EditorConfig, ITALIC_BUTTON, NgxSimpleTextEditorModule, SEPARATOR, UNDO_BUTTON } from 'ngx-simple-text-editor';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { BOLD_BUTTON, EditorConfig, ITALIC_BUTTON, NgxSimpleTextEditorModule, SE
   templateUrl: './quote.component.html',
   styleUrl: './quote.component.css'
 })
-export class QuoteComponent {
+export class QuoteComponent implements OnInit{
 
   private modalService = inject(NgbModal);
   modalMessage: ModalMessage = {} as ModalMessage;
@@ -66,9 +67,15 @@ export class QuoteComponent {
   });
 
   constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
+    private authService: AuthService,
     private quotesService: QuoteService) { }
+
+  ngOnInit(): void {
+    if (this.authService.userValue){
+      this.quoteForm.controls['email'].setValue(this.authService.userValue.email);
+      // this.quoteForm.setValue("email", this.authService.userValue.email);
+    }
+  }
 
   get f(): { [key: string]: AbstractControl } {
     return this.quoteForm.controls;

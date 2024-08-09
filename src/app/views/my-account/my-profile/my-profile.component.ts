@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, output } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, output } from '@angular/core';
 import { MyAccountSideBarComponent } from "../my-account-sideBar/my-account-sideBar.component";
 import { ChangePasswordComponent } from "../../auth-view/change-password/change-password.component";
 import { QuoteListComponent } from "../quote-list/quote-list.component";
@@ -8,15 +8,20 @@ import { faCaretDown, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderListComponent } from "../order-list/order-list.component";
 import { MyInfoComponent } from "../my-info/my-info.component";
+import { QuoteSearchComponent } from "../quote-search/quote-search.component";
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [MyAccountSideBarComponent, ChangePasswordComponent, QuoteListComponent, NgbCollapseModule, NgbAccordionModule, FontAwesomeModule, OrderListComponent, MyInfoComponent],
+  imports: [MyAccountSideBarComponent, ChangePasswordComponent,
+     QuoteListComponent, NgbCollapseModule, NgbAccordionModule,
+      FontAwesomeModule, OrderListComponent, MyInfoComponent,
+       QuoteSearchComponent],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.css'
 })
 export class MyProfileComponent implements OnInit{
+  width: number = 0;
   isCollapsed = true;
 
   faCaretDown = faCaretDown;
@@ -35,7 +40,8 @@ export class MyProfileComponent implements OnInit{
   // }
 
   ngOnInit(): void {
-    
+   this.width = window.innerWidth;
+   this.currentView = this.viewEnum.userInfo; 
     // const msg: Message = {
     //   key: "page",
     //   value: PageNameEnum.MyProfile
@@ -47,7 +53,15 @@ export class MyProfileComponent implements OnInit{
   newView(event: any){
    this.currentView = event;
    this.isCollapsed = true;
-    console.log("newView: " , event)
+    console.log("MyProfileComponent newView(func): " , event)
   }
+
+  
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event:any) {
+		this.width = event.target.innerWidth;
+
+	}
 
 }

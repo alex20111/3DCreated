@@ -5,12 +5,12 @@
                 <div class="col-lg-6 col-sm-12">
                     <div class="card  border-0 bg-light">
                         <div class="card-body p-4">
-                              <!-- <div *ngIf="resetMessage.length > 0" class="alert alert-success text-center " role="success">
-                                    {{resetMessage}}
+                              <div *ngIf="message.length > 0" class="alert alert-success text-center " role="success">
+                                    {{message}}
                                 </div>
-                                  <div  *ngIf="errorResetMessage.length > 0"  class="alert alert-danger text-center " role="danger">
-                                    {{errorResetMessage}}                                  
-                                </div> -->
+                                  <div  *ngIf="errorMessage.length > 0"  class="alert alert-danger text-center " role="danger">
+                                    {{errorMessage}}                                  
+                                </div>
                      
                             <h1 class="fs-4 card-title fw-bold mb-4">Information</h1>
                             <form [formGroup]="userInfoForm" class="needs-validation" novalidate="" autocomplete="off">                       
@@ -112,7 +112,7 @@
 
                                 <div class="d-grid col-6" >
                                     <button type="submit" class="btn btn-primary " 
-                                        [disabled]="this.userInfoForm.invalid">
+                                        [disabled]="this.userInfoForm.invalid" (click)="update()">
                                         <span class="spinner-border spinner-border-sm" aria-hidden="true"
                                             *ngIf="submitted"></span>
                                         Update

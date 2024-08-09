@@ -1,6 +1,7 @@
 export class User {
-
-    email?:string;
+    firstName?: string;
+    lastName?:string;
+    email:string | undefined;
     token?: string;
     admin?: boolean;
 }

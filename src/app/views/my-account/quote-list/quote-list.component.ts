@@ -108,7 +108,7 @@ export class QuoteListComponent implements OnInit {
         this.loading = false;
       },
       error: (err)=>{
-        console.error("listAllQuotes: ", err);
+        console.error("listAllQuotes Error: ", err);
         this.loading = false;
       }
     })

@@ -38,9 +38,13 @@ export class AuthService {
       this.userSubject.next(resp.user);
       return resp;
     }));
-
-
   }
+
+  updateLocalStorageUser(user: User){
+    localStorage.setItem('user', JSON.stringify(user));
+      this.userSubject.next(user);
+  }
+
 
   logout() {
     console.log("Logout!!!");

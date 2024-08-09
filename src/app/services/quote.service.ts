@@ -31,10 +31,14 @@ export class QuoteService {
     return this.http.get(`http://${this.host}:${this.port}/api/quoteStlFile?reqStlFile=${fileName}`, { responseType: 'blob' });
   }
 
+  //admin
   updateQuote(fieldsToUpdate: any): Observable<any> {
     return this.http.post<any>(`http://${this.host}:${this.port}/api/updateQuote`, fieldsToUpdate);
   }
 
+  getQuoteByReferenceId(refId: string): Observable<any> {
+    return this.http.get<any>(`http://${this.host}:${this.port}/api/getQuote/${refId}`);
+  }
 
 }
 

@@ -14,9 +14,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent implements OnInit {
 
+  toCheckout: boolean = false;
+
   productId: string | undefined = undefined;
   cart: Cart = {} as Cart;
-  // cartItems: Cart[] = [];
   totalPrice: number = 0;
 
   constructor(private route: ActivatedRoute,
@@ -34,21 +35,22 @@ export class CartComponent implements OnInit {
       //if we have a cart, add to it
       if (this.cartService.getCartValue) {
         //verify if the cart item exist.
+        console.log("this.cartService.getCartValue " , this.cartService.getCartValue);
         this.cart = this.cartService.getCartValue;
 
         const cartIdx = this.cart.cartProducts.findIndex((i: any) => i.productId.toString() === paramId);
         // console.log(cartIdx);
         if (cartIdx > -1) {
-          this.cart.finalPrice = this.cart.finalPrice + this.cart.cartProducts[cartIdx].productPrice;
-          this.cart.cartProducts[cartIdx].productQuantity++;
+          const cartItem = this.cart.cartProducts[cartIdx]; 
+          this.cart.finalPrice = this.cart.finalPrice + cartItem.productPrice;          
+          cartItem.productQuantity++;
+          cartItem.totalPrice = cartItem.productQuantity * cartItem.productPrice;
           this.cartService.addCart(this.cart);
         } else {
           //add new item.
           this.addNewProductToCart(paramId);
         }
-      }
-
-      else {
+      }else {
         console.log("add new cart3 - ", paramId);
         this.addNewProductToCart(paramId);
       }
@@ -63,10 +65,6 @@ export class CartComponent implements OnInit {
   }
 
   emptyCart() {
-    // this.cartItems.forEach((i: Cart) => {
-    //   console.log(i);
-    // })
-    // console.log("this.car: ", this.cart.cartProducts.length);
     this.cartService.emptyCart();
     this.cart = {} as Cart;
   }
@@ -89,18 +87,20 @@ export class CartComponent implements OnInit {
   }
   addProductQtr(idx: any) {
 
-    const product = this.cart.cartProducts[idx];
-    if (product) {
-      this.cart.cartProducts[idx].productQuantity++;
-      this.cart.finalPrice = this.cart.finalPrice + product.productPrice;
+    const cartItem = this.cart.cartProducts[idx];
+    if (cartItem) {
+      this.cart.finalPrice = this.cart.finalPrice + cartItem.productPrice;          
+      cartItem.productQuantity++;
+      cartItem.totalPrice = cartItem.productQuantity * cartItem.productPrice;
       this.cartService.addCart(this.cart);
     }
   }
   removeProductQtr(idx: any) {
-    const product = this.cart.cartProducts[idx];
-    if (product.productQuantity > 0) {
+    const cartItem = this.cart.cartProducts[idx];
+    if (cartItem.productQuantity > 0) {
       this.cart.cartProducts[idx].productQuantity --;
-      this.cart.finalPrice = this.cart.finalPrice - product.productPrice;
+      this.cart.finalPrice = this.cart.finalPrice - cartItem.productPrice;
+      cartItem.totalPrice = cartItem.totalPrice! -  cartItem.productPrice;
       this.cartService.addCart(this.cart);
     }
   }
@@ -131,7 +131,8 @@ export class CartComponent implements OnInit {
             productQuantity: 1,
             productPrice: product.price,
             imageUrl: product.coverImageThumb,
-            catgName: result.categoryName
+            catgName: result.categoryName,
+            totalPrice: product.price
           });
 
         } else {
@@ -143,7 +144,8 @@ export class CartComponent implements OnInit {
             productQuantity: 1,
             productPrice: product.price,
             imageUrl: product.coverImageThumb,
-            catgName: result.categoryName
+            catgName: result.categoryName,
+            totalPrice: product.price
           });
 
           const newCartProduct: Cart = {

@@ -22,11 +22,9 @@ import { MyProfilePageViewEnum } from '../../enums/MyProfilePageViewEnum';
   styleUrl: './top-menu.component.css'
 })
 export class TopMenuComponent implements OnInit {
-  tabActive = 1;
-  // pageNameEnum: typeof PageNameEnum = PageNameEnum;
 
-  // currentPage: string = "";
-  // currentView: string = "";
+  viewEnum: typeof MyProfilePageViewEnum = MyProfilePageViewEnum;
+
   faArrowRightToBracket = faArrowRightToBracket;
   faCartShopping = faCartShopping;
   faUser = faUser;
@@ -43,6 +41,7 @@ export class TopMenuComponent implements OnInit {
   ngOnInit(): void {
     this.autService.user.subscribe({
       next: (obUser) => {
+        console.log("topBarUser!!");
         if (obUser) {
           this.user = obUser;
         }else{

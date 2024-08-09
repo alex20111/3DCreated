@@ -23,13 +23,14 @@
 
 
 
-        
+        <!-- @if(width > 992){ -->
         <div class="col-2 hideEle992">
            <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
         </div>
-
+    <!-- } -->
         <div class="col-10 bg-light"> <!-- image must be max 1000w 596h-->
 
+            <!-- @if(width < 992){ -->
             <button	type="button" class="btn btn-info showEle992 mt-1"
             (click)="collapse.toggle()"	[attr.aria-expanded]="!isCollapsed"
             aria-controls="collapseExample"	>
@@ -42,13 +43,14 @@
             </button>
             <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="showEle992 mt-1" >
                 <div class="card col-6">
-                    <div class="card-body">
+                    <div class="card-body">   
                         <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
                     </div>
                 </div>
             </div>
+        <!-- } -->
 
-         @if(currentView === viewEnum.userInfo){
+            @if(currentView === viewEnum.userInfo){
                 <app-my-info></app-my-info>
             }
             @else if(currentView === viewEnum.chPassword){
@@ -59,8 +61,17 @@
                 <app-change-password></app-change-password>
             }@else if(currentView === viewEnum.QuoteList){
                 <app-quote-list></app-quote-list>
+            }@else if(currentView === viewEnum.QuoteSearch){
+                <app-quote-search></app-quote-search>
             }
 
+            
+
+
+
+            <ng-template #menu>
+            <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
+            </ng-template>
             <!-- <div class="row">
                 <div class="col-8 ">
                     @if(searchDisplay){

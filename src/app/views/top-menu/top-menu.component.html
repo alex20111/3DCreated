@@ -44,27 +44,25 @@
           </li>
           <!-- <li><a  class="dropdown-item" [routerLink]="['/myProfile/home']" [queryParams]="{name: 'ferret'}" >My Profile</a> </li> -->
             <li><a  class="dropdown-item" [routerLink]="['/myProfile/home']" >My Profile</a> </li>
-          <li><a class="dropdown-item" href="#">Orders</a></li>          
+          <li><a class="dropdown-item" [routerLink]="['/myProfile/home']" [queryParams]="{page: viewEnum.Orders}">Orders</a></li>          
           <!-- <li><a class="dropdown-item" routerLink="/changePassword">Change Password</a></li>           -->
-          <li>
-            <hr class="dropdown-divider">
-          </li>
+
           @if(user.admin) {
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li ><a class="dropdown-item" routerLink="/addProduct">Add Product</a></li>
           }
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          <li><a class="dropdown-item point" (click)="logout()">Logout</a></li>
         </ul>
       </li>
       }
     </ul>
-
   </div>
 </div>
-<!-- me
-        <div class="hideEle992">Hide me</div> -->
 
 <nav class="navbar bg-body-tertiary navbar-expand-lg py-4 border-bottom border-2" >
   <div class="container">
@@ -83,7 +81,22 @@
       </div>
       <div class="offcanvas-body">
 
-        <ng-container *ngTemplateOutlet="menu"></ng-container>  
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item ">
+              <a class="nav-link fs-5 fw-bold" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 fw-bold" href="#" routerLink="/services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 fw-bold" href="#">Contact us</a>
+            </li>
+          </ul>      
+          <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
+          </li>
+        </ul>
+        <!-- <ng-container *ngTemplateOutlet="menu"></ng-container>   -->
 
       </div>
     </div>
@@ -96,7 +109,7 @@
 </nav>
 
     
-<ng-template #menu>
+<!-- <ng-template #menu>
   <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
 
@@ -115,4 +128,4 @@
     <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
     </li>
   </ul>
-</ng-template>
+</ng-template> -->

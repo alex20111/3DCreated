@@ -30,17 +30,21 @@ export class MyAccountSideBarComponent implements OnInit{
 
 
   ngOnInit(): void {
-    // const userActivated = this.route.snapshot.queryParamMap.get('userActivated') !== null ? this.route.snapshot.queryParamMap.get('userActivated') as string : undefined;
+    const pageToShow = this.route.snapshot.queryParamMap.get('page') !== null ? this.route.snapshot.queryParamMap.get('page') as string : undefined;
 
-    // console.log("userActivated: ", userActivated);
-    this.pageView = MyProfilePageViewEnum.Orders;
+    console.log("pageToShow: ", pageToShow);
+    if (pageToShow){
+      this.pageView = pageToShow;
+    }else{
+    this.pageView = MyProfilePageViewEnum.userInfo;
+    }
     this.pageViewChange.emit(this.pageView); 
 
     this.authService.user.subscribe({
       next: (usr)=>{
         if (usr){
           this.user = usr;
-
+          console.log("MyAccountSideBarComponent user " , usr)
         }
       }
   });
