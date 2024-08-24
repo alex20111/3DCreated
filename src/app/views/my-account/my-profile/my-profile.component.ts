@@ -31,22 +31,10 @@ export class MyProfileComponent implements OnInit{
   viewEnum: typeof MyProfilePageViewEnum = MyProfilePageViewEnum;
 
   constructor(){}
-  // ngOnDestroy(): void {
-  //   const msg: Message = {
-  //     key: "page",
-  //     value: ""
-  //   }
-  //   this.messageService.sendMessage(msg);
-  // }
 
   ngOnInit(): void {
    this.width = window.innerWidth;
    this.currentView = this.viewEnum.userInfo; 
-    // const msg: Message = {
-    //   key: "page",
-    //   value: PageNameEnum.MyProfile
-    // }
-    // this.messageService.sendMessage(msg);
   }
 
 

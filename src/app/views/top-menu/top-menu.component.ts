@@ -57,6 +57,8 @@ export class TopMenuComponent implements OnInit {
       next: (cart)=> {
         if (cart){
            this.cart = cart;
+        }else{
+          this.cart = {} as Cart;
         }
       }
     });
@@ -81,7 +83,7 @@ export class TopMenuComponent implements OnInit {
   //  }
 
   logout(){
-    this.autService.logout();
+    this.autService.logout(false);
   }
 
 

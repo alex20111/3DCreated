@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Cart } from '../models/cart';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   
-  host: string = 'localhost';
-  port: string = '3000';
-
   private cartSubject: BehaviorSubject<Cart | null>;
   public cart: Observable<Cart | null>;
 
@@ -34,18 +32,12 @@ export class CartService {
   }
 
   producyById(productId: string): Observable<any>{
-    return this.http.get<any>(`http://${this.host}:${this.port}/api/getProductForCart/${productId}`);
+    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/getProductForCart/${productId}`);
     
   }
-  // addCartValueSingle(cart: Cart){
-  //   const cartItems: Cart[] = JSON.parse(localStorage.getItem('cart')!);
 
-  //   //find the product id
-  //   cartItems.map( (i: Cart) => {
+  pay(cart: any): Observable<any>{
+    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/addOrder`, cart); 
+  }
 
-  //   });
-
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  //   this.cartSubject.next(cart);
-  // }
 }

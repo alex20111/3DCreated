@@ -1,0 +1,125 @@
+<!-- <div class="container footer">
+
+    @for(cart of cartItems; track cart.productId) {
+    <p>{{cart.productName}} - {{cart.productQuantity}}</p>
+    }
+
+    <button class="button " (click)="emptyCart()"> Rmove </button>
+</div> -->
+
+<!-- <button (click)="emit()">Click me</button> -->
+<section class="h-100 h-custom">
+    <div class="container py-4 h-100">
+        <!-- <button class="button " (click)="emptyCart()"> Rmove </button> -->
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-12">
+                
+            <!-- <h4> TO THE CHECKOUT!! </h4> -->
+            <!-- <button type="button" data-mdb-button-init data-mdb-ripple-init (click)="transactionCompleted()"
+                class="btn btn-dark btn-block" data-mdb-ripple-color="dark">Complete</button> -->
+
+           @if(order){
+
+            <div class="container footer">
+                <div class="row">
+                    <div class="col-4 mb-3">       
+                        </div>
+                        <div class="text-center mb-2"><h1>Receipt</h1></div>
+ 
+                    <!-- <div class="col-12 text-end">
+                          <h1><small>Invoice {{order.orderRefId}}</small></h1>
+                    </div> -->
+                    <hr>
+                    
+                    <div class="row justify-content-between mb-3 pe-0">
+                        <div class="col-4 ps-0">
+                            <div class="card  ">
+                                <div class="card-header">
+                                    <h4>Invoice</h4>
+                                </div>
+                                <div class="card-body">                                    
+                                    <p><b>Invoice #:</b> {{order.orderRefId}}</p>
+                                    <p><b>Date Paid:</b> {{order.datePaid | date : " YYYY-MM-dd hh:mm" }}</p>
+                                    <p><b>Status:</b> {{order.status }}</p>                                                         
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4  text-end pe-0">
+                            <div class="card h-100 ">
+                                <div class="card-header">
+                                    <h4>To : <a href="#">{{user.firstName}} {{user.lastName}}</a></h4>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        {{user.email}} <br>                                      
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- / end client details section -->
+
+                    <div class="ps-0">
+                       <h3> Order details</h3>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr >
+                                <th class="bg-info"> 
+                                    <h4>Product</h4>
+                                </th>
+                                <!-- <th class="bg-secondary">
+                                    <h4>Description</h4>
+                                </th> -->
+                                <th class="bg-info" style="width:150px">
+                                    <h4>Quantity</h4>
+                                </th>
+                                <th class="bg-info" style="width:150px">
+                                    <h4>Price</h4>
+                                </th>
+                                <th class="bg-info" style="width:150px">
+                                    <h4>Sub Total</h4>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(product of order.products; track product) {
+                                <tr>
+                                    <td>{{product.title}}</td>
+                                    <!-- <td>{{product.description}}</td> -->
+                                    <td class="text-end">{{product.orderProduct.quantity}}</td>
+                                    <td class="text-end">${{product.price}}</td>
+                                    <td class="text-end">${{product.price * product.orderProduct.quantity}}</td>
+                                </tr>
+                            }
+                                                  
+                            <tr style="border-width: 0px;">
+                              <td colspan="2" style="border-width: 0px;"></td>
+                              <td class="text-end fs-5" style="border-width: 0px;" >Sub total:</td>
+                              <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice}}</td>
+                            </tr>    
+                            <tr style="border-width: 0px;max-width: 150px;">
+                                <td colspan="2" style="border-width: 0px;"></td>
+                                <td class="text-end fs-5" style="border-width: 0px;" >Total:</td>
+                                <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice}}</td>
+                              </tr>               
+                        </tbody>
+                    </table>
+                    <div class="text-center mb-2 mt-3"><h1>Thank you!</h1></div>          
+
+                </div>
+            </div>
+
+
+        } @else {
+
+            @if(loading){
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            }
+        }
+         
+        </div>
+    </div>
+    </div>
+</section>

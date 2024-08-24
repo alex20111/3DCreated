@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnDestroy, OnInit, } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../../services/product.service';
@@ -7,6 +7,8 @@ import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
+import { Message, MessagesService } from '../../services/messages.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent implements OnInit, OnDestroy {
   // <i class="fa-solid fa-magnifying-glass"></i>
 
   faMagnifyingGlass = faMagnifyingGlass;
@@ -32,12 +34,28 @@ export class WelcomeComponent implements OnInit {
   priceMax: any = 100;
 
   message: string = "";
+  messageWarn: string = "";
+
+  msgServiceSubs: Subscription | undefined;
+  authServiceSubs: Subscription | undefined;
 
   user: User | undefined = undefined;
 
 
 
-  constructor(private productService: ProductService, private authService: AuthService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private msgService: MessagesService) { }
+  ngOnDestroy(): void {
+    if (this.msgServiceSubs) {
+      this.msgServiceSubs.unsubscribe();
+    }
+
+    if (this.authServiceSubs){
+      this.authServiceSubs.unsubscribe();
+    }
+  }
   ngOnInit(): void {
 
     const userActivated = this.route.snapshot.queryParamMap.get('userActivated') !== null ? this.route.snapshot.queryParamMap.get('userActivated') as string : undefined;
@@ -54,7 +72,7 @@ export class WelcomeComponent implements OnInit {
 
     this.loading = true;
 
-    this.authService.user.subscribe({
+    this.authServiceSubs = this.authService.user.subscribe({
       next: (user) => {
         if (user) {
           this.user = user;
@@ -65,6 +83,27 @@ export class WelcomeComponent implements OnInit {
     });
     this.totalProduct = 0;
     this.loadProducts("categoriesList=true");
+
+    // this.msgServiceSubs = this.msgService.messageEmitter.subscribe({
+    //   next: (msg: Message) => {
+    //     console.log("Message service recieved : ", msg);
+    //     if (msg.key === "session" && msg.value === "expired") {
+    //       this.messageWarn = "Your session has expired";
+    //     }
+    //   }
+    // });
+
+    this.msgServiceSubs = this.msgService.getData().subscribe({
+      next: (msg: Message) => {
+        console.log("Message service recieved : ", msg);
+        if (msg.key === "session" && msg.value === "expired") {
+          this.messageWarn = "Your session has expired";
+          this.msgService.removeItem();
+        }
+      }
+    });
+
+
   }
 
   loadSelected(id: any, evnt: any) {
@@ -165,6 +204,7 @@ export class WelcomeComponent implements OnInit {
     }
     );
   }
+
 }
 
 export interface category {

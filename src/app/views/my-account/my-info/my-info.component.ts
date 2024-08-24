@@ -59,7 +59,14 @@ export class MyInfoComponent implements OnInit{
           usr.lastName = result.user.lastName;
           usr.firstName = result.user.firstName;
           usr.email = result.user.email;
+          if (result.user.token) {
+            console.log("Update token.");
+            usr.token = result.user.token;
+          }
           this.authService.updateLocalStorageUser(usr);
+
+
+          
         }
 
         

@@ -31,12 +31,22 @@ import { AuthService } from '../services/auth.service';
 
       
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-    console.log("JwTInterceptor");
-    const user = inject(AuthService).userValue;
+    console.log("loggingInterceptor");
+    const authS = inject(AuthService);
+    const user = authS.userValue;
     const isLoggedIn = user?.token; 
     // const isApiUrl = request.url.startsWith(environment.apiUrl);
     // if (isLoggedIn && isApiUrl) {
         if (isLoggedIn ) {
+            console.log("loggingInterceptor: User is logged in!!!!!")
+            //check if session expired and need to re-log the user.
+            if (authS.isUserExpired()){
+                //re-login
+                console.log("loggingInterceptor: User is expired!!!!!")
+                authS.logout(true);
+            }
+
+            // console.log("user token: " , isLoggedIn);
             req = req.clone({
             setHeaders: {
                 Authorization: `Bearer ${user.token}`
@@ -45,5 +55,6 @@ export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
     }
     return next(req);
   }
+  
   
       

@@ -1,21 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserInfoService {
 
-  host: string = 'localhost';
-  port: string = '3000';
 
   constructor(private http: HttpClient) { }
 
 
-   //on Quote screen, upload the STL file that the user added
+   //Update the user information
    update(userInfo: any): Observable<any> {
-    return this.http.post<any>(`http://${this.host}:${this.port}/api/selfUpdateUser`, userInfo);
+    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/selfUpdateUser`, userInfo);
   }
 
   

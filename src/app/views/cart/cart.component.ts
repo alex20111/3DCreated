@@ -3,26 +3,42 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Cart, cartProduct } from '../../models/cart';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DisableControlDirective } from '../../directives/disable-control.directive';
+import { AuthService } from '../../services/auth.service';
+import { MessagesService } from '../../services/messages.service';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+// import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule, DisableControlDirective, FontAwesomeModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
 
+  faCircleCheck = faCircleCheck;
+
   toCheckout: boolean = false;
+  paySubmitted: boolean = false;
 
   productId: string | undefined = undefined;
   cart: Cart = {} as Cart;
   totalPrice: number = 0;
 
+  payForm = new FormGroup({
+    paySelection: new FormControl('stripe'),
+  });
+
   constructor(private route: ActivatedRoute,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private msgService: MessagesService
   ) { }
 
   ngOnInit(): void {
@@ -70,20 +86,22 @@ export class CartComponent implements OnInit {
   }
 
   removeItem(indx: any) {
-    this.cart.cartProducts.splice(indx, 1);   
+    if (!this.paySubmitted){
+      this.cart.cartProducts.splice(indx, 1);   
 
-    if (this.cart.cartProducts.length === 0) {
-      this.cartService.emptyCart();
-      this.cart = {} as Cart
-     }else{
-      //update total price
-      this.cartService.addCart(this.cart);
-      let tot = 0;
-      this.cart.cartProducts.forEach( ci => {
-        tot = tot + (ci.productPrice * ci.productQuantity);
-      });
-      this.cart.finalPrice = tot;
-     }
+      if (this.cart.cartProducts.length === 0) {
+        this.cartService.emptyCart();
+        this.cart = {} as Cart
+      }else{
+        //update total price
+        this.cartService.addCart(this.cart);
+        let tot = 0;
+        this.cart.cartProducts.forEach( ci => {
+          tot = tot + (ci.productPrice * ci.productQuantity);
+        });
+        this.cart.finalPrice = tot;
+      }
+    }
   }
   addProductQtr(idx: any) {
 
@@ -166,6 +184,64 @@ export class CartComponent implements OnInit {
 
     });
   }
+  transactionCompleted(){
+ 
+
+    // this.cartService.createOrder(this.cart).subscribe({
+    //   next: (result) => {
+    //     console.log("result " , result);
+    //     // this.toCheckout = false;
+    //     // this.cartService.emptyCart();
+    //     // this.cart = {} as Cart;
+    //   },
+    //   error: (err) => {
+    //     console.log("Error : " , err);
+    //   }
+    // })
+  }
+
+  payment(){
+    console.log("this.cart: " , this.cart);
+    // console.log("this.authService.userValue: " , this.authService.userValue);
+    this.paySubmitted = true;
+
+    if (!this.authService.userValue){
+      this.msgService.sendMessage({key:"cart",value :"paymentForCart"});
+      this.router.navigate(['/login']);
+      
+    }else{
+
+    this.cartService.pay(this.cart).subscribe({
+      next: (result)=>{
+        console.log("result!! " , result);
+        if (result.success){
+          window.location.href = result.url;
+        }else{
+          console.log("error : ", result);
+        }
+      },
+      error: (err)=>{
+        console.error("errors : " , err);
+      }
+    });
+  }
+  }
+
+
+  
+
+
+
+
+
+
+  emit(){
+    this.msgService.sendMessage({key: "session", value: "expired"});
+  }
+
+
+
+
 
 }
 

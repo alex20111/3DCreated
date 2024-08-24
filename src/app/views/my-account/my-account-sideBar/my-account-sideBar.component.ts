@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user';
 import { MyProfilePageViewEnum } from '../../../enums/MyProfilePageViewEnum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-account-sideBar',
@@ -15,7 +16,7 @@ import { MyProfilePageViewEnum } from '../../../enums/MyProfilePageViewEnum';
   templateUrl: './my-account-sideBar.component.html',
   styleUrl: './my-account-sideBar.component.css'
 })
-export class MyAccountSideBarComponent implements OnInit{
+export class MyAccountSideBarComponent implements OnInit, OnDestroy{
   pageView: string = "";
   pageViewChange = output<string>()  
 
@@ -24,9 +25,15 @@ export class MyAccountSideBarComponent implements OnInit{
   message: string = "";
   user: User | undefined;
   
+  userSubscription: Subscription | undefined;
     // OutputEmitterRef<string>   
 
   constructor(private productService: ProductService, private authService: AuthService, private route: ActivatedRoute){}
+  ngOnDestroy(): void {
+    if (this.userSubscription){
+      this.userSubscription.unsubscribe();
+    }
+  }
 
 
   ngOnInit(): void {
@@ -40,7 +47,7 @@ export class MyAccountSideBarComponent implements OnInit{
     }
     this.pageViewChange.emit(this.pageView); 
 
-    this.authService.user.subscribe({
+    this.userSubscription = this.authService.user.subscribe({
       next: (usr)=>{
         if (usr){
           this.user = usr;

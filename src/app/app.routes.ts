@@ -15,11 +15,16 @@ import { MyProfileComponent } from './views/my-account/my-profile/my-profile.com
 import { MyInfoComponent } from './views/my-account/my-info/my-info.component';
 import { QuoteListComponent } from './views/my-account/quote-list/quote-list.component';
 import { ContactUsComponent } from './views/contact-us/contact-us.component';
+import { AdminAuthGuard } from './_helpers/adminAuth.guard';
+import { CartReceiptComponent } from './views/cart/cart-receipt/cart-receipt.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+
 
 export const routes: Routes = [
+     
     { path: '', component: WelcomeComponent },
-    { path: 'editProduct/:id', component: ManageProductComponent, resolve: {catgList: categoriesListResolver},canActivate : [AuthGuard] },
-    { path: 'addProduct', component: ManageProductComponent, resolve: {catgList: categoriesListResolver} ,canActivate : [AuthGuard]},
+    { path: 'editProduct/:id', component: ManageProductComponent, resolve: {catgList: categoriesListResolver},canActivate : [AdminAuthGuard] },
+    { path: 'addProduct', component: ManageProductComponent, resolve: {catgList: categoriesListResolver} ,canActivate : [AdminAuthGuard]},
     { path: 'viewProduct/:id', component: ProductViewComponent },
     { path: 'addToCart/:id', component: CartComponent },
     { path: 'viewCart', component: CartComponent },
@@ -30,6 +35,7 @@ export const routes: Routes = [
     { path: 'services', component: ServiceComponent },
     { path: 'changePassword', component: ChangePasswordComponent },
     { path: 'contactUs', component: ContactUsComponent },
+    { path: 'receipt', component: CartReceiptComponent ,canActivate : [AuthGuard]},
     // { path: 'myProfile', component: MyProfileComponent ,canActivate : [AuthGuard]},
      {path: 'myProfile', canActivate: [AuthGuard], children: [
         {path: 'home', component: MyProfileComponent},
@@ -37,6 +43,9 @@ export const routes: Routes = [
         {path: 'quoteList', component: QuoteListComponent},
         {path: 'info', component: MyInfoComponent}
       ]
-    }
+    },
+    {path: '404', component: PageNotFoundComponent},
+    {path: '**', redirectTo: '/404'}
+
 
 ];

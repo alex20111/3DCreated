@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const user = this.authService.userValue;
-        if (user) {
+        if (user && !this.authService.isUserExpired())  {
             // logged in so return true
             return true;
         }

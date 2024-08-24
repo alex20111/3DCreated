@@ -24,7 +24,7 @@
           </fa-icon>
           <span class="badge rounded-pill text-bg-danger"
             style="margin-left: -5px;vertical-align: top; padding: 2px 2px 2px 2px">
-            {{cart.cartProducts ? cart.cartProducts.length : 0}}
+            {{cart && cart.cartProducts ? cart.cartProducts.length : 0}}
             </span>
 
  
@@ -66,8 +66,8 @@
 
 <nav class="navbar bg-body-tertiary navbar-expand-lg py-4 border-bottom border-2" >
   <div class="container">
-    <a class="navbar-brand fs-2" href="#">
-      <img src="assets/Untitled.png" class="img-fluid" alt="Responsive image">
+    <a class="navbar-brand fs-2" routerLink="/">
+      <img src="assets/logo.png" class="img-fluid" alt="3dCreated Logo">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
       aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -84,16 +84,16 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item ">
-              <a class="nav-link fs-5 fw-bold" href="#">Products</a>
+              <a class="nav-link fs-5 fw-bold"  routerLink="/">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fs-5 fw-bold" href="#" routerLink="/services">Services</a>
+              <a class="nav-link fs-5 fw-bold"  routerLink="/services">Services</a>
             </li>
             <li class="nav-item">
               <a class="nav-link fs-5 fw-bold" href="#">Contact us</a>
             </li>
           </ul>      
-          <li class="nav-item me-3"><button type="button" class="btn btn-warning" routerLink="/quote" >Quote</button>
+          <li class="nav-item me-3"><button type="button" class="btn btn-warning" [routerLink]="['/quote']" >Quote</button>
           </li>
         </ul>
         <!-- <ng-container *ngTemplateOutlet="menu"></ng-container>   -->

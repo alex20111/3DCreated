@@ -10,6 +10,10 @@
                                 <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
                                     {{errorMessage}}
                                 </div>
+                                <div *ngIf="messageInfo.length > 0" class="alert alert-info" role="alert">
+                                    {{messageInfo}}
+                                </div>
+                                
 
                                 <div class="mb-3">
                                     <label class="mb-2 text-muted" for="email">E-Mail Address</label>

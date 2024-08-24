@@ -12,7 +12,7 @@ export class AdminAuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const user = this.authService.userValue;
-        if (user && user.admin) {
+        if (user && user.admin && !this.authService.isUserExpired()) {
             // logged and admin in so return true
             return true;
         }
