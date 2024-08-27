@@ -104,7 +104,7 @@
                                 <div class="d-flex justify-content-between mb-4">
                                     @if(cart && cart.cartProducts !== undefined){
                                     <h5 class="text-uppercase">items {{countCartProductNumber()}}</h5>
-                                    <h5>$ {{cart.finalPrice}}</h5>
+                                    <h5>$ {{ cart.finalPrice | number : '1.2-2' }}</h5>
                                     }@else {
                                     <h5 class="text-uppercase">items 0</h5>
                                     <h5>$ 0.00</h5>
@@ -114,7 +114,7 @@
                                 <hr class="my-4 mt-3">
                                 <div class="d-flex justify-content-between mb-5">
                                     <h5 class="text-uppercase">Total price</h5>
-                                    <h5> $ {{cart.finalPrice}}</h5>
+                                    <h5> $ {{ cart.finalPrice | number : '1.2-2' }}</h5>
                                 </div>
                                 <form [formGroup]="payForm">
                                 <div class="form-check">

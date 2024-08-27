@@ -30,6 +30,8 @@ export class MyProfileComponent implements OnInit{
   currentView: string = "";
   viewEnum: typeof MyProfilePageViewEnum = MyProfilePageViewEnum;
 
+  ordRefresh = "";
+
   constructor(){}
 
   ngOnInit(): void {
@@ -39,6 +41,10 @@ export class MyProfileComponent implements OnInit{
 
 
   newView(event: any){
+    if (event === MyProfilePageViewEnum.Orders){ //to force the page to refresh for orders on the client
+      let r = (Math.random() + 1).toString(36).substring(7);
+      this.ordRefresh = r;
+    }
    this.currentView = event;
    this.isCollapsed = true;
     console.log("MyProfileComponent newView(func): " , event)

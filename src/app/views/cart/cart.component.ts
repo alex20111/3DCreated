@@ -10,12 +10,13 @@ import { MessagesService } from '../../services/messages.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
 // import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, DisableControlDirective, FontAwesomeModule],
+  imports: [FormsModule, ReactiveFormsModule, DisableControlDirective, FontAwesomeModule, CommonModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -51,23 +52,22 @@ export class CartComponent implements OnInit {
       //if we have a cart, add to it
       if (this.cartService.getCartValue) {
         //verify if the cart item exist.
-        console.log("this.cartService.getCartValue " , this.cartService.getCartValue);
+        console.log("this.cartService.getCartValue ", this.cartService.getCartValue);
         this.cart = this.cartService.getCartValue;
 
         const cartIdx = this.cart.cartProducts.findIndex((i: any) => i.productId.toString() === paramId);
         // console.log(cartIdx);
         if (cartIdx > -1) {
-          const cartItem = this.cart.cartProducts[cartIdx]; 
-          this.cart.finalPrice = this.cart.finalPrice + cartItem.productPrice;          
+          const cartItem = this.cart.cartProducts[cartIdx];
+          this.cart.finalPrice = Number((this.cart.finalPrice + cartItem.productPrice).toFixed(2));
           cartItem.productQuantity++;
-          cartItem.totalPrice = cartItem.productQuantity * cartItem.productPrice;
+          cartItem.totalPrice = Number((cartItem.productQuantity * cartItem.productPrice).toFixed(2));
           this.cartService.addCart(this.cart);
         } else {
           //add new item.
           this.addNewProductToCart(paramId);
         }
-      }else {
-        console.log("add new cart3 - ", paramId);
+      } else {
         this.addNewProductToCart(paramId);
       }
     }
@@ -86,20 +86,20 @@ export class CartComponent implements OnInit {
   }
 
   removeItem(indx: any) {
-    if (!this.paySubmitted){
-      this.cart.cartProducts.splice(indx, 1);   
+    if (!this.paySubmitted) {
+      this.cart.cartProducts.splice(indx, 1);
 
       if (this.cart.cartProducts.length === 0) {
         this.cartService.emptyCart();
         this.cart = {} as Cart
-      }else{
+      } else {
         //update total price
         this.cartService.addCart(this.cart);
         let tot = 0;
-        this.cart.cartProducts.forEach( ci => {
+        this.cart.cartProducts.forEach(ci => {
           tot = tot + (ci.productPrice * ci.productQuantity);
         });
-        this.cart.finalPrice = tot;
+        this.cart.finalPrice = Number((tot).toFixed(2));
       }
     }
   }
@@ -107,18 +107,18 @@ export class CartComponent implements OnInit {
 
     const cartItem = this.cart.cartProducts[idx];
     if (cartItem) {
-      this.cart.finalPrice = this.cart.finalPrice + cartItem.productPrice;          
+      this.cart.finalPrice = Number((this.cart.finalPrice + cartItem.productPrice).toFixed(2));;
       cartItem.productQuantity++;
-      cartItem.totalPrice = cartItem.productQuantity * cartItem.productPrice;
+      cartItem.totalPrice = Number((cartItem.productQuantity * cartItem.productPrice).toFixed(2));
       this.cartService.addCart(this.cart);
     }
   }
   removeProductQtr(idx: any) {
     const cartItem = this.cart.cartProducts[idx];
     if (cartItem.productQuantity > 0) {
-      this.cart.cartProducts[idx].productQuantity --;
-      this.cart.finalPrice = this.cart.finalPrice - cartItem.productPrice;
-      cartItem.totalPrice = cartItem.totalPrice! -  cartItem.productPrice;
+      this.cart.cartProducts[idx].productQuantity--;
+      this.cart.finalPrice = Number((this.cart.finalPrice - cartItem.productPrice).toFixed(2));
+      cartItem.totalPrice = Number((cartItem.totalPrice! - cartItem.productPrice).toFixed(2));
       this.cartService.addCart(this.cart);
     }
   }
@@ -141,7 +141,7 @@ export class CartComponent implements OnInit {
         console.log(result);
 
         if (Object.keys(this.cart).length > 0) {
-          this.cart.finalPrice = this.cart.finalPrice + product.price;
+          this.cart.finalPrice = Number((this.cart.finalPrice + product.price).toFixed(2));
 
           this.cart.cartProducts.push({
             productId: product.id,
@@ -154,7 +154,6 @@ export class CartComponent implements OnInit {
           });
 
         } else {
-          console.log("!!!!!!! new cart");
           let cartProductList: cartProduct[] = [];
           cartProductList.push({
             productId: product.id,
@@ -184,8 +183,8 @@ export class CartComponent implements OnInit {
 
     });
   }
-  transactionCompleted(){
- 
+  transactionCompleted() {
+
 
     // this.cartService.createOrder(this.cart).subscribe({
     //   next: (result) => {
@@ -200,43 +199,46 @@ export class CartComponent implements OnInit {
     // })
   }
 
-  payment(){
-    console.log("this.cart: " , this.cart);
+  payment() {
+    // console.log("this.cart: " , this.cart);
     // console.log("this.authService.userValue: " , this.authService.userValue);
-    this.paySubmitted = true;
+    if (this.cart.cartProducts) {
+      this.paySubmitted = true;
 
-    if (!this.authService.userValue){
-      this.msgService.sendMessage({key:"cart",value :"paymentForCart"});
-      this.router.navigate(['/login']);
-      
-    }else{
+      if (!this.authService.userValue) {
+        this.msgService.sendMessage({ key: "cart", value: "paymentForCart" });
+        this.router.navigate(['/login']);
 
-    this.cartService.pay(this.cart).subscribe({
-      next: (result)=>{
-        console.log("result!! " , result);
-        if (result.success){
-          window.location.href = result.url;
-        }else{
-          console.log("error : ", result);
-        }
-      },
-      error: (err)=>{
-        console.error("errors : " , err);
+      } else {
+        console.log("Ths cart: " , this.cart);
+
+        this.cartService.pay(this.cart).subscribe({
+          next: (result) => {
+            console.log("result!! ", result);
+            if (result.success) {
+              window.location.href = result.url;
+            } else {
+              console.log("error : ", result);
+            }
+          },
+          error: (err) => {
+            console.error("errors : ", err);
+          }
+        });
       }
-    });
+    }
   }
-  }
-
-
-  
 
 
 
 
 
 
-  emit(){
-    this.msgService.sendMessage({key: "session", value: "expired"});
+
+
+
+  emit() {
+    this.msgService.sendMessage({ key: "session", value: "expired" });
   }
 
 

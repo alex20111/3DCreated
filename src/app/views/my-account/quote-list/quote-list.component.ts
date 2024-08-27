@@ -65,9 +65,16 @@ export class QuoteListComponent implements OnInit {
   //droptdown to refresh the quotes for status
   statusSearch($event: any){
     console.log("event: " , $event.target.value);
-    const query = "status=" + $event.target.value;
 
-    this.loadQuotes(query);
+    const status = $event.target.value;
+
+    if (status !== "all"){
+      const query = "status=" + $event.target.value;
+
+      this.loadQuotes(query);
+    }else{
+      this.loadQuotes("");
+    }
   }
 
   updateQuoteStatus(id: string, value: string){

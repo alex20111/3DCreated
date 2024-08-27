@@ -87,20 +87,20 @@
                                     <td>{{product.title}}</td>
                                     <!-- <td>{{product.description}}</td> -->
                                     <td class="text-end">{{product.orderProduct.quantity}}</td>
-                                    <td class="text-end">${{product.price}}</td>
-                                    <td class="text-end">${{product.price * product.orderProduct.quantity}}</td>
+                                    <td class="text-end">${{product.price.toFixed(2)}}</td>
+                                    <td class="text-end">${{ (product.price * product.orderProduct.quantity).toFixed(2) }}</td>
                                 </tr>
                             }
                                                   
                             <tr style="border-width: 0px;">
                               <td colspan="2" style="border-width: 0px;"></td>
                               <td class="text-end fs-5" style="border-width: 0px;" >Sub total:</td>
-                              <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice}}</td>
+                              <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice.toFixed(2)}}</td>
                             </tr>    
                             <tr style="border-width: 0px;max-width: 150px;">
                                 <td colspan="2" style="border-width: 0px;"></td>
                                 <td class="text-end fs-5" style="border-width: 0px;" >Total:</td>
-                                <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice}}</td>
+                                <td class="text-end fs-5 text-black-50" style="border-width: 0px;"> ${{order.totalPrice.toFixed(2)}}</td>
                               </tr>               
                         </tbody>
                     </table>

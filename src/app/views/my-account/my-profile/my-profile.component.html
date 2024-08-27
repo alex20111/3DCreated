@@ -56,7 +56,7 @@
             @else if(currentView === viewEnum.chPassword){
                 <app-change-password></app-change-password>
             }@else if(currentView === viewEnum.OrderList || currentView === viewEnum.Orders){
-                <app-order-list></app-order-list>
+                <app-order-list [refresh]="ordRefresh"></app-order-list>
             }@else if(currentView === viewEnum.chPassword){
                 <app-change-password></app-change-password>
             }@else if(currentView === viewEnum.QuoteList){

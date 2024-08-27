@@ -31,7 +31,7 @@ import { AuthService } from '../services/auth.service';
 
       
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-    console.log("loggingInterceptor");
+    // console.log("loggingInterceptor");
     const authS = inject(AuthService);
     const user = authS.userValue;
     const isLoggedIn = user?.token; 

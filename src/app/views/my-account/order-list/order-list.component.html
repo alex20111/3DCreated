@@ -1,1 +1,113 @@
-<p>order-list works!</p>
+<h4 class="mb-2"> Quote List </h4>
+
+<form>
+	<div class="mb-3 row">
+		<!-- <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label> -->
+		<div class="col-xs-3 col-sm-auto">
+			<label for="quoteStatus" class="form-label"><b>Status</b></label>
+			<select class="form-select"  (change)="statusSearch($event)" [disabled]="loading" >
+			  <option selected value="all">All</option>
+			  @for (status of statusArray ; track status; let i = $index) {
+			  	<option value="{{status}}">{{status}}</option>  
+			  }
+			</select>
+		</div>
+	</div>
+</form> 
+
+@if(loading){
+	<div class="spinner-border text-info" role="status">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+}@else{
+<table class="table table-hover table-responsive">
+	<thead>
+
+        <!-- declare public totalPrice: number;
+        declare public status: string;
+        declare public paymentSessionId: string;
+        declare public orderRefId: number;
+        declare public datePaid?: Date;
+        declare public paymentIntentId?: string;
+        declare public paymentProvider?: string; -->
+		<tr>
+			<th scope="col">Order #</th>
+			<th scope="col">Date</th>
+			<th scope="col">Status</th>
+			<th scope="col">Total</th>
+            <th></th>
+       
+		
+		</tr>
+	</thead>
+	<tbody>
+		@for (order of orderList ; track order.orderRefId; let i = $index) {
+			
+			<tr>
+				<th scope="row">{{order.orderRefId}}</th>
+                <td>{{ order.createdAt | date : " YYYY-MM-dd hh:mm" }}</td>
+                <!-- <td (click)="collapse.toggle()" class="point" [attr.aria-expanded]="!isCollapsed[i]">{{quote.fromEmail}}</td> -->
+                 <td>{{order.status}}</td>
+               
+                
+                <td >${{order.totalPrice.toFixed(2)}} </td>
+				<td class="text-center">
+                    <button	type="button"	class="btn btn-outline-primary"	>
+					View 
+					</button>
+				</td>
+			</tr>
+				
+				<!-- <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
+					<td colspan="5" >
+						<div class="card">
+							<div class="card-body">
+								<div >
+									<b>Material:</b> 
+									<p>{{quote.material}}</p>
+								</div>
+								<div >
+									<b>color:</b> 
+									<p>{{quote.color}}</p>
+								</div>
+								<div >
+									<b>Infill:</b> 
+									<p>{{quote.infil}}</p>
+								</div>
+								<div >
+									<b>Layer height:</b> 
+									<p>{{quote.layerHeight}}</p>
+								</div>
+								<div >
+									<b>Wall count:</b> 
+									<p>{{quote.wallCount}}</p>
+								</div>
+								<div >
+									<b>Additional information:</b> 
+									<p [innerHtml]="quote.additionalInfo"></p>
+								</div>
+							</div>
+						</div>
+					</td>
+				
+				</tr> -->
+				<!-- <td>
+					<img
+						[src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+						[alt]="'The flag of ' + country.name"
+						class="me-2"
+						style="width: 20px"
+					/>
+					<ngb-highlight [result]="country.name" [term]="filter.value" />
+				</td>
+				<td><ngb-highlight [result]="country.area | number" [term]="filter.value" /></td>
+				<td><ngb-highlight [result]="country.population | number" [term]="filter.value" /></td> -->
+		
+		} @empty {
+			<tr>
+				<td colspan="5" style="text-align: center">No quotes found</td>
+			</tr>
+		}
+	</tbody>
+</table>
+}

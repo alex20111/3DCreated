@@ -62,7 +62,7 @@ export class ManageProductComponent implements OnInit, OnDestroy {
         Validators.maxLength(200),
       ],
     ],
-    price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    price: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]+)?$')]],//;
     description: [
       '',
       [
@@ -140,6 +140,7 @@ export class ManageProductComponent implements OnInit, OnDestroy {
       return;
     }
 
+    console.log("this.form.get('price')!.value: " , this.form.get('price')!.value);
     const formData = new FormData();
 
     formData.append('title', this.form.get('title')!.value);
