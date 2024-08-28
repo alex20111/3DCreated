@@ -63,6 +63,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
 
+   
     const userActivated = this.route.snapshot.queryParamMap.get('userActivated') !== null ? this.route.snapshot.queryParamMap.get('userActivated') as string : undefined;
 
     // console.log("userActivated: ", userActivated);
@@ -231,6 +232,40 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     }
     
   }
+
+  // test(){
+  //   const scr  = document.getElementById("thisIdIsMine");
+  //   console.log("Exist: ", scr);
+
+  //   if (!scr){
+  //     let node = document.createElement('script');
+  //     node.src = "https://www.google.com/recaptcha/api.js?render=6LeVQjEqAAAAAAk194docf99x3LPs3YGGBHCMSIN";//Change to your js file
+  //     node.type = 'text/javascript';
+  //     node.async = true;
+  //     node.id = "thisIdIsMine";
+  //     // node.charset = 'utf-8';
+  //     document.getElementsByTagName('head')[0].appendChild(node);
+  //   }
+  // }
+  // remove(){
+  //   // const scr  = document.getElementById("thisIdIsMine");
+  //   // scr?.remove();
+  //   (window as any)['ngRecaptcha3Loaded'] = () => {
+  //     console.log("loaddedededed");
+  //   };
+  //   console.log("GOGOGOOG");
+  //   // grecaptcha().ready(function() {
+  //     (window as any)['grecaptcha'].execute('6LeVQjEqAAAAAAk194docf99x3LPs3YGGBHCMSIN', {action: 'submit'}).then((token:any ) => {
+  //         // Add your logic to submit to your backend server here.
+  //         console.log("Token: " , token);
+  //         // this.message = token;
+
+  //     }).catch( (err: any)     => {
+  //       console.log("errrrorororororoo: " , err)
+  //     });
+  //   // });
+
+  // }
 }
 
 export interface category {

@@ -5,25 +5,25 @@
 		<!-- <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label> -->
 		<div class="col-xs-3 col-sm-auto">
 			<label for="quoteStatus" class="form-label"><b>Status</b></label>
-			<select class="form-select"  (change)="statusSearch($event)" [disabled]="loading" >
-			  <option selected value="all">All</option>
-			  @for (status of statusArray ; track status; let i = $index) {
-			  	<option value="{{status}}">{{status}}</option>  
-			  }
+			<select class="form-select" (change)="statusSearch($event)" [disabled]="loading">
+				<option selected value="all">All</option>
+				@for (status of statusArray ; track status; let i = $index) {
+				<option value="{{status}}">{{status}}</option>
+				}
 			</select>
 		</div>
 	</div>
-</form> 
+</form>
 
 @if(loading){
-	<div class="spinner-border text-info" role="status">
-		<span class="visually-hidden">Loading...</span>
-	</div>
-}@else{
+<div class="spinner-border text-info" role="status">
+	<span class="visually-hidden">Loading...</span>
+</div>
+}@else if(!viewOrder){
 <table class="table table-hover table-responsive">
 	<thead>
 
-        <!-- declare public totalPrice: number;
+		<!-- declare public totalPrice: number;
         declare public status: string;
         declare public paymentSessionId: string;
         declare public orderRefId: number;
@@ -35,79 +35,133 @@
 			<th scope="col">Date</th>
 			<th scope="col">Status</th>
 			<th scope="col">Total</th>
-            <th></th>
-       
-		
+			<th></th>
+
+
 		</tr>
 	</thead>
 	<tbody>
 		@for (order of orderList ; track order.orderRefId; let i = $index) {
-			
-			<tr>
-				<th scope="row">{{order.orderRefId}}</th>
-                <td>{{ order.createdAt | date : " YYYY-MM-dd hh:mm" }}</td>
-                <!-- <td (click)="collapse.toggle()" class="point" [attr.aria-expanded]="!isCollapsed[i]">{{quote.fromEmail}}</td> -->
-                 <td>{{order.status}}</td>
-               
-                
-                <td >${{order.totalPrice.toFixed(2)}} </td>
-				<td class="text-center">
-                    <button	type="button"	class="btn btn-outline-primary"	>
-					View 
-					</button>
-				</td>
-			</tr>
-				
-				<!-- <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
-					<td colspan="5" >
-						<div class="card">
-							<div class="card-body">
-								<div >
-									<b>Material:</b> 
-									<p>{{quote.material}}</p>
-								</div>
-								<div >
-									<b>color:</b> 
-									<p>{{quote.color}}</p>
-								</div>
-								<div >
-									<b>Infill:</b> 
-									<p>{{quote.infil}}</p>
-								</div>
-								<div >
-									<b>Layer height:</b> 
-									<p>{{quote.layerHeight}}</p>
-								</div>
-								<div >
-									<b>Wall count:</b> 
-									<p>{{quote.wallCount}}</p>
-								</div>
-								<div >
-									<b>Additional information:</b> 
-									<p [innerHtml]="quote.additionalInfo"></p>
-								</div>
-							</div>
-						</div>
-					</td>
-				
-				</tr> -->
-				<!-- <td>
-					<img
-						[src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-						[alt]="'The flag of ' + country.name"
-						class="me-2"
-						style="width: 20px"
-					/>
-					<ngb-highlight [result]="country.name" [term]="filter.value" />
-				</td>
-				<td><ngb-highlight [result]="country.area | number" [term]="filter.value" /></td>
-				<td><ngb-highlight [result]="country.population | number" [term]="filter.value" /></td> -->
-		
+
+		<tr>
+			<th scope="row">{{order.orderRefId}}</th>
+			<td>{{ order.createdAt | date : " YYYY-MM-dd hh:mm" }}</td>
+			<td>{{order.status}}</td>
+
+			<td>${{order.totalPrice.toFixed(2)}} </td>
+			<td class="text-center">
+				<button type="button" class="btn btn-outline-primary" (click)="loadSingleOrder(order.orderRefId)">
+					View
+				</button>
+			</td>
+		</tr>
+
+
 		} @empty {
-			<tr>
-				<td colspan="5" style="text-align: center">No quotes found</td>
-			</tr>
+		<tr>
+			<td colspan="5" style="text-align: center">No quotes found</td>
+		</tr>
 		}
 	</tbody>
 </table>
+}@else if(viewOrder){
+<div class="container footer">
+	<div class="row">
+		
+		<h4>Order #{{order.orderRefId}} was placed on {{order.createdAt | date : "  MMM d, y" }} and is currently {{order.status}}.
+			<fa-icon class="text-success" [icon]="faCircleCheck"></fa-icon>
+		</h4>
+
+		<div class="col-12 text-end mt-2">
+			<h1>INVOICE</h1>
+			<h1><small>Invoice #001</small></h1>
+		</div>
+		<hr>
+
+		<div class="row justify-content-between mb-3 pe-0">
+			<div class="col-4 ps-0">
+				<div class="card  ">
+					<div class="card-header">
+						<h4>Invoice</h4>
+					</div>
+					<div class="card-body">
+						<p><b>Invoice #:</b> {{order.orderRefId}}</p>
+						<p><b>Date Paid:</b> {{order.datePaid | date : " YYYY-MM-dd hh:mm" }}</p> 
+						<p><b>Status:</b> {{order.status }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-4  text-end pe-0">
+				<div class="card h-100 ">
+					<div class="card-header">
+						<h4>To : <a href="#">{{user.firstName}} {{user.lastName}}</a></h4>
+					</div>
+					<div class="card-body">
+						<p>
+							{{user.email}} <br>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div> <!-- / end client details section -->
+
+		<div class="ps-0">
+			<h3> Order details</h3>
+		</div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="bg-secondary">
+						<h4>Product</h4>
+					</th>
+					<th class="bg-secondary">
+						<h4>Description</h4>
+					</th>
+					<th class="bg-secondary">
+						<h4>Quantity</h4>
+					</th>
+					<th class="bg-secondary">
+						<h4>Price</h4>
+					</th>
+					<th class="bg-secondary">
+						<h4>Sub Total</h4>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>New car</td>
+					<td><a href="#">Title of your article here</a></td>
+					<td class="text-right">1</td>
+					<td class="text-right">$200.00</td>
+					<td class="text-right">$200.00</td>
+				</tr>
+				<tr>
+					<td>Nice Lamp</td>
+					<td>Details of project here</td>
+					<td class="text-right">10</td>
+					<td class="text-right">75.00</td>
+					<td class="text-right">$750.00</td>
+				</tr>
+				<tr style="border-width: 0px;">
+					<td colspan="3" style="border-width: 0px;"></td>
+					<td align="right" style="border-width: 2px;">Sub total:</td>
+					<td style="border-width: 2px;"> 2000</td>
+				</tr>
+				<tr style="border-width: 0px;">
+					<td colspan="3" style="border-width: 0px;"></td>
+					<td align="right" style="border-width: 2px;">Total:</td>
+					<td style="border-width: 2px;"> 2000</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+
+
+
+
+	</div>
+</div>
 }

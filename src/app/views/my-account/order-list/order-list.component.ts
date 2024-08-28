@@ -4,33 +4,49 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbHighlight, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderService } from '../../../services/order.service';
 import { OrderStatus } from '../../../enums/OrderStatus';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { User } from '../../../models/user';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule],
+  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule, FontAwesomeModule],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css'
 })
 export class OrderListComponent implements OnInit , OnChanges {
   @Input() refresh: any;
 
+  faCircleCheck = faCircleCheck;
+
   orderList: any[] = [];
+  order: any;
+  user!: User;
   loading: boolean  = true;
 
-  isCollapsed: boolean[] = [];
   statusArray: string[] = []; //for search dropdown
 
+  viewOrder: boolean = false;
 
-  constructor(private orderService: OrderService){}
+  constructor(private orderService: OrderService, private authService: AuthService){}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log("On changes: " , this.refresh, changes['refresh']);
     if (changes['refresh'].previousValue){
+      this.loading = true;
+      this.viewOrder = false;
+      this.order = {};
       this.loadOrders("");
     }
   }
 
   ngOnInit(): void {
+
+    if (this.authService.userValue) {
+      this.user = this.authService.userValue;
+    }
+
     const vals = Object.values(OrderStatus);
     vals.forEach(val => {
       this.statusArray.push(val);
@@ -101,6 +117,21 @@ export class OrderListComponent implements OnInit , OnChanges {
         this.loading = false;
       }
     })
+  }
+
+  loadSingleOrder(refId: any){
+    this.viewOrder = true;
+    this.loading = true;
+    this.orderService.viewUserOrder(refId).subscribe({
+      next: (result) => {
+        this.loading = false;
+        this.order = result.order;
+      },
+      error: (err) => {
+        console.log("loadSingleOrder Error: " , err);
+        this.loading = false;
+      }
+    });
   }
 
 }
