@@ -1,9 +1,9 @@
-<div class="container mt-2 footer">
+<div class="container mt-2 footer" *transloco="let t">
   <div class="row">
 
     @if(messageSub.length === 0){
     <div class="col-7">
-      <h2 class="">Upload 3D Model</h2>
+      <h2 class="">{{ t('quote.html.uploadModel') }}</h2>
       <div *ngIf="message.length > 0" class="alert alert-info text-center " role="success">
         {{message}}
       </div>
@@ -14,9 +14,9 @@
       <div class="modelCont rounded border-dark bg-light" appDnd (fileDropped)="onFileDropped($event)">
         <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event)" accept=".stl" />
         <!-- <img src="assets/img/dnd/ic-upload-file.svg" alt=""> -->
-        <h3>Drag and drop file here</h3>
-        <h3>or</h3>
-        <label for="fileDropRef">Upload your 3d model</label>
+        <h3>{{ t('quote.html.dndFile') }}</h3>
+        <h3>{{ t('quote.html.or') }}</h3>
+        <label for="fileDropRef">{{ t('quote.html.uplYourModel') }}</label>
       </div>
 
       <div class="files-list">
@@ -35,13 +35,13 @@
         <!-- <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)"> -->
         }
       </div>
-      <div><b>File max size 35 Mb.</b></div>
+      <div><b>{{ t('quote.html.fileMax') }}</b></div>
 
       <!-- </div> -->
       }
       @if(newStl){
       <div class="ms-2" style="font-size: 18px;font-weight: 500;color: #353f4a">
-        Name: {{ file?.name }}
+        {{ t('quote.html.name') }}: {{ file?.name }}
       </div>
       <div class="ms-2" style="font-size: 18px;font-weight: 500;color: #353f4a">
         <!-- <div class="col">Height
@@ -53,12 +53,12 @@
         <div class="col">Length
           <input type="text" class="form-control" placeholder="Length" value="0">
         </div> -->
-        Dimensions: {{stlDimensions[0]}} x {{stlDimensions[1]}} x {{stlDimensions[2]}}mm
+        {{ t('quote.html.dim') }}: {{stlDimensions[0]}} x {{stlDimensions[1]}} x {{stlDimensions[2]}}mm
       </div>
 
       <div style="border-style: solid; height:500px">
-      <stl-model-viewer [centered]="true" [stlModels]="[newStl]"></stl-model-viewer>
-        </div>
+        <stl-model-viewer [centered]="true" [stlModels]="[newStl]"></stl-model-viewer>
+      </div>
 
       }
 
@@ -67,10 +67,10 @@
 
       <form [formGroup]="quoteForm" enctype="multipart/form-data">
 
-        <label for="materialInput" class="form-label"><b>Material</b></label>
+        <label for="materialInput" class="form-label"><b> {{ t('quote.html.material') }} </b></label>
         <div class="mb-3 input-group">
           <select class="form-select rounded" aria-label="Default select Material" formControlName="material">
-            <option selected value="">Select material</option>
+            <option selected value="" >{{ t('quote.html.selMat') }}</option>
             <option value="PLA">PLA</option>
             <option value="ABS">ABS</option>
             <option value="PETG">PTEG</option>
@@ -79,10 +79,10 @@
             <fa-icon [icon]="faQuestion" class="point"></fa-icon>
           </span>
         </div>
-        <label for="colorsInput" class="form-label"><b>Color</b></label>
+        <label for="colorsInput" class="form-label"><b>{{ t('quote.html.Color') }}</b></label>
         <div class="mb-3 input-group">
           <select class="form-select rounded" aria-label="Default select colors" formControlName="color">
-            <option selected value="">Select color</option>
+            <option selected value="">{{ t('quote.html.selColor') }}</option>
             <option value="Black">Black</option>
             <option value="Green">Green</option>
             <option value="Blue">Blue</option>
@@ -91,7 +91,7 @@
             <fa-icon [icon]="faQuestion" class="point"></fa-icon>
           </span>
         </div>
-        <label for="infilInput" class="form-label"><b>Infill density</b></label>
+        <label for="infilInput" class="form-label"><b>{{ t('quote.html.infill') }}</b></label>
         <div class="mb-3 input-group">
           <select class="form-select rounded" aria-label="Default select infil" formControlName="infil">
             <!-- <option selected>Infill density</option> -->
@@ -121,7 +121,7 @@
             <fa-icon [icon]="faQuestion" class="point"></fa-icon>
           </span>
         </div>
-        <label for="layersInput" class="form-label"><b>Layer height</b></label>
+        <label for="layersInput" class="form-label"><b>{{ t('quote.html.layer') }}</b></label>
         <div class="mb-3 input-group">
           <select class="form-select rounded" aria-label="Default select layer height" formControlName="layerHeight">
             <!-- <option selected>Layer height</option> -->
@@ -133,7 +133,7 @@
             <fa-icon [icon]="faQuestion" class="point"></fa-icon>
           </span>
         </div>
-        <label for="wallsInput" class="form-label"><b>Wall count</b></label>
+        <label for="wallsInput" class="form-label"><b>{{ t('quote.html.wall') }}</b></label>
         <div class="mb-3 input-group">
           <select class="form-select rounded" aria-label="Default select wall count" formControlName="wallCount">
             <!-- <option selected>Wall count</option> -->
@@ -147,35 +147,35 @@
         </div>
 
         <div class="mb-3">
-          <label for="quoteemail" class="form-label"><b>E-mail</b></label>
+          <label for="quoteemail" class="form-label"><b>{{ t('quote.html.email') }}</b></label>
           <input id="email" type="email" class="form-control" formControlName="email" required
             placeholder="E-mail address"
             [ngClass]="{ 'is-invalid':  f['email'].invalid && (f['email'].dirty || f['email'].touched) }">
           @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
           <div class="invalid-feedback">
             @if (f['email'].errors?.['required']) {
-            <div>Email is required</div>
+            <div>{{ t('quote.html.email_req') }}</div>
             }
             @if (f['email'].errors?.['email']) {
-            <div>Enter a valid email</div>
+            <div>{{ t('quote.html.email_valid') }}</div>
             }
           </div>
           }
         </div>
         <div class="mb-3">
-          <label for="quoteDetails" class="form-label"><b>Additional details: </b></label>
-          <st-editor  formControlName="additionalInfo" [config]="config" ></st-editor>
+          <label for="quoteDetails" class="form-label"><b>{{ t('quote.html.addInfo') }}: </b></label>
+          <st-editor formControlName="additionalInfo" [config]="config"></st-editor>
           <!-- <textarea class="form-control" placeholder="Add additional details" formControlName="additionalInfo"></textarea> -->
 
         </div>
         <div class="mb-3">
-          <p><b>You will receive an answer between 24 and 48 hours.</b> </p>
+          <p><b>{{ t('quote.html.answer') }}</b> </p>
           <button class="btn btn-warning mr-2" (click)="clearOrRestart()" [disabled]="submitted"
             style="margin-right:10px">Clear</button>
           <button class="btn btn-primary" type="submit" [disabled]="quoteForm.invalid" (click)="submit()">
-          <!-- <button class="btn btn-primary" type="submit" (click)="submit()"> -->
+            <!-- <button class="btn btn-primary" type="submit" (click)="submit()"> -->
             <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="submitted"></span>
-            Request Quote
+            {{ t('quote.html.reqBtn') }}
           </button>
         </div>
       </form>
@@ -186,15 +186,16 @@
         {{messageSub}}
       </div>
       <div class="text-center">
-      <button class="btn btn-warning mx-auto" (click)="newStl = undefined; file = undefined; messageSub = ''; submitted=false "
-        style="margin-right:10px">Sumbit another Quote</button>
+        <button class="btn btn-warning mx-auto"
+          (click)="newStl = undefined; file = undefined; messageSub = ''; submitted=false " style="margin-right:10px">
+          {{ t('quote.html.subOthBtn') }} </button>
       </div>
     </div>
     }
   </div>
 </div>
 
-<ng-template #content let-modal>
+<ng-template #content let-modal >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">{{modalMessage.title}}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -202,7 +203,7 @@
   <div class="modal-body">
     {{modalMessage.body}}
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+  <div class="modal-footer"  *transloco="let t">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{ t('quote.html.btnClose') }}close</button>
   </div>
 </ng-template>

@@ -1,12 +1,12 @@
-<h4 class="mb-2"> Quote List </h4>
+<h4 class="mb-2" *transloco="let t"> {{ t('orderList.html.title') }} </h4>
 
 <form>
-	<div class="mb-3 row">
+	<div class="mb-3 row" *transloco="let t">
 		<!-- <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label> -->
 		<div class="col-xs-3 col-sm-auto">
-			<label for="quoteStatus" class="form-label"><b>Status</b></label>
+			<label for="quoteStatus" class="form-label"><b>{{ t('orderList.html.status') }}</b></label>
 			<select class="form-select" (change)="statusSearch($event)" [disabled]="loading">
-				<option selected value="all">All</option>
+				<option selected value="all">{{ t('orderList.html.all') }}</option>
 				@for (status of statusArray ; track status; let i = $index) {
 				<option value="{{status}}">{{status}}</option>
 				}
@@ -20,21 +20,13 @@
 	<span class="visually-hidden">Loading...</span>
 </div>
 }@else if(!viewOrder){
-<table class="table table-hover table-responsive">
+<table class="table table-hover table-responsive" *transloco="let t">
 	<thead>
-
-		<!-- declare public totalPrice: number;
-        declare public status: string;
-        declare public paymentSessionId: string;
-        declare public orderRefId: number;
-        declare public datePaid?: Date;
-        declare public paymentIntentId?: string;
-        declare public paymentProvider?: string; -->
 		<tr>
-			<th scope="col">Order #</th>
-			<th scope="col">Date</th>
-			<th scope="col">Status</th>
-			<th scope="col">Total</th>
+			<th scope="col" >{{ t('orderList.html.orderNbr') }}</th>
+			<th scope="col" >{{ t('orderList.html.date') }}</th>
+			<th scope="col">{{ t('orderList.html.status') }}</th>
+			<th scope="col" >{{ t('orderList.html.total') }}</th>
 			<th></th>
 
 
@@ -51,7 +43,7 @@
 			<td>${{order.totalPrice.toFixed(2)}} </td>
 			<td class="text-center">
 				<button type="button" class="btn btn-outline-primary" (click)="loadSingleOrder(order.orderRefId)">
-					View
+					<span >{{ t('orderList.html.viewBtn') }} </span>
 				</button>
 			</td>
 		</tr>
@@ -59,22 +51,26 @@
 
 		} @empty {
 		<tr>
-			<td colspan="5" style="text-align: center">No quotes found</td>
+			<td colspan="5" style="text-align: center" >{{ t('orderList.html.noQuoteFnd') }}</td>
 		</tr>
 		}
 	</tbody>
 </table>
 }@else if(viewOrder){
-<div class="container footer">
+<div class="container footer" *transloco="let t">
 	<div class="row">
 		
-		<h4>Order #{{order.orderRefId}} was placed on {{order.createdAt | date : "  MMM d, y" }} and is currently {{order.status}}.
+		<h4>
+			{{ t('orderList.html.orderPlaced1', { orderId: order.orderRefId }) }} {{order.createdAt | date : "  MMM d, y" }} 
+			{{ t('orderList.html.orderPlaced2', { status: order.status }) }}
+			
+			<!-- Order #{{order.orderRefId}} was placed on {{order.createdAt | date : "  MMM d, y" }} and is currently {{order.status}}. -->
 			<fa-icon class="text-success" [icon]="faCircleCheck"></fa-icon>
 		</h4>
 
 		<div class="col-12 text-end mt-2">
-			<h1>INVOICE</h1>
-			<h1><small>Invoice #001</small></h1>
+			<h1>{{ t('orderList.html.invoiceTitle') }}</h1>
+			<h1><small >{{ t('orderList.html.invoiceNumber') }}: {{order.orderRefId}}</small></h1>
 		</div>
 		<hr>
 
@@ -82,19 +78,19 @@
 			<div class="col-4 ps-0">
 				<div class="card  ">
 					<div class="card-header">
-						<h4>Invoice</h4>
+						<h4>{{ t('orderList.html.smallInvoiceTitle') }}</h4>
 					</div>
 					<div class="card-body">
-						<p><b>Invoice #:</b> {{order.orderRefId}}</p>
-						<p><b>Date Paid:</b> {{order.datePaid | date : " YYYY-MM-dd hh:mm" }}</p> 
-						<p><b>Status:</b> {{order.status }}</p>
+						<p><b>{{ t('orderList.html.invNbr') }}:</b> {{order.orderRefId}}</p>
+						<p><b>{{ t('orderList.html.datePaid') }}:</b> {{order.datePaid | date : " YYYY-MM-dd hh:mm" }}</p> 
+						<p><b>{{ t('orderList.html.status') }}:</b> {{order.status }}</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-4  text-end pe-0">
 				<div class="card h-100 ">
 					<div class="card-header">
-						<h4>To : <a href="#">{{user.firstName}} {{user.lastName}}</a></h4>
+						<h4>{{ t('orderList.html.to') }} : <a href="#">{{user.firstName}} {{user.lastName}}</a></h4>
 					</div>
 					<div class="card-body">
 						<p>
@@ -106,52 +102,49 @@
 		</div> <!-- / end client details section -->
 
 		<div class="ps-0">
-			<h3> Order details</h3>
+			<h3>{{ t('orderList.html.orderDtl') }} </h3>
 		</div>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th class="bg-secondary">
-						<h4>Product</h4>
+					<th class="bg-secondary " width="60%">
+						<h4 >{{ t('orderList.html.product') }}</h4>
 					</th>
-					<th class="bg-secondary">
-						<h4>Description</h4>
+					<!-- <th class="bg-secondary">
+						<h4>{{ t('orderList.html.desc') }}</h4>
+					</th> -->
+					<th class="bg-secondary" width="10%">
+						<h4 >{{ t('orderList.html.qty') }}</h4>
 					</th>
-					<th class="bg-secondary">
-						<h4>Quantity</h4>
+					<th class="bg-secondary" width="15%">
+						<h4>{{ t('orderList.html.price') }}</h4>
 					</th>
-					<th class="bg-secondary">
-						<h4>Price</h4>
-					</th>
-					<th class="bg-secondary">
-						<h4>Sub Total</h4>
+					<th class="bg-secondary" width="15%">
+						<h4>{{ t('orderList.html.subTot') }}</h4>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>New car</td>
-					<td><a href="#">Title of your article here</a></td>
-					<td class="text-right">1</td>
-					<td class="text-right">$200.00</td>
-					<td class="text-right">$200.00</td>
-				</tr>
-				<tr>
-					<td>Nice Lamp</td>
-					<td>Details of project here</td>
-					<td class="text-right">10</td>
-					<td class="text-right">75.00</td>
-					<td class="text-right">$750.00</td>
+
+				@for (product of order.products ; track product; let i = $index) {
+					<tr>
+						<td >{{product.title}}</td>
+						<!-- <td class="">{{product.description.substring(0, 4)}}</td> -->
+						<td align="right">{{product.orderProduct.quantity}}</td>
+						<td align="right">${{product.price.toFixed(2)}}</td>
+						<td align="right">${{ (product.price * product.orderProduct.quantity).toFixed(2) }}</td>
+					</tr>
+					}
+
+				<tr style="border-width: 0px;">
+					<td colspan="2" style="border-width: 0px;"></td>
+					<td align="right" style="border-width: 2px;">{{ t('orderList.html.subTot') }}:</td>
+					<td align="right" style="border-width: 2px;"> ${{order.totalPrice.toFixed(2)}}</td>
 				</tr>
 				<tr style="border-width: 0px;">
-					<td colspan="3" style="border-width: 0px;"></td>
-					<td align="right" style="border-width: 2px;">Sub total:</td>
-					<td style="border-width: 2px;"> 2000</td>
-				</tr>
-				<tr style="border-width: 0px;">
-					<td colspan="3" style="border-width: 0px;"></td>
+					<td colspan="2" style="border-width: 0px;"></td>
 					<td align="right" style="border-width: 2px;">Total:</td>
-					<td style="border-width: 2px;"> 2000</td>
+					<td align="right" style="border-width: 2px;"> ${{order.totalPrice.toFixed(2)}}</td>
 				</tr>
 			</tbody>
 		</table>

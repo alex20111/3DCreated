@@ -1,14 +1,14 @@
-<div class="container footer">
+<div class="container footer" *transloco="let t">
   <h2> @if ( editProductId) {
-    Edit product
+    <span >{{ t('manageProduct.html.editTitle') }}</span>
     } @else {
-    Add management
+     <span >{{ t('manageProduct.html.addTitle') }}</span>
     }</h2>
 
 
   <form [formGroup]="form"  enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="productTitle" class="form-label"><b>Title</b></label>
+      <label for="productTitle" class="form-label"><b>{{ t('manageProduct.html.prodTitle') }}</b></label>
       <input type="text" class="form-control" id="productTitle" aria-describedby="titleHelp" formControlName="title"
       [ngClass]="{ 'is-invalid':  f['title'].invalid && (f['title'].dirty || f['title'].touched) }"[disableControl]="submitted">
          <!-- [ngClass]="{ 'is-invalid':  submitted && f['title'].errors  }" -->
@@ -18,90 +18,93 @@
         *ngIf="f['title'].invalid && (f['title'].dirty || f['title'].touched)">
 
         @if (f['title'].errors?.['required'] ) {
-        <div>A title is required</div>
+        <div >{{ t('manageProduct.html.errTitleReq') }}</div>
         }
         @if (f['title'].errors?.['minlength']) {
-        <div>Title must be at least 3 characters</div>
+        <div>{{ t('manageProduct.html.errtitleMin') }}</div>
         }
         @if (f['title'].errors?.['maxlength']) {
-        <div>Title must not exceed 200 characters</div>
+        <div>{{ t('manageProduct.html.errTitleMax') }}</div>
         }
       </div>
     </div>
     <div class="mb-3">
-      <label for="productTitle" class="form-label"><b>Category</b></label>
+      <label for="productTitle" class="form-label"><b>{{ t('manageProduct.html.catgTitle') }}</b></label>
       <select class="form-select" aria-label="Default select example"  formControlName="category">
-        <option selected value="-1">Select category</option>
+        <option selected value="-1" >{{ t('manageProduct.html.selCatgFiller') }}</option>
         <option *ngFor="let cat of categories; index as idx" [value]="cat.id">{{cat.category}}</option>  
       </select>
     </div>
 
     <div class="mb-3">
-      <label for="productPrice" class="form-label"><b>Price</b></label>
+      <label for="productPrice" class="form-label"><b>{{ t('manageProduct.html.priceTitle') }}</b></label>
       <input type="number" class="form-control" id="productPrice" formControlName="price"
         [ngClass]="{ 'is-invalid': f['price'].invalid && (f['price'].dirty || f['price'].touched) }" [disableControl]="submitted">
 
       @if (f['price'].invalid && (f['price'].dirty || f['price'].touched)) {
       <div class="invalid-feedback">
         @if (f['price'].errors?.['required']) {
-        <div>Price is required</div>
+        <div>{{ t('manageProduct.html.errPriceReq') }}</div>
         }
         @if (f['price'].errors?.['pattern']) {
-        <div>Enter only numbers</div>
+        <div>{{ t('manageProduct.html.errPriceNbrOnly') }}</div>
         }
       </div>
       }
     </div>
     <div class="mb-3">
-      <label for="productQuantity" class="form-label"><b>Quantity</b></label>
+      <label for="productQuantity" class="form-label"><b>{{ t('manageProduct.html.qtyTitle') }}</b></label>
       <input type="number" class="form-control" id="productQuantity" formControlName="quantity"
         [ngClass]="{ 'is-invalid': f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched) }" [disableControl]="submitted">
 
       @if (f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched)) {
       <div class="invalid-feedback">
         @if (f['quantity'].errors?.['required']) {
-        <div>Quantity is required</div>
+        <div>{{ t('manageProduct.html.errQtyReq') }}</div>
         }
         @if (f['quantity'].errors?.['pattern']) {
-        <div>Enter only numbers</div>
+        <div>{{ t('manageProduct.html.errQtyNbrOnly') }}</div>
         }
       </div>
       }
+
     </div>
     <div class="mb-3">
-      <label for="productDescription" class="form-label"><b>Description</b></label>
+      <label for="productDescription" class="form-label"><b >{{ t('manageProduct.html.descTitle') }}</b></label>
 
       <st-editor formControlName="description" [config]="config"></st-editor>
 
         @if (f['description'].invalid && (f['description'].dirty || f['description'].touched)) {
-        <div class="invalid-feedback">
+        <div style="color: red;font-size: .875em">
           @if (f['description'].errors?.['required']) {
-          <div>A description is required</div>
+          <div>{{ t('manageProduct.html.errDescReq') }}</div>
           }
           @if (f['description'].errors?.['minlength']) {
-          <div>Description must be at least 1 characters</div>
+          <div>{{ t('manageProduct.html.errDescMin') }}</div>
           }
           @if (f['description'].errors?.['maxlength']) {
-          <div>Descrtiption must not exceed 2000 characters</div>
+          <div>{{ t('manageProduct.html.errDescMax') }}</div>
           }
         </div>
         } 
     </div>
 
+
     <div class="mb-3">
-      <label for="productImage" class="form-label"><b>Cover Image ( main page )</b></label>
+      
+      <label for="productImage" class="form-label"><b>{{ t('manageProduct.html.coverImgTitle') }}</b></label>
       <input #productImage type="file" class="form-control" id="productImage"
         (change)="this.coverFileChangeHandler($event)" accept=".jpg,.png,.gif,.jpeg"
         [ngClass]="{ 'is-invalid': toManyFiles || noCoverFile }" [disabled]="submitted">
 
       @if (toManyFiles){
-      <div class="invalid-feedback">
-        5 files maximum
+      <div class="invalid-feedback" >
+        {{ t('manageProduct.html.errCoverImgMaxFiles') }}
       </div>
       }
       @if(noCoverFile){
-        <div class="invalid-feedback">
-          Cover image is required.
+        <div class="invalid-feedback" >
+          {{ t('manageProduct.html.errCoverImgReq') }} 
         </div>
       }
       <div class="d-inline-flex p-2" *ngIf="coverPreviewImg.length > 0">
@@ -111,13 +114,13 @@
     </div>
 
     <div class="mb-3">
-      <label for="productImage" class="form-label">Additional images</label>
+      <label for="productImage" class="form-label"> {{ t('manageProduct.html.addImgtitle') }} </label>
       <input #productImage type="file" class="form-control" id="productImage" (change)="this.fileChangeHandler($event)"
         multiple accept=".jpg,.png,.gif,.jpeg" [ngClass]="{ 'is-invalid': toManyFiles }" [disabled]="submitted">
 
       @if (toManyFiles){
       <div class="invalid-feedback">
-        5 files maximum
+        {{ t('manageProduct.html.errAddImgMaxFiles') }} 
       </div>
       }
       <div class="d-inline-flex p-2">
@@ -129,14 +132,15 @@
       </div>
 
     </div>
-    <button class="btn btn-warning me-2" type="button" [disabled]="submitted" [routerLink]="['/']">
-      Cancel
+    <button class="btn btn-warning me-2" type="button" [disabled]="submitted" [routerLink]="['/']" >
+      {{ t('manageProduct.html.cancelBtn') }} 
     </button>
     <button class="btn btn-primary" type="submit" [disabled]="form.invalid || noCoverFile" (click)="onSubmit()">
       <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="submitted" ></span>
-      Submit
+      <span>{{ t('manageProduct.html.subBtn') }} </span>
+      
     </button>
-
+<button (click)="disp()">a</button>
   </form>
 
 

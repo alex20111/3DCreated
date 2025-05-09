@@ -1,11 +1,11 @@
-<div class="container mt-5">
+<div class="container mt-5" *transloco="let t">
     <section class="h-100">
         <div class="container h-100">
             <div class="row justify-content-sm-center h-100">
                 <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
                     <div class="card  border-0">
                         <div class="card-body p-5">
-                            <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+                            <h1 class="fs-4 card-title fw-bold mb-4">{{ t('login.html.title') }}</h1>
                             <form [formGroup]="loginForm" class="needs-validation" novalidate="" autocomplete="off">
                                 <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
                                     {{errorMessage}}
@@ -16,17 +16,17 @@
                                 
 
                                 <div class="mb-3">
-                                    <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+                                    <label class="mb-2 text-muted" for="email">{{ t('login.html.email') }}</label>
                                     <input id="email" type="email" class="form-control" formControlName="email" required
                                         autofocus
                                         [ngClass]="{ 'is-invalid':  f['email'].invalid && (f['email'].dirty || f['email'].touched) }">
                                     @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['email'].errors?.['required']) {
-                                        <div>Email is required</div>
+                                        <div>{{ t('login.html.errEmailreq') }}</div>
                                         }
                                         @if (f['email'].errors?.['email']) {
-                                        <div>Enter a valid email</div>
+                                        <div>{{ t('login.html.errEmailValid') }}</div>
                                         }
                                     </div>
                                     }
@@ -35,9 +35,9 @@
 
                                 <div class="mb-3">
                                     <div class="mb-2 w-100">
-                                        <label class="text-muted" for="password">Password</label>
+                                        <label class="text-muted" for="password">{{ t('login.html.Password') }}</label>
                                         <a href="#" class="float-end" routerLink="/resetPassword">
-                                            Forgot Password?
+                                            {{ t('login.html.forgotPassword') }} 
                                         </a>
                                     </div>
                                     <input id="password" type="password" class="form-control" formControlName="password"
@@ -46,7 +46,7 @@
                                     @if (f['password'].invalid && (f['password'].dirty || f['password'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['password'].errors?.['required']) {
-                                        <div>Password is required</div>
+                                        <div>{{ t('login.html.PasswordReq') }}</div>
                                         }
                                     </div>
                                     }
@@ -56,7 +56,7 @@
                                     <button type="submit" class="btn btn-primary " (click)="submit()"
                                         [disabled]="this.loginForm.invalid || loading">
                                         <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="loading" ></span>
-                                        Login
+                                        {{ t('login.html.loginBtn') }}
                                     </button>
                                 </div>
 
@@ -64,7 +64,10 @@
                         </div>
                         <div class=" py-3 border-0">
                             <div class="text-center">
-                                Don't have an account? <a href="#" class="text-dark" routerLink="/signup">Create One</a>
+                                {{ t('login.html.noAcct') }}
+                                 <a href="#" class="text-dark" routerLink="/signup">
+                                    {{ t('login.html.crtOne') }}
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -13,16 +13,14 @@
             </div>                                
     </div>
 }
-<!-- <button (click)="remove()">Remove me</button> -->
+<!-- <button (click)="setNag()">Remove me</button> -->
 <div class="imgStyle align-middle align-items-center mt-2">
 
-    <div class="text-center fs-1 text-white fw-bolder " style="">
-        Welcome to 3dCreated <br />
-        3D printing services
+    <div class="text-center fs-1 text-white fw-bolder " *transloco="let t" [innerHtml]="t('welcome.html.title')">
     </div>
 
 </div>
-<div class="container footer">
+<div class="container footer"  *transloco="let t">
     <div class="row rounded" style="margin-top:-50px; background-color:white">
         <div class="col-3">
             <div class="input-group mb-3 mt-5">
@@ -41,8 +39,9 @@
             }
             <div class="list-group list-group-flush">
                 <a class="list-group-item  d-flex list-group-item-action justify-content-between point"
-                    aria-current="true" (click)="loadSelected(0, totalProduct)" [ngClass]=" {'active': currentCatgSel === 0}">
-                    All categories
+                    aria-current="true" (click)="loadSelected(0, totalProduct)" [ngClass]=" {'active': currentCatgSel === 0}"  >
+                    {{ t('welcome.html.AllCategories') }} 
+                     <!-- <span i18n="@@WelcomeHtml-AllCategories">All categories!!!!!</span> -->
                     <span class="badge bg-info text-dark rounded-pill"> @if(totalProduct){ {{totalProduct}}  }@else{  0  }</span>
                 </a>
                 @for(catg of categories; track catg.id) {
@@ -55,7 +54,7 @@
 
             </div>
             <div class="my-3 ms-2">
-                <label for="customRange2" class="form-label"> <b>Price Range</b></label>
+                <label for="customRange2" class="form-label"> <b> {{ t('welcome.html.priceRange') }} </b></label>
                 <!-- <input type="range" class="form-range" min="5" max="100" id="customRange2" (change)="refresh($event)" [(ngModel)]="priceBarInput"> -->
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="5" aria-label="min"
@@ -70,21 +69,21 @@
         <div class="col-9"> <!-- image must be max 1000w 596h-->
 
             <div class="row">
-                <div class="col-8 ">
+                <div class="col-8 "  >
                     @if(searchDisplay){
-                    Results: <button type="button" class="btn btn-outline-secondary mb-2 mt-2  btn-sm">{{searchDisplay}}
+                    <span >  {{ t('welcome.html.results') }}:</span> <button type="button" class="btn btn-outline-secondary mb-2 mt-2  btn-sm">{{searchDisplay}}
                         <fa-icon [icon]="faCircleXmark" size="xs" (click)="resetSearch()"></fa-icon></button>
                     }
                 </div>
 
                 <div class="col-2 float-end">
                     <div class="input-group mb-1 mt-2">
-                        <span class="input-group-text" id="basic-addon3">Filter</span>
+                        <span class="input-group-text" id="basic-addon3" >{{ t('welcome.html.filter') }}</span>
                         <select class="form-select form-select-sm " (change)="filterSizeChange($event)">
                             <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option>20</option>
+                            <option>30</option>
+                            <option>40</option>
                         </select>
                     </div>
                 </div>
@@ -104,18 +103,21 @@
                                 class="card-img-top" alt="...">
                             <div class="card-body" style="height:80px;max-height:80px">
                                 <h6 class="card-title">{{product.title}}</h6>
-                                <!-- <p class="card-text">{{product.description}}.</p> -->
+                                <p class="card-text descLimit" [innerHTML]="product.description"></p>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item text-end">${{product.price}}</li>
+                                <li class="list-group-item text-end">{{product.price | currency}}</li>
                             </ul>
                         </span>
                         <div class="card-footer align-bottom ">
                             <button *ngIf="user && user.admin" type="button" class="btn btn-primary "
-                                [routerLink]="['/editProduct',product.id]">Edit</button>
+                                [routerLink]="['/editProduct',product.id]" >{{ t('welcome.html.editBtn') }} </button>
                             <button type="button" class="btn btn-primary float-end"
-                                [routerLink]="['/addToCart',product.id]"> Add to
-                                cart</button>
+                                [routerLink]="['/addToCart']"
+                                [queryParams]="{ productId: product.id}"
+
+
+                               >{{ t('welcome.html.addCartBtn') }} </button>
                         </div>
                     </div>
                 </div>
@@ -131,7 +133,7 @@
                 </div>
                 }@else {
                 <div class="col-md-4 col-lg-4 my-2">
-                    No Products found
+                    {{ t('welcome.html.noProductfound') }}
                 </div>
                 }
 

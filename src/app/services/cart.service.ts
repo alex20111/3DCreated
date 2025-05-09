@@ -32,12 +32,12 @@ export class CartService {
   }
 
   producyById(productId: string): Observable<any>{
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/getProductForCart/${productId}`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/getProductForCart/${productId}`);
     
   }
 
   pay(cart: any): Observable<any>{
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/addOrder`, cart); 
+    return this.http.post<any>(`${environment.HOST_PORT}/api/addOrder`, cart); 
   }
 
 }

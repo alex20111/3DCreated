@@ -1,11 +1,11 @@
-<div class="container mt-2">
+<div class="container mt-2 footer"  *transloco="let t">
     <section class="h-100">
         <div class="container h-100">
             <div class="row justify-content-sm-center h-100">
                 <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
                     <div class="card  border-0">
                         <div class="card-body p-5">
-                            <h1 class="fs-4 card-title fw-bold mb-4">Sign up</h1>
+                            <h1 class="fs-4 card-title fw-bold mb-4">{{ t('signUp.html.title') }}</h1>
                             @if(successMsg.length > 0){
                                 <div class="alert alert-success text-center " role="success">
                                     {{successMsg}}                                   
@@ -18,49 +18,49 @@
                             @if(!accountCreated){
                             <form [formGroup]="signupForm" class="needs-validation" novalidate="" autocomplete="off">
                                 <div class="mb-3">
-                                    <label class="mb-2 text-muted" for="firstName">First name</label>
+                                    <label class="mb-2 text-muted" for="firstName">{{ t('signUp.html.firstName') }}</label>
                                     <input id="firstName" type="text" class="form-control" formControlName="firstName"
                                         required autofocus
                                         [ngClass]="{ 'is-invalid':  f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched) }">
                                     @if (f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['firstName'].errors?.['required']) {
-                                        <div>First name is required</div>
+                                        <div>{{ t('signUp.html.errFirstNameReq') }}</div>
                                         }
                                         @if (f['firstName'].errors?.['minlength']) {
-                                        <div>First name must be at least 3 or more characters</div>
+                                        <div>{{ t('signUp.html.errFirstNameMin') }}</div>
                                         }
                                     </div>
                                     }
                                 </div>
                                 <div class="mb-3">
-                                    <label class="mb-2 text-muted" for="lastName">Last name</label>
+                                    <label class="mb-2 text-muted" for="lastName">{{ t('signUp.html.lastName') }}</label>
                                     <input id="lastName" type="text" class="form-control" formControlName="lastName"
                                         required autofocus
                                         [ngClass]="{ 'is-invalid':  f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched) }">
                                     @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['lastName'].errors?.['required']) {
-                                        <div>Last name is required</div>
+                                        <div>{{ t('signUp.html.errLastNameReq') }}</div>
                                         }
                                         @if (f['lastName'].errors?.['minlength']) {
-                                        <div>Last name must be at least 3 or more characters</div>
+                                        <div>{{ t('signUp.html.errLastNameMin') }}</div>
                                         }
                                     </div>
                                     }
                                 </div>
                                 <div class="mb-3">
-                                    <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+                                    <label class="mb-2 text-muted" for="email">{{ t('signUp.html.email') }}</label>
                                     <input id="email" type="email" class="form-control" formControlName="email" required
                                         autofocus
                                         [ngClass]="{ 'is-invalid':  f['email'].invalid && (f['email'].dirty || f['email'].touched) }">
                                     @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['email'].errors?.['required']) {
-                                        <div>Email is required</div>
+                                        <div>{{ t('signUp.html.errEmailreq') }}</div>
                                         }
                                         @if (f['email'].errors?.['email']) {
-                                        <div>Enter a valid email</div>
+                                        <div>{{ t('signUp.html.errEmailvValid') }}</div>
                                         }
                                     </div>
                                     }
@@ -68,7 +68,7 @@
 
                                 <div class="mb-3">
                                     <div class="mb-2 w-100">
-                                        <label class="text-muted" for="password">Password</label>
+                                        <label class="text-muted" for="password">{{ t('signUp.html.pass') }}</label>
                                     </div>
                                     <input id="password" type="password" class="form-control" formControlName="password"
                                         required
@@ -76,22 +76,22 @@
                                     @if (f['password'].invalid && (f['password'].dirty || f['password'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['password'].errors?.['required']) {
-                                        <div>Password is required</div>
+                                        <div>{{ t('signUp.html.errPassReq') }}</div>
                                         }
                                         @if (!f['password'].value?.match('^(?=.*[A-Z])') ) {
-                                        <div>At least one uppercase letter is required</div>
+                                        <div>{{ t('signUp.html.errPassUpper') }}</div>
                                         }
                                         @if (!f['password'].value?.match('(?=.*[a-z])')) {
-                                        <div>At least one lowercase letter</div>
+                                        <div>{{ t('signUp.html.errPassLower') }}</div>
                                         }
                                         @if (!f['password'].value?.match('(.*[0-9].*)')) {
-                                        <div>At least one digit.</div>
+                                        <div>{{ t('signUp.html.errPassDigit') }}</div>
                                         }
                                         @if (!f['password'].value?.match('(?=.*[!@#$%^&*])')) {
-                                        <div>At least one special character</div>
+                                        <div>{{ t('signUp.html.errPassSpecial') }}</div>
                                         }
                                         @if (f['password'].errors?.['minlength']) {
-                                        <div>At least 8 characters long.</div>
+                                        <div>{{ t('signUp.html.errPass8') }}</div>
                                         }
                                     </div>
                                     }
@@ -102,7 +102,7 @@
 
                                 <div class="mb-3">
                                     <div class="mb-2 w-100">
-                                        <label class="text-muted" for="confirmPassword">Confirm password</label>
+                                        <label class="text-muted" for="confirmPassword">{{ t('signUp.html.confPass') }}</label>
                                     </div>
                                     <input id="confirmPassword" type="password" class="form-control"
                                         formControlName="confirmPassword" required
@@ -111,10 +111,10 @@
                                     f['confirmPassword'].touched)) {
                                     <div class="invalid-feedback">
                                         @if (f['confirmPassword'].errors?.['required']) {
-                                        <div>Password is required</div>
+                                        <div>{{ t('signUp.html.errConfPassReq') }}</div>
                                         }
                                         @if (f['confirmPassword'].errors?.['mustMatch']) {
-                                        <div>Password do not match</div>
+                                        <div>{{ t('signUp.html.errConfPassMatch') }}</div>
                                         }
                                     </div>
                                     }
@@ -125,7 +125,7 @@
                                         [disabled]="this.signupForm.invalid">
                                         <span class="spinner-border spinner-border-sm" aria-hidden="true"
                                             *ngIf="submitted"></span>
-                                        Sign up
+                                            {{ t('signUp.html.signBtn') }}
                                     </button>
                                 </div>
                             </form>

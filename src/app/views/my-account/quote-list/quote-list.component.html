@@ -1,12 +1,12 @@
-<h4 class="mb-2"> Quote List </h4>
+<h4 class="mb-2" *transloco="let t">{{ t('quoteList.html.title') }}  </h4>
 
 <form>
-	<div class="mb-3 row">
+	<div class="mb-3 row" *transloco="let t">
 		<!-- <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label> -->
 		<div class="col-xs-3 col-sm-auto">
-			<label for="quoteStatus" class="form-label"><b>Status</b></label>
+			<label for="quoteStatus" class="form-label"><b>{{ t('quoteList.html.status') }}</b></label>
 			<select class="form-select"  (change)="statusSearch($event)" [disabled]="loading" >
-			  <option selected value="all">All</option>
+			  <option selected value="all" >{{ t('quoteList.html.all') }}</option>
 			  @for (status of statusArray ; track status; let i = $index) {
 			  	<option value="{{status}}">{{status}}</option>  
 			  }
@@ -20,14 +20,14 @@
 		<span class="visually-hidden">Loading...</span>
 	</div>
 }@else{
-<table class="table table-hover table-responsive">
+<table class="table table-hover table-responsive" *transloco="let t">
 	<thead>
 		<tr>
 			<th scope="col">#</th>
-			<th scope="col">E-mail</th>
-			<th scope="col">Status</th>
-			<th scope="col">Created</th>
-            <th scope="col">STL File</th>
+			<th scope="col" >{{ t('quoteList.html.email') }}</th>
+			<th scope="col" >{{ t('quoteList.html.status') }}</th>
+			<th scope="col">{{ t('quoteList.html.created') }}</th>
+            <th scope="col" >{{ t('quoteList.html.stl') }}</th>
 		
 		</tr>
 	</thead>
@@ -60,27 +60,27 @@
 						<div class="card">
 							<div class="card-body">
 								<div >
-									<b>Material:</b> 
+									<b>{{ t('quoteList.html.material') }}:</b> 
 									<p>{{quote.material}}</p>
 								</div>
 								<div >
-									<b>color:</b> 
+									<b>{{ t('quoteList.html.color') }}:</b> 
 									<p>{{quote.color}}</p>
 								</div>
 								<div >
-									<b>Infill:</b> 
+									<b>{{ t('quoteList.html.infill') }}:</b> 
 									<p>{{quote.infil}}</p>
 								</div>
 								<div >
-									<b>Layer height:</b> 
+									<b>{{ t('quoteList.html.layerH') }}:</b> 
 									<p>{{quote.layerHeight}}</p>
 								</div>
 								<div >
-									<b>Wall count:</b> 
+									<b >{{ t('quoteList.html.wallC') }}:</b> 
 									<p>{{quote.wallCount}}</p>
 								</div>
 								<div >
-									<b>Additional information:</b> 
+									<b>{{ t('quoteList.html.addInfo') }}:</b> 
 									<p [innerHtml]="quote.additionalInfo"></p>
 								</div>
 							</div>
@@ -102,19 +102,9 @@
 		
 		} @empty {
 			<tr>
-				<td colspan="5" style="text-align: center">No quotes found</td>
+				<td colspan="5" style="text-align: center">{{ t('quoteList.html.noQuoteFound') }}</td>
 			</tr>
 		}
 	</tbody>
 </table>
 }
-<!-- id: number;
-material: string;
-color: string;
-infil: number;
-layerHeight: number;
-wallCount: number;
-stlFile: string;
-status: string;
-fromEmail: string;
-additionalInfo: string; -->

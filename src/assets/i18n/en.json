@@ -1,0 +1,342 @@
+{
+    "welcome": {
+        "html": {
+            "title": "Welcome to 3dCreated <br /> 3D printing services",
+            "AllCategories": "All categories",
+            "priceRange": "Price Range",
+            "results": "Results",
+            "filter": "Filter",
+            "editBtn": "Edit",
+            "addCartBtn": "Add to cart",
+            "noProductfound": "No Products found"
+        },
+        "ts": {
+            "acctActivated": "Account activated",
+            "acctActivatedErr": "Account activation error.",
+            "session_exp": "Your sesson has expired"
+        }
+    },
+    "topMenu":{
+        "html": {
+            "login": "Login",
+            "signUp" : "Sign up",
+            "profile" : "My Profile",
+            "orders": "Orders",
+            "addProd": "Add Product",
+            "logout": "Logout",
+            "products" : "Products",
+            "services": "Services",
+            "contact_us": "Contact us",
+            "quote": "Quote"
+        }
+    },
+    "services":{
+        "html": {
+            "prototype-title": "Prototyping & Custom designs",
+            "prototype-desc": "<p> Do you have functional designs you want validated?</p><p> Or do you need quick prototypes to custom creations that you dreamed of, then we've got the 3D printing potion to make it happen.</p><p>We can 3d print parts up to 235x235x250mm super fast in a variety of materials suitable for yor application. </p>",
+            "diy-title": "DIY parts repairs",
+            "diy-desc": " <p> If you have a part that is broken .</p><p> We can 3D print parts that will make your DIY projects a reality.</p><p> Request a Quote today! </p>"
+        }
+    },
+    "quote": {
+        "html":{
+            "uploadModel": "Upload 3D Model",
+            "dndFile": "Drag and drop file here",
+            "or": "or",
+            "uplYourModel": "Upload your 3d model",
+            "fileMax": "File max size 35 Mb.",
+            "name": "Name",
+            "dim": "Dimensions",
+            "material": "Material",
+            "selMat": "Select material",
+            "Color":"Color",
+            "selColor": "Select color",
+            "infill":"Infill density",
+            "layer":"Layer height",
+            "wall":"Wall count",
+            "email": "E-mail",
+            "email_req": "Email is required",
+            "email_valid": "Enter a valid email",
+            "addInfo": "Additional details",
+            "answer": "You will receive an answer between 24 and 48 hours.",
+            "reqBtn": "Request Quote",
+            "subOthBtn": "Sumbit another Quote"
+        },
+        "ts": {
+            "stl_file": "File needs to be a STL file",
+            "stl_file_size": "File size cannot exceed 35 mb",
+            "quoteSent": "Quote submitted to {{email}}. You will receive an response within 24 to 48 hours. Thank you ",
+            "errUploadStl": "Could not upload the file!"
+        }
+    },
+    "productView": {
+        "html": {
+            "quantity":"Quantity",
+            "addCartBtn":"Add to cart",
+            "desc": "Description",
+            "editBtn": "Edit",
+            "loading":"Loading product"
+        }
+    },
+    "manageProduct": {
+        "html": {
+            "addTitle": "Add management",
+            "editTitle": "Edit product",
+            "prodTitle": "Title",
+            "errTitleReq": "A title is required",
+            "errtitleMin": "Title must be at least 3 characters",
+            "errTitleMax": "Title must not exceed 200 characters",
+            "catgTitle": "Category",
+            "selCatgFiller": "Select category",
+            "priceTitle": "Price",
+            "errPriceReq": "Price is required",
+            "errPriceNbrOnly": "Enter only numbers",
+            "qtyTitle": "Quantity",
+            "errQtyReq": "Quantity is required",
+            "errQtyNbrOnly": "Enter only numbers",
+            "descTitle": "Description",
+            "errDescReq": "A description is required",
+            "errDescMin": "Description must be at least 1 characters",
+            "errDescMax": "Descrtiption must not exceed 2000 characters",
+            "coverImgTitle": "Cover Image ( main page )",
+            "errCoverImgMaxFiles": "5 files maximum",
+            "errCoverImgReq": "Cover image is required.",
+            "addImgtitle": "Additional images",
+            "errAddImgMaxFiles": "5 files maximum",
+            "cancelBtn": "Cancel",
+            "subBtn": "Submit",
+            "btnClose": "Close"
+
+        },
+        "ts":{
+            
+        }
+    },
+    "404":{
+        "html": {
+            "Oops":"Oops! You're lost.",
+            "pageLookingFor": "The page you are looking for was not found.",
+            "backHome":"Back to Home"
+        }
+    },
+    "quoteSearch": {
+        "html" : {
+            "title": "Quote",
+            "search": "Search",
+            "result": "Result",
+            "noResult": "No result found",
+            "refId": "Reference Id",
+            "email": "Email",
+            "material": "Material",
+            "color": "Color",
+            "Infill": "Infill",
+            "layerH": "Layer Height",
+            "wallC": "Wall Count",
+            "status": "Status",
+            "addInfo": "Additional Information",
+            "created": "Created",
+            "updDt": "Updated"
+        },
+        "ts": {
+
+        }
+    },
+    "quoteList": {
+        "html": {
+            "title": "Quote List",
+            "status": "Status",
+            "all": "All",
+            "email": "E-mail",
+            "created": "Created",
+            "stl": "STL File",
+            "material": "Material",
+            "color": "Color",
+            "infill": "Infill",
+            "layerH": "Layer height",
+            "wallC": "Wall count",
+            "addInfo": "Additional information",
+            "noQuoteFound": "No quotes found"
+        }
+    },
+    "orderList": {
+        "html": {
+            "title": "Order List",
+            "status": "Status",
+            "all": "All",
+            "orderNbr": "Order #",
+            "date": "Date",
+            "total": "Total",
+            "viewBtn": "View",
+            "noQuoteFnd": "No quotes found",
+            "orderPlaced1": "Order #{{orderId}} was placed on ",
+            "orderPlaced2": " and is currently {{status}}.",
+            "invoiceTitle": "INVOICE",
+            "invoiceNumber":"Invoice #",
+            "smallInvoiceTitle":"Invoice",
+            "invNbr":"Invoice #",
+            "datePaid":"Date Paid",
+            "to":"To",
+            "orderDtl":"Order details",
+            "product":"Product",
+            "desc":"Description",
+            "qty":"Quantity",
+            "price":"Price",
+            "subTot":"Sub Total"
+
+        }
+    },
+    "myProfile": {
+        "html" : {
+            "menuTitle": "My Profile Menu"
+        }
+    },
+    "myInfo": {
+        "html" : {
+            "info": "Information",
+            "FirstName": "First name",
+            "FirstNameReq": "First name is required",
+            "FirstNameMin": "First name must be at least 3 or more characters",
+            "lastName": "Last name",
+            "lastNameReq": "Last name is required",
+            "lastNameMin": "Last name must be at least 3 or more characters",
+            "email": "E-Mail Address",
+            "emailReq":"Email is required",
+            "emailMin":"Enter a valid email",
+            "updBtn": "Update"
+
+        }
+    },
+    "myAcctSideBar": {
+        "html": {
+            "info":"Information",
+            "chPass":"Change Password",
+            "orders":"Orders",
+            "quoteSearch":"Quote Search",
+            "acc":"Account",
+            "admin":"Admin",
+            "quoteList":"Quotes List",
+            "ordList":"Orders List",
+            "userList":"User list"
+        }
+    },
+    "footer": {
+        "html": {
+            "copyright":"Copyright© 2024 Alexandre Boudreault "
+        }
+    },
+    "contacUs": {
+        "html": {
+            "contact": "Contact",
+            "text": "The best way to contact us is to use our contact form below. Please fill out all of the required fields and we will get back to you as soon as possible.",
+            "fullName": "Full Name",
+            "fullNameReq": "Full name is required",
+            "fullNameMin": "Full name must be at least 3 or more characters",
+            "email": "Email",
+            "emailReq": "Email is required",
+            "emailValidErr": "Enter a valid email",
+            "message": "Message",
+            "msgReq": "A message is required",
+            "msgMin": "The message must contain at least 3 characters",
+            "submitBtn": "Submit"
+        }
+    },
+    "cart": {
+        "html": {
+            "title": "Shopping Cart",
+            "items": "items",
+            "noItems": "No Items in cart",
+            "backShop": "Back to shop",
+            "summary": "Summary",
+            "totalPrice": "Total Price",
+            "payStripe": "Pay with Stripe",
+            "paypal": "Pay with Pay Pal",
+            "shippingInfo": "Only local pickup at the moment. Shipping done on request. Expect 15$ or more for shipping.",
+            "payBtn": "Proceed to pay"
+        }
+    },
+    "cartReceipt": {
+        "html": {
+            "title": "Receipt",
+            "invTitle": "Invoice",
+            "invNbr": "Invoice #",
+            "paid": "Date Paid",
+            "status": "Status",
+            "to": "To",
+            "orderDtl": "Order details",
+            "qty": "Quantity",
+            "price": "Price",
+            "subTot": "Sub Total",
+            "prod": "Product",
+            "thanks": "Thank you!"
+        }
+    }
+    ,
+    "signUp": {
+        "html": {
+            "title":"Sign up",
+            "firstName":"First name",
+            "errFirstNameReq":"First name is required",
+            "errFirstNameMin":"First name must be at least 3 or more characters",
+            "lastName":"Last name",
+            "errLastNameReq":"Last name is required",
+            "errLastNameMin":"Last name must be at least 3 or more characters",
+            "email":"E-Mail Address",
+            "errEmailreq":"Email is required",
+            "errEmailvValid":"Enter a valid email",
+            "pass":"Password",
+            "errPassReq":"Password is required",
+            "errPassUpper":"At least one uppercase letter is required",
+            "errPassLower":"At least one lowercase letter",
+            "errPassDigit":"At least one digit.",
+            "errPassSpecial":"At least one special character",
+            "errPass8":"At least 8 characters long.",
+            "confPass":"Confirm password",
+            "errConfPassReq":"Password is required",
+            "errConfPassMatch":"Password do not match",
+            "signBtn":"Sign Up"
+        }
+    },
+    "login": {
+        "html": {
+            "title":"Login",
+            "email":"E-Mail Address",
+            "errEmailreq":"Email is required",
+            "errEmailValid":"Enter a valid email",
+            "Password":"Password",
+            "forgotPassword":"Forgot Password?",
+            "PasswordReq":"Password is required",
+            "loginBtn":"Login",
+            "noAcct":"Don't have an account?",
+            "crtOne":"Create One"
+        },
+        "ts": {
+
+        }
+    },
+    "forgotPass": {
+        "html": {
+            "title": "Forgot your password?",
+            "email": "E-Mail Address",
+            "emailErrReq": "Email is required",
+            "emailErrValid": "Enter a valid email",
+            "newPassBtn": "Get new password"
+        }
+    },
+    "changePass": {
+        "html": {
+            "title": "Change password",
+            "Password": "Password",
+            "passReq": "Password is required",
+            "passUpperLetter": "At least one uppercase letter is required",
+            "passLowerLetter": "At least one lowercase letter",
+            "passOneDigit": "At least one digit.",
+            "passOneSpecial": "At least one special character",
+            "passLength": "At least 8 characters long.",
+            "confPass": "Confirm password",
+            "passNoMatch": "Password do not match",
+            "chgPassBtn": "Change password"
+
+        }
+    }
+
+}

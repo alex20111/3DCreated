@@ -31,11 +31,11 @@ export class AuthService {
 
 
   signup(signupFormValues: any): Observable<any> {
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/signup`, signupFormValues);
+    return this.http.post<any>(`${environment.HOST_PORT}/api/signup`, signupFormValues);
   }
 
   login(loginInfo: any): Observable<any> {
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/login`, loginInfo).pipe(map(resp => {
+    return this.http.post<any>(`${environment.HOST_PORT}/api/login`, loginInfo).pipe(map(resp => {
       console.log("User:  ", resp);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem('user', JSON.stringify(resp.user));
@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   resetPassword(email: any): Observable<any> {
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/resetPassword`, email);
+    return this.http.post<any>(`${environment.HOST_PORT}/api/resetPassword`, email);
   }
 
   changePasswordForReset(email: string, token: string, password: string, confirmPassword: string): Observable<any> {
@@ -75,12 +75,12 @@ export class AuthService {
       password: password,
       confirmPassword: confirmPassword
     }
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/resetPassword/change`, rstEval);
+    return this.http.post<any>(`${environment.HOST_PORT}/api/resetPassword/change`, rstEval);
   }
 
   changePassword(chPassword: any): Observable<any> {
 
-    return this.http.post<any>(`http://${environment.HOST}:${environment.PORT}/api/changePassword/`, chPassword);
+    return this.http.post<any>(`${environment.HOST_PORT}/api/changePassword/`, chPassword);
 
   }
 

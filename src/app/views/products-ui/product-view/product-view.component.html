@@ -1,43 +1,49 @@
-<div class="container footer">
+<div class="container footer" *transloco="let t">
 
     @if(product){
     <div class="row mt-2">
-
 
         <div class="col-8">
 
             <img crossorigin="anonymous" [src]="productMainImage" class="card-img-top" alt="This is an image" style="width: 856px;height:510px;">
 
             <!-- <div class="col-2"> -->
-                <span  class="p-1 mt-1 point col-2"><img  crossorigin="anonymous" src="http://localhost:3000/{{product.coverImageUrl}}" style="width:100px;height:100px;"
+                <span  class="p-1 mt-1 point col-2"><img  crossorigin="anonymous" src="{{hostPort}}/{{product.coverImageUrl}}" style="width:100px;height:100px;"
                      class="preview mt-1 p-1" alt="This is an image" (click)="changeMainImage(product.coverImageUrl)"></span>
                 <span *ngFor="let p of product.productImages; index as idx" class="  point col-2">
-                    <img crossorigin="anonymous" src="http://localhost:3000/{{p.imageUrl}}" class="preview mt-1 p-1" style="width:100px;height:100px;" (click)="changeMainImage(p.imageUrl)" />
+                    <img crossorigin="anonymous" src="{{hostPort}}/{{p.imageUrl}}" class="preview mt-1 p-1" style="width:100px;height:100px;" (click)="changeMainImage(p.imageUrl)" />
                 </span>
             <!-- </div> -->
             <hr>
         </div>
         <div class="col-4">
             <p style="font-size: 22px; font-weight: bold">{{product.title}}</p>
-            <p style="color:red;font-size: 22px"> <b>${{product.price}}</b></p>
+            <p style="color:red;font-size: 22px"> <b>${{product.price.toFixed(2)}}</b></p>
             <hr />
-            <p><b>Quantity</b></p>
-            <p><input type="number" class="form-control" style="width:100px"></p>
-            <p><button class="btn btn-danger ">Add to cart</button></p>
+            <p><b>{{ t('productView.html.quantity') }}</b></p>
+            <p><input type="number" class="form-control" style="width:100px" [(ngModel)]="quantity">
+             
+                @if(quantityError.length > 0) {
+                <div style="color: red">
+                   <div>{{quantityError}}</div>
+                  </div>
+                }
+            </p>
+            <p><button class="btn btn-danger " (click)="addtoCart()">{{ t('productView.html.addCartBtn') }}</button></p>
         </div>
 
     </div>
 
     <div class="row mt-2">
         <div class="col-8 border border-primary-subtle p-3">            
-            <h3>Description</h3>
+            <h3 >{{ t('productView.html.desc') }}</h3>
             <div [innerHtml]="product.description"></div>
             <!-- <p>{{}}</p> -->
          
         </div>
         <div class="col-8 mt-2" >
         <button *ngIf="user && user.admin" type="button" class="btn btn-primary "
-        [routerLink]="['/editProduct',product.id]">Edit</button>
+        [routerLink]="['/editProduct',product.id]">{{ t('productView.html.editBtn') }}</button>
     </div>
     </div>
     }
@@ -46,7 +52,7 @@
 
         <span class="visually-hidden">Loading...</span>
     </div>
-    Loading product
+    <span>{{ t('productView.html.loading') }} </span>
     }
 
 </div>

@@ -16,3 +16,9 @@
     background-repeat: no-repeat;
     display:grid;
   }
+
+  .descLimit{
+    white-space: nowrap;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

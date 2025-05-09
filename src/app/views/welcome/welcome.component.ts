@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../../services/product.service';
-import { CommonModule } from '@angular/common';
+import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user';
@@ -10,12 +10,16 @@ import { AuthService } from '../../services/auth.service';
 import { Message, MessagesService } from '../../services/messages.service';
 import { Subscription } from 'rxjs';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslocoModule , TranslocoService , TranslocoDirective} from '@jsverse/transloco';
+import { LanguageService } from '../../services/language.service';
+import { Language } from '../../models/lang';
 
+//transloclDirectives
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, RouterOutlet, RouterModule, FormsModule, NgbPaginationModule],
+  imports: [FontAwesomeModule, CommonModule, RouterOutlet, RouterModule, FormsModule, NgbPaginationModule,  TranslocoModule],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
 })
@@ -51,7 +55,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   constructor(private productService: ProductService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private msgService: MessagesService) { }
+    private msgService: MessagesService,
+    private translocoService: TranslocoService,
+  private langService: LanguageService) {
+
+     }
   ngOnDestroy(): void {
     if (this.msgServiceSubs) {
       this.msgServiceSubs.unsubscribe();
@@ -70,9 +78,15 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
     if (userActivated !== undefined) {
       if (userActivated === 'true') {
-        this.message = "Account activated.";
+        this.translocoService.selectTranslate('welcome.ts.acctActivated')
+        .subscribe(value => {this.message = value} );
+        // this.message =  this.translocoService.translate('welcome.ts.acctActivated');
+        // $localize`:@@welcomeTs-acctActivated:Account activated.`;
       } else {
-        this.message = "Account activation error.";
+        this.translocoService.selectTranslate('welcome.ts.acctActivatedErr')
+        .subscribe(value => {this.message = value} );
+        // this.message = this.translocoService.translate('welcome.ts.acctActivatedErr');
+        //  $localize`:@@welcomeTs-acctActivatedErr:Account activation error.`;
       }
     }
 
@@ -93,7 +107,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       next: (msg: Message) => {
         console.log("Message service recieved : ", msg);
         if (msg.key === "session" && msg.value === "expired") {
-          this.messageWarn = "Your session has expired";
+          this.translocoService.selectTranslate('welcome.ts.session_exp')
+                         .subscribe(value => {this.messageWarn = value} );
+          // this.messageWarn =  this.translocoService.translate('welcome.ts.session_exp');
+          // $localize`:@@welcomeTs.session_exp:Your sesson has expired`;
+          // this.messageWarn = "Your session has expired";
           this.msgService.removeItem();
         }
       }
@@ -163,12 +181,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
 
   private loadProducts(param: any) {
-    // console.log("priceMin: ", this.priceMin);
-    // console.log("priceMax: ", this.priceMax);
-    // console.log("category: ", this.currentCatgSel);
-    // console.log("pageNbr: ", this.pageNbr);
-    // console.log("pageSize: ", this.pageSize);
-    // console.log("param: ", param);
 
     let query = "";
     if (param) {
@@ -266,6 +278,20 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   //   // });
 
   // }
+
+  setNag(){
+    // const val = this.translocoService.translate('quote.ts.quoteSent', { email: `bbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaa` , ro: " aall d"});
+    const val2 = this.translocoService.translate('welcome.ts.session_exp');
+    console.log("Transalted value: " ,  val2);
+    this.translocoService.selectTranslate('welcome.ts.session_exp')
+    .subscribe(value => { console.log("trans") ; this.messageWarn = value} );
+    // this.translocoService.setActiveLang('fr');
+    // const langCode: Language = {
+    //   locale: "fr"
+    // }
+    // this.langService.savelang(langCode);
+
+  }
 }
 
 export interface category {

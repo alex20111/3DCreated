@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "i18n:extract": "ng extract-i18n --format=json --output-path src/locale"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,8 @@
     "@fortawesome/angular-fontawesome": "^0.15.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@ng-bootstrap/ng-bootstrap": "^17.0.0",
+    "@jsverse/transloco": "^7.4.3",
+    "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@popperjs/core": "^2.11.8",
     "@stripe/stripe-js": "^4.3.0",
     "angular-stl-model-viewer": "^12.0.0",

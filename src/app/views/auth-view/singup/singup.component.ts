@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,16 +7,17 @@ import { MustMatch } from '../../../validator/mustMatchValidator';
 import { AuthService } from '../../../services/auth.service';
 import { environment } from '../../../../environments/environment';
 import { Recaptcha3Service } from '../../../services/recaptcha3.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 
 @Component({
   selector: 'app-singup',
   standalone: true,
-  imports:  [RouterOutlet, RouterModule, ReactiveFormsModule, DisableControlDirective,CommonModule],
+  imports:  [RouterOutlet, RouterModule, ReactiveFormsModule, DisableControlDirective,CommonModule, TranslocoModule],
   templateUrl: './singup.component.html',
   styleUrl: './singup.component.css'
 })
-export class SingupComponent implements OnInit, OnDestroy{
+export class SingupComponent implements OnInit, OnDestroy, AfterViewInit{
 
   submitted: boolean = false;
   accountCreated: boolean = false;
@@ -45,6 +46,16 @@ export class SingupComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.captCha3.init(environment.CAPTCHA_SITE_KEY);
   }
+  ngAfterViewInit(): void {
+    // console.log("after view init", new Date());
+    setTimeout(() => {
+      const captChatPos = Array.from(document.getElementsByClassName('grecaptcha-badge') as HTMLCollectionOf<HTMLElement>);
+
+      // console.log("captChatPos: " , captChatPos, new Date());
+      captChatPos.forEach(element=> {  element.style.bottom = "90px"});
+    }, 500);
+      
+  }
 
   get f(): { [key: string]: AbstractControl } {
     return this.signupForm.controls;
@@ -57,7 +68,7 @@ export class SingupComponent implements OnInit, OnDestroy{
     }
     this.submitted = true;
 
-    this.captCha3.getToken().then(token => {
+    this.captCha3.getToken("SignUpAction").then(token => {
       // console.log("tokennnnnn: " , token);
       // console.log("Type of: " , typeof token);
       const formData = new FormData();
@@ -70,19 +81,22 @@ export class SingupComponent implements OnInit, OnDestroy{
 
       this.authService.signup(formData).subscribe({
         next: (result)=> {
-          console.log("signup: ", result);
+          // console.log("signup: ", result);
           this.submitted = false;
           this.accountCreated = true;
           this.successMsg = result.message;
         },
         error: (err) => {
-          console.error("signup: ", err);
+          // console.error("signup: ", err);
           this.accountCreated = false;
           this.errorMsg = err.error.message;
+          this.submitted = false;
         }
       });
     }, error => {
-    console.log('err ',error)
+    console.log('err ',error);
+    this.submitted = false;
+    this.errorMsg = "Error signing up , try again later";
   });
 
     

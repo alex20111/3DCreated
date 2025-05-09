@@ -6,11 +6,12 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
 import { CommonModule } from '@angular/common';
 import { DisableControlDirective } from '../../../directives/disable-control.directive';
 import { environment } from '../../../../environments/environment';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, ReactiveFormsModule, DisableControlDirective, CommonModule],
+  imports: [RouterOutlet, RouterModule, ReactiveFormsModule, DisableControlDirective, CommonModule, TranslocoModule],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css'
 })

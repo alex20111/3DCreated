@@ -1,0 +1,33 @@
+{
+    "welcome": {
+        "html": {
+            "title": "Welcome to 3dCreated <br /> 3D printing services[fr]",
+            "AllCategories": "All categories[fr]",
+            "priceRange": "Price Range[fr]",
+            "results": "Results[fr]",
+            "filter": "Filter[fr]",
+            "editBtn": "Edit[fr]",
+            "addCartBtn": "Add to cart[fr]",
+            "noProductfound": "No Products found[fr]"
+        },
+        "ts": {
+            "acctActivated": "Account activated[fr]",
+            "acctActivatedErr": "Account activation error.[fr]",
+            "session_exp": "Your sesson has expired[fr]"
+        }
+    },
+    "topMenu":{
+        "html": {
+            "login": "Login",
+            "signUp" : "Sign up",
+            "profile" : "My Profile",
+            "orders": "Orders",
+            "addProd": "Add Product",
+            "logout": "Logout",
+            "products" : "Products",
+            "services": "Services",
+            "contact_us": "Contact us",
+            "quote": "Quote"
+        }
+    } 
+}

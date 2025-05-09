@@ -26,7 +26,7 @@ export const routes: Routes = [
     { path: 'editProduct/:id', component: ManageProductComponent, resolve: {catgList: categoriesListResolver},canActivate : [AdminAuthGuard] },
     { path: 'addProduct', component: ManageProductComponent, resolve: {catgList: categoriesListResolver} ,canActivate : [AdminAuthGuard]},
     { path: 'viewProduct/:id', component: ProductViewComponent },
-    { path: 'addToCart/:id', component: CartComponent },
+    { path: 'addToCart', component: CartComponent },
     { path: 'viewCart', component: CartComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SingupComponent },

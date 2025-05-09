@@ -8,11 +8,12 @@ import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user';
 import { MyProfilePageViewEnum } from '../../../enums/MyProfilePageViewEnum';
 import { Subscription } from 'rxjs';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-my-account-sideBar',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, RouterOutlet, RouterModule, FormsModule],
+  imports: [FontAwesomeModule, CommonModule, RouterOutlet, RouterModule, FormsModule, TranslocoModule],
   templateUrl: './my-account-sideBar.component.html',
   styleUrl: './my-account-sideBar.component.css'
 })

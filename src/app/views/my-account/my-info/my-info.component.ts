@@ -4,11 +4,12 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { UserInfoService } from '../../../services/user-info.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-my-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,TranslocoModule],
   templateUrl: './my-info.component.html',
   styleUrl: './my-info.component.css'
 })

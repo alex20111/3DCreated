@@ -12,10 +12,10 @@ export class OrderService {
 
 
   viewUserOrder(orderId: any): Observable<any> {
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/orderView?orderId=${orderId}`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/orderView?orderId=${orderId}`);
   }
 
   loadAllOrders(query: any): Observable<any> {
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/allOrders?${query}`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/allOrders?${query}`);
   }
 }

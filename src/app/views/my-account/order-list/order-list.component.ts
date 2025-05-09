@@ -8,11 +8,12 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { User } from '../../../models/user';
 import { AuthService } from '../../../services/auth.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule, FontAwesomeModule],
+  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule, FontAwesomeModule, TranslocoModule],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css'
 })
@@ -126,6 +127,7 @@ export class OrderListComponent implements OnInit , OnChanges {
       next: (result) => {
         this.loading = false;
         this.order = result.order;
+        console.log("Single order: " , this.order);
       },
       error: (err) => {
         console.log("loadSingleOrder Error: " , err);

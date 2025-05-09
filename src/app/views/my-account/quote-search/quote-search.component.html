@@ -1,5 +1,5 @@
-<h4 class="mb-2"> Quote </h4>
-<div class="container mt-2 ">
+<h4 class="mb-2"  *transloco="let t">{{ t('quoteSearch.html.title') }}  </h4>
+<div class="container mt-2 " *transloco="let t">
     <div class="row h-100 ">
         <div class="col-lg-4 col-sm-6 mt-2">
             <div class="input-group mb-3 ">
@@ -7,7 +7,7 @@
                 <input  id="quoteSearch" type="text" class="form-control" required placeholder="Quote number"  #qs (change)="quoteNumber=  qs.value" >
                 <button type="submit" class="btn btn-primary " [disabled]="searchSubmitted" (click)="searchQuote('a')">
                     <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="searchSubmitted"></span>
-                    Search
+                    <span >{{ t('quoteSearch.html.search') }}  </span>
                 </button>
             </div>
         </div>
@@ -15,75 +15,70 @@
 </div>
 
 @if (searchDone){
-<div class="container mt-2">
+<div class="container mt-2"  *transloco="let t">
     <div class="row">
         
         <div class="col-lg-12 col-sm-12 mt-2">
-           Result: 
+           <span >{{ t('quoteSearch.html.search') }}: </span> 
             <hr/>
             @if(!quoteResult){
-                No result found
+               <span >{{ t('quoteSearch.html.noResult') }}  </span>
             }@else {
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td colspan="2" class="ms-5" style="background-color: #f8f9fa;"><b>Reference Id: {{quoteResult.quoteRefId}} ({{quoteResult.status}})</b></td>
+                            <td colspan="2" class="ms-5" style="background-color: #f8f9fa;"><b><span > {{ t('quoteSearch.html.refId') }}: </span>{{quoteResult.quoteRefId}} ({{quoteResult.status}})</b></td>
                         </tr>
                         @if(user && user.email == quoteResult.fromEmail){
                             <tr>
-                                <td style="background-color: #f8f9fa;"><b>Email:</b></td>
+                                <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.email') }}:</b></td>
                                 <td style="background-color: #f8f9fa;">{{quoteResult.fromEmail}}</td>
                             </tr>
                          }
                         <tr>
-                            <td style="width:50px;background-color: #f8f9fa;"><b>Material:</b></td>
+                            <td style="width:50px;background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.material') }}:</b></td>
                             <td  style="background-color: #f8f9fa;">{{quoteResult.material}}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Color:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.color') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{quoteResult.color}}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Infill:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.Infill') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{quoteResult.infil}}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Layer Height:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.layerH') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{quoteResult.layerHeight}}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Wall Count:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.wallC') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{quoteResult.wallCount}}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Status:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.status') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{quoteResult.status}}</td>
                         </tr>
                       
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Additional Information:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.addInfo') }}:</b></td>
                             <td style="background-color: #f8f9fa;"><p  [innerHtml]="quoteResult.additionalInfo"></p></td>
                         </tr>                                     
 
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Created:</b></td>
+                            <td style="background-color: #f8f9fa;"><b>{{ t('quoteSearch.html.created') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{ quoteResult.createdAt | date : " YYYY-MM-dd hh:mm" }}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #f8f9fa;"><b>Updated:</b></td>
+                            <td style="background-color: #f8f9fa;"><b >{{ t('quoteSearch.html.updDt') }}:</b></td>
                             <td style="background-color: #f8f9fa;">{{ quoteResult.updatedAt | date : " YYYY-MM-dd hh:mm" }}</td>
                             <!-- <td>{{ quote.createdAt | date : " YYYY-MM-dd hh:mm" }}</td> -->
                         </tr>
                         </tbody>
                   </table>
-            }
-            
-
-
-        </div>
-        
+            }            
+        </div>        
     </div>
-
 </div>
 }
 

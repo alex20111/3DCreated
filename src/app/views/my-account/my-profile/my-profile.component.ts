@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderListComponent } from "../order-list/order-list.component";
 import { MyInfoComponent } from "../my-info/my-info.component";
 import { QuoteSearchComponent } from "../quote-search/quote-search.component";
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-my-profile',
@@ -16,7 +17,7 @@ import { QuoteSearchComponent } from "../quote-search/quote-search.component";
   imports: [MyAccountSideBarComponent, ChangePasswordComponent,
      QuoteListComponent, NgbCollapseModule, NgbAccordionModule,
       FontAwesomeModule, OrderListComponent, MyInfoComponent,
-       QuoteSearchComponent],
+       QuoteSearchComponent, TranslocoModule],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.css'
 })

@@ -11,13 +11,14 @@ import { QuoteService } from '../../services/quote.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { BOLD_BUTTON, EditorConfig, ITALIC_BUTTON, NgxSimpleTextEditorModule, SEPARATOR, UNDO_BUTTON } from 'ngx-simple-text-editor';
 import { AuthService } from '../../services/auth.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
   selector: 'app-quote',
   standalone: true,
   imports: [StlModelViewerModule, CommonModule, FontAwesomeModule,  ReactiveFormsModule,
-    DisableControlDirective, NgbProgressbarModule,NgxSimpleTextEditorModule, 
+    DisableControlDirective, NgbProgressbarModule,NgxSimpleTextEditorModule, TranslocoModule, 
     RouterModule],
   templateUrl: './quote.component.html',
   styleUrl: './quote.component.css'
@@ -68,7 +69,8 @@ export class QuoteComponent implements OnInit{
 
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
-    private quotesService: QuoteService) { }
+    private quotesService: QuoteService,
+    private translocoService: TranslocoService) { }
 
   ngOnInit(): void {
     if (this.authService.userValue){
@@ -116,12 +118,12 @@ export class QuoteComponent implements OnInit{
     // console.log("Name ext: ", fileExt);
 
     if (fileExt !== 'stl') {
-      this.message = "File needs to be a STL file";
+      this.message = this.translocoService.translate('quote.ts.stl_file'); 
       return;
     }
 
     if (initFile.size > this.maxFileSize) {
-      this.message = "File size cannot exceed 35 mb."
+      this.message = this.translocoService.translate('quote.ts.stl_file_size'); 
       return;
     }
     this.file = initFile;
@@ -201,11 +203,12 @@ export class QuoteComponent implements OnInit{
 
     this.quotesService.sendQuote(formData).subscribe({
       next: (result) => {
-        this.messageSub = `Quote submitted to ${this.quoteForm.get('email')!.value}. You will receive an response within 24 to 48 hours. Thank you`;
+        // this.messageSub = this.translocoService.translate('quote.ts.stl_file');  $localize`:@@quote.quoteSent:Quote submitted to ${this.quoteForm.get('email')!.value}. You will receive an response within 24 to 48 hours. Thank you`;
+        this.messageSub = this.translocoService.translate('quote.ts.quoteSent', { email: `${this.quoteForm.get('email')!.value}` });
         this.submitted = false;
       },
       error: (err) => {
-        this.messageSub = "Error: " + err.error.message;
+        this.messageSub =  err.error.message;
         this.submitted = false;
       }
     });
@@ -240,7 +243,8 @@ export class QuoteComponent implements OnInit{
         if (err.error && err.error.message) {
           this.message = err.error.message;
         } else {
-          this.message = 'Could not upload the file!';
+          this.message = this.translocoService.translate('quote.ts.errUploadStl');
+            // $localize`:@@quote.errUploadStl:Could not upload the file!`;
         }
 
         // this.currentFile = undefined;

@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DisableControlDirective } from '../../../directives/disable-control.directive';
 import { EditorConfig, NgxSimpleTextEditorModule, ST_BUTTONS } from 'ngx-simple-text-editor';
 import { map } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-manage-product',
@@ -18,7 +20,8 @@ import { map } from 'rxjs';
     FontAwesomeModule,
     DisableControlDirective,
     RouterModule,
-    NgxSimpleTextEditorModule
+    NgxSimpleTextEditorModule,
+    TranslocoModule
 
   ],
   templateUrl: './manage-product.component.html',
@@ -26,7 +29,7 @@ import { map } from 'rxjs';
 })
 export class ManageProductComponent implements OnInit, OnDestroy {
 
-  SERVER_HOST: string = 'http://localhost:3000/';
+  SERVER_HOST: string = environment.HOST_PORT + "/";
 
   faTrash = faTrash;
 
@@ -68,7 +71,7 @@ export class ManageProductComponent implements OnInit, OnDestroy {
       [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(200),
+        Validators.maxLength(2000),
       ]
     ],
     quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -278,6 +281,10 @@ export class ManageProductComponent implements OnInit, OnDestroy {
 
   fs(){
     console.log("this form: " , this.form.invalid);
+  }
+
+  disp(){
+    console.log(this.form);
   }
 }
 

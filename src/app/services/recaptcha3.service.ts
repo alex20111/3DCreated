@@ -20,7 +20,7 @@ export class Recaptcha3Service {
 
   public getToken(action?: any): Promise<any> {
     try {
-      return (window as any)['grecaptcha'].execute(this.siteKey, action);
+      return (window as any)['grecaptcha'].execute(this.siteKey,  {action: action});
     } catch (e) {
       return new Promise((resolve, reject) => {
         reject(e);

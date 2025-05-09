@@ -11,12 +11,13 @@ import { MessagesService } from '../../services/messages.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco';
 // import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, DisableControlDirective, FontAwesomeModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, DisableControlDirective, FontAwesomeModule, CommonModule, TranslocoModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -43,7 +44,15 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const paramId = this.route.snapshot.paramMap.get('id');
+
+    const paramId = this.route.snapshot.queryParamMap.get('productId') !== null ? this.route.snapshot.queryParamMap.get('productId') as string : undefined;
+
+    const quantity = this.route.snapshot.queryParamMap.get('productQty') !== null ? this.route.snapshot.queryParamMap.get('productQty') as string : undefined;
+
+    console.log("Param id: " , paramId, " QTY: " , quantity);
+
+    // const paramId = this.route.snapshot.paramMap.get('id');
+    // const paramId = this.route.snapshot.paramMap.get('quantity');
     //when a param id, add to cart
     if (paramId) {
       console.log("Cart: Param id: ", paramId);
@@ -60,15 +69,19 @@ export class CartComponent implements OnInit {
         if (cartIdx > -1) {
           const cartItem = this.cart.cartProducts[cartIdx];
           this.cart.finalPrice = Number((this.cart.finalPrice + cartItem.productPrice).toFixed(2));
-          cartItem.productQuantity++;
+          if (quantity){
+            cartItem.productQuantity = cartItem.productQuantity + parseInt(quantity);
+          }else{
+            cartItem.productQuantity++;
+          }
           cartItem.totalPrice = Number((cartItem.productQuantity * cartItem.productPrice).toFixed(2));
           this.cartService.addCart(this.cart);
         } else {
           //add new item.
-          this.addNewProductToCart(paramId);
+          this.addNewProductToCart(paramId, quantity);
         }
       } else {
-        this.addNewProductToCart(paramId);
+        this.addNewProductToCart(paramId, quantity);
       }
     }
     //no param id, view cart
@@ -132,7 +145,7 @@ export class CartComponent implements OnInit {
   }
 
 
-  private addNewProductToCart(productId: string) {
+  private addNewProductToCart(productId: string, quantity: string | undefined) {
     this.cartService.producyById(productId).subscribe({
       next: (result) => {
         console.log("this.cart:  ", this.cart);
@@ -146,7 +159,7 @@ export class CartComponent implements OnInit {
           this.cart.cartProducts.push({
             productId: product.id,
             productName: product.title,
-            productQuantity: 1,
+            productQuantity: quantity !== undefined ? parseInt(quantity) : 1,
             productPrice: product.price,
             imageUrl: product.coverImageThumb,
             catgName: result.categoryName,
@@ -158,7 +171,7 @@ export class CartComponent implements OnInit {
           cartProductList.push({
             productId: product.id,
             productName: product.title,
-            productQuantity: 1,
+            productQuantity: quantity !== undefined ? parseInt(quantity) : 1,
             productPrice: product.price,
             imageUrl: product.coverImageThumb,
             catgName: result.categoryName,

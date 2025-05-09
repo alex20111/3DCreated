@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { QuoteService } from '../../../services/quote.service';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-quote-search',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   templateUrl: './quote-search.component.html',
   styleUrl: './quote-search.component.css'
 })
@@ -24,14 +25,14 @@ export class QuoteSearchComponent {
 constructor(private quoteService: QuoteService, private authService: AuthService){}
 
   searchQuote(event: any){
-    console.log("event : " , event.value);
-    console.log("quu: " , this.quoteNumber);
+    // console.log("event : " , event.value);
+    // console.log("quu: " , this.quoteNumber);
     this.searchSubmitted = true;
     this.searchDone = false;
 
     this.quoteService.getQuoteByReferenceId(this.quoteNumber).subscribe({
       next: (result) => {
-        console.log("resukt refernce by id!! " , result)
+        // console.log("resukt refernce by id!! " , result)
         if (result.quote){
           this.quoteResult = result.quote;
         }

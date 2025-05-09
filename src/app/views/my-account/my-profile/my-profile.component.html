@@ -14,15 +14,11 @@
     </div>
 
 </div> -->
-<div class="container footer">
+<div class="container footer" *transloco="let t">
 
 
 
-    <div class="row justify-content-md-center" style="background-color:white">
-        
-
-
-
+    <div class="row justify-content-md-center" style="background-color:white">  
         <!-- @if(width > 992){ -->
         <div class="col-2 hideEle992">
            <app-my-account-sideBar (pageViewChange)="newView($event)"></app-my-account-sideBar>
@@ -34,7 +30,7 @@
             <button	type="button" class="btn btn-info showEle992 mt-1"
             (click)="collapse.toggle()"	[attr.aria-expanded]="!isCollapsed"
             aria-controls="collapseExample"	>
-                My Profile Menu
+            {{ t('myProfile.html.menuTitle') }} 
                 @if(isCollapsed){
                     <fa-icon [icon]="faCaretDown"></fa-icon>
                 }@else {

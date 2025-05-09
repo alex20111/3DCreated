@@ -5,11 +5,12 @@ import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cart-receipt',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   templateUrl: './cart-receipt.component.html',
   styleUrl: './cart-receipt.component.css'
 })

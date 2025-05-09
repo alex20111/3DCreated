@@ -1,12 +1,9 @@
-<div class="container">
+<div class="container" *transloco="let t">
 
     <div class="row mt-2 ">
-        <h1 class="mb-4">Prototyping & Custom designs</h1>
-        <div class="col-6">
-            <p> Do you have functional designs you want validated?</p>
-            <p> Or do you need  
-             quick prototypes to custom creations that you dreamed of, then we've got the 3D printing potion to make it happen.</p>
-             <p>We can 3d print parts up to 235x235x250mm super fast in a variety of materials suitable for yor application. </p>
+        <h1 class="mb-4" > {{ t('services.html.prototype-title') }}</h1>
+        <div class="col-6" [innerHtml]="t('services.html.prototype-desc')" >
+            
         </div>
         <div class="col-6">
             <img class="img-fluid rounded" crossorigin="anonymous" src="https://luxcreo.com/wp-content/uploads/2023/11/EM-06_product_portfolio_black_white_bbg-1024x683.jpg" >
@@ -14,15 +11,13 @@
 
     </div>
     <div class="row mt-2">
-        <h1 class="mb-4">DIY parts repairs</h1>
+        <h1 class="mb-4" >{{ t('services.html.diy-title') }}</h1>
        
         <div class="col-6">
             <img class="img-fluid rounded" crossorigin="anonymous" src="/assets/clock.jpg" >
         </div>
-        <div class="col-6">
-            <p> If you have a part that is broken .</p>    
-            <p> We can 3D print parts that will make your DIY projects a reality.</p>            
-            <p> Request a Quote today! </p>
+        <div class="col-6" [innerHtml]="t('services.html.diy-desc')">
+           
 
         </div>
 

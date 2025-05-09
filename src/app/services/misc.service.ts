@@ -6,16 +6,12 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserInfoService {
-
+export class MiscService {
 
   constructor(private http: HttpClient) { }
 
-
-   //Update the user information
-   update(userInfo: any): Observable<any> {
-    return this.http.post<any>(`${environment.HOST_PORT}/api/selfUpdateUser`, userInfo);
+  //on Quote screen, upload the STL file that the user added
+  sendContactUs(contactUsForm: any): Observable<any> {
+    return this.http.post<any>(`${environment.HOST_PORT}/api/contactUs`, contactUsForm);
   }
-
-  
 }

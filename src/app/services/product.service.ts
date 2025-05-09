@@ -8,31 +8,29 @@ import { environment } from '../../environments/environment';
 })
 export class ProductService {
 
-  host: string = 'localhost';
-  port: string = '3000';
 
   constructor(private http: HttpClient) { }
 
 
   listProduct(query: any): Observable<any>{
     if (query){
-      return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/getProductList/?${query}`);
+      return this.http.get<any>(`${environment.HOST_PORT}/api/getProductList/?${query}`);
     }
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/getProductList/`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/getProductList/`);
     
   }
 
   displayProduct(productId: string): Observable<any>{
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/displayProduct/${productId}`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/displayProduct/${productId}`);
   }
 
 
   loadProductsBycategories(catgId: any): Observable<any>{
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/productsCategories/${catgId}`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/productsCategories/${catgId}`);
   }
 
   getCategoryList(): Observable<any>{
-    return this.http.get<any>(`http://${environment.HOST}:${environment.PORT}/api/categories/`);
+    return this.http.get<any>(`${environment.HOST_PORT}/api/categories/`);
   }
 
 }

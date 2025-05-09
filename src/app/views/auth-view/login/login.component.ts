@@ -6,11 +6,12 @@ import { AuthService } from '../../../services/auth.service';
 import { DisableControlDirective } from '../../../directives/disable-control.directive';
 import { Message, MessagesService } from '../../../services/messages.service';
 import { Subscription } from 'rxjs';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, ReactiveFormsModule, DisableControlDirective,CommonModule],
+  imports: [ RouterModule, ReactiveFormsModule, CommonModule,TranslocoModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

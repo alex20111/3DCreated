@@ -1,32 +1,32 @@
 
-<div class="mb-3 mt-5">
-  <h5>Account</h5>
+<div class="mb-3 mt-5" *transloco="let t">
+  <h5>{{ t('myAcctSideBar.html.acc') }}</h5>
   <ul class="list-group list-group-flush">
 
     
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.userInfo}"
-      (click)="pageChange(viewEnum.userInfo)">Information</li> 
+      (click)="pageChange(viewEnum.userInfo)">{{ t('myAcctSideBar.html.info') }}</li> 
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.chPassword}"
-      (click)="pageChange(viewEnum.chPassword)">Change Password</li>    
+      (click)="pageChange(viewEnum.chPassword)">{{ t('myAcctSideBar.html.chPass') }}</li>    
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.Orders}"
-      (click)="pageChange(viewEnum.Orders) "> Orders</li>
+      (click)="pageChange(viewEnum.Orders) "> {{ t('myAcctSideBar.html.orders') }}</li>
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.QuoteSearch}"
-      (click)="pageChange(viewEnum.QuoteSearch)">Quote Search</li>
+      (click)="pageChange(viewEnum.QuoteSearch)">{{ t('myAcctSideBar.html.quoteSearch') }}</li>
 
   </ul>
 </div>
 
 @if(user && user.admin){
-<div class="pt-3">
-  <h5>Admin</h5>
+<div class="pt-3"  *transloco="let t">
+  <h5>{{ t('myAcctSideBar.html.admin') }}</h5>
   <ul class="list-group list-group-flush">
   
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.QuoteList}"
-      (click)="pageChange(viewEnum.QuoteList)">Quotes List</li>
+      (click)="pageChange(viewEnum.QuoteList)">{{ t('myAcctSideBar.html.quoteList') }}</li>
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.OrderList}"
-      (click)="pageChange(viewEnum.OrderList)">Orders List</li>
+      (click)="pageChange(viewEnum.OrderList)">{{ t('myAcctSideBar.html.ordList') }}</li>
     <li class="list-group-item list-group-item-action point" [ngClass]="{'active': pageView === viewEnum.UserList}"
-      (click)="pageChange(viewEnum.UserList)">User list</li>
+      (click)="pageChange(viewEnum.UserList)">{{ t('myAcctSideBar.html.userList') }}</li>
     
   </ul>
 </div>

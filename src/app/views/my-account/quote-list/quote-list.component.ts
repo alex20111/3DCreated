@@ -8,11 +8,12 @@ import { NgbCollapseModule, NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { QuoteService } from '../../../services/quote.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { QuoteStatus } from '../../../enums/QuoteStatus';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-quote-list',
   standalone: true,
-  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule],
+  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbCollapseModule, TranslocoModule],
   templateUrl: './quote-list.component.html',
   styleUrl: './quote-list.component.css'
 })
